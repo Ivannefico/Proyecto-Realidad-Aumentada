@@ -1,35 +1,89 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import "../css/inicio.css";
 
-const MiAppRA = () => {
+class MiAppRA extends Component {
+  state={clicked: false};
+  handleClick = () => {
+    this.setState({clicked: !this.state.clicked})
+  }
+  render(){
   return (
-      <div style={{ margin: "0px", overflow: "hidden" }}>
-        <header>
-          <div className="titulo">
-            <h1><a href="index.html">PEQTU</a></h1>
+    <>
+      <header>
+        <nav>
+          <h1 className='Logo'>Scanner Cat</h1>
+            <div>
+              <ul id="navbar" className={this.state.clicked ? "#navbar active" : "#navbar"}>
+               <li><a className="active" href="indexhtml">Home</a></li>
+               <li><a href="indexhtml">Ayuda</a></li>
+               <li><a href="indexhtml">Contacto</a></li>
+               <li><a href="indexhtml">Nosotros</a></li>
+              </ul>
+            </div>
+
+            <div id="mobile" onClick={this.handleClick}>
+               <i id="bar" className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
+            </div>
+        </nav>
+      </header>
+        <section className="text">
+          <h2 className="text_2scan">Scan</h2>
+          <div className="span">
+            <button className="Buttons">
+              <Link to='/camara' className="Color">Activa Camara</Link>
+            </button>
+            <h1>Escanear en tiempo real</h1>
+            <h1>Empieza a utilizar Scanner Cat</h1>
           </div>
-          <div className="config">
-            <a href="#">config</a>
-          </div>
-          <div className="login">
-            <a href="#">login</a>
-          </div>
-        </header>
-        <div className="lader">
-          <div className="scan">
-            <h2>escanear</h2>
-          </div>
-          <div className="historial">
-            <h2>historial</h2>
-          </div>
-        </div>
-        <div className="body">
-          <h2>escanear en tiempo real</h2>
-          <p>empieza a utilizar peqtu</p>
-          <Link to="/camara">Camara</Link>
-        </div>
-      </div>
+        </section>
+        <section className='Nav_historial'>
+              <h2 className="text_h2">Historial de Scanner</h2>
+            <div className="historial">
+              <ul className="ul_historial">
+                <li className="derme">
+                  <p className="p2"></p>
+                    <p className="p3">Documento</p>
+                  <p className="p3"></p>
+                </li>
+              </ul>
+              <p className="no_hay_element">Busquedad</p>
+            </div>
+        </section>
+    </>
   );
-};
+}
+}
 
 export default MiAppRA;
+
+
+
+  /* const abrir_cerrar_menu = () =>{
+    let menu_desplegable = document.getElementById('menu');
+    let boton_cerrar = document.getElementById('x');
+    menu_desplegable.classList.toggle('abrir_menu');
+    boton_cerrar.classList.toggle('colocar_x')<div className='menu_header'>
+        <header className='header'>
+          <h1><a href="#">PEQTU</a></h1>
+          <div className='barras'>
+            <button onClick={abrir_cerrar_menu} className='boton_menu' id='x'></button>
+          </div>
+          <nav id='menu' className='desplegable'>
+            <ul className='nav_bar'>
+              <li>
+                <a href="#">ayuda</a></li>
+              <li>
+                <a href="#">nosotros</a></li>
+              <li>
+                <a href="#">contactos</a></li>
+          
+              <li>
+                <a href="#">config</a></li>
+          
+              <li>
+                <a href="#">login/inicio</a></li>
+            </ul>
+          </nav>
+        </header>
+      */
