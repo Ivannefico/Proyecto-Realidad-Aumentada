@@ -2,40 +2,81 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Formulario.css";
 
-const FormularioRegistro = ({ titulo = "Formulario Registro" }) => {
+const Formulario = ({ titulo = "Formulario" }) => {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [correo, setCorreo] = useState('');
     const [telefono, setTelefono] = useState('');
+    const [contrasena, setContrasena] = useState('');
     const [confirmarContrasena, setConfirmarContrasena] = useState('');
-    const [fotoPerfil, setFotoPerfil] = useState(null);
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSignIn = (e) => {
         e.preventDefault();
-
-        // Navegar a PantallaDestino y pasar los datos
+        navigate("/inicio", {
+            state: { nombre, apellido, correo, telefono, contrasena, confirmarContrasena }
+        });
+    };
+    const handleLogin = (e) => {
+        e.preventDefault();
         navigate("/resultado", {
-            state: { nombre, apellido, correo, telefono }
+            state: { correo, contrasena }
         });
     };
 
+    /*                      NO PERMITA REDIRECCIONAR AL INICIO SI EL USUARIO YA ESTA REGISTRADO
+    useEffect(() => {
+        const storedUser = localStorage.getItem('usuario');
+        if (storedUser) {
+            navigate('/', { replace: true });
+        }
+    }, []);
+    */
+
+    const flip = () => {
+        const front = document.querySelector('.front');
+        const back = document.querySelector('.back');
+        front.style.transform = 'translateX(0%)';
+        back.style.transform = 'translateX(120%)';
+    };
+    const flipBack = () => {
+        const front = document.querySelector('.front');
+        const back = document.querySelector('.back');
+        front.style.transform = 'translateX(-120%)';
+        back.style.transform = 'translateX(0%)';
+    };
+    
+
+/*
+    const flip = () => {
+        const form = document.querySelector('.form-container');
+        form.style.transform = 'rotateY(180deg)';
+        form.style.transition = 'transform 1.2s ease-in-out';
+    };
+    const flipBack = () => {
+        const form = document.querySelector('.form-container');
+        form.style.transform = 'rotateY(0deg)';
+        form.style.transition = 'transform 1.2s ease-in-out';
+    };          
+    
+*/
+
     return (
         <div className="form-container">
-            <form onSubmit={handleSubmit} className="glass-form">
+            <form onSubmit={handleSignIn} className="glass-form front">
                 <div className="title-form">
                     <h2>{titulo}</h2>
-                    <p>¿Ya tienes una cuenta? <a href="/iniciar-sesion">Iniciar sesion</a></p>
+                    <p>¿Ya tienes una cuenta? <button type="button" onClick={flipBack}>Iniciar sesion</button></p>
                 </div>
                 
-                <div className="img">
+                <div className="img"></div>
 
-                </div>
                 <div className="group">
                     
                     <div className="form-group">
                         <label>Nombre</label>
                         <input
+                            required="required"
                             type="text"
                             value={nombre}
                             onChange={(e) => setNombre(e.target.value)}
@@ -46,6 +87,7 @@ const FormularioRegistro = ({ titulo = "Formulario Registro" }) => {
                     <div className="form-group">
                         <label>Apellido</label>
                         <input
+                            required="required"
                             type="text"
                             value={apellido}
                             onChange={(e) => setApellido(e.target.value)}
@@ -56,6 +98,7 @@ const FormularioRegistro = ({ titulo = "Formulario Registro" }) => {
                     <div className="form-group">
                         <label>Correo electronico</label>
                         <input
+                            required="required"
                             type="text"
                             value={correo}
                             onChange={(e) => setCorreo(e.target.value)}
@@ -66,6 +109,7 @@ const FormularioRegistro = ({ titulo = "Formulario Registro" }) => {
                     <div className="form-group">
                         <label>Numero de telefono</label>
                         <input
+                            required="required"
                             type="text"
                             value={telefono}
                             onChange={(e) => setTelefono(e.target.value)}
@@ -74,21 +118,24 @@ const FormularioRegistro = ({ titulo = "Formulario Registro" }) => {
                     </div>
 
                     <div className="form-group">
-                        <label>Confirmar Contraseña</label>
+                        <label>Contraseña</label>
                         <input
+                            required="required"
                             type="password"
-                            value={confirmarContrasena}
-                            onChange={(e) => setConfirmarContrasena(e.target.value)}
-                            placeholder="Confirma tu contraseña"
+                            value={contrasena}
+                            onChange={(e) => setContrasena(e.target.value)}
+                            placeholder="Escribe tu contraseña"
                         />
                     </div>
 
                     <div className="form-group">
-                        <label>Foto de perfil</label>
+                        <label>Confirmar Contraseña</label>
                         <input
-                            type="file"
-                            value={fotoPerfil}
-                            onChange={(e) => setFotoPerfil(e.target.files[0])}
+                            required="required"
+                            type="password"
+                            value={confirmarContrasena}
+                            onChange={(e) => setConfirmarContrasena(e.target.value)}
+                            placeholder="Confirma tu contraseña"
                         />
                     </div>
                 
@@ -98,8 +145,34 @@ const FormularioRegistro = ({ titulo = "Formulario Registro" }) => {
 
                 </div>
             </form>
+            <form onSubmit={handleLogin} className="glass-form back">
+                <div className="title-form">
+                    <h2>Iniciar Sesion</h2>
+                    <p>¿No tienes una cuenta? <button type="button" onClick={flip}>Registrate</button></p>
+                </div>
+                <div className="form-group">
+                    <label>Correo electronico</label>
+                    <input
+                        required="required"
+                        type="text"
+                        placeholder="Escribe tu correo electronico" 
+                    />
+                </div>
+                <div className="form-group">
+                    <label>Contraseña</label>
+                    <input
+                        required="required"
+                        type="password"
+                        placeholder="Escribe tu contraseña"
+                    />
+                </div>
+                <button type="submit">Iniciar Sesion</button>
+            
+                <div className="img"></div>
+            </form>
         </div>
+        
     );
 };
 
-export default FormularioRegistro;
+export default Formulario;

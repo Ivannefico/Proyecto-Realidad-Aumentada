@@ -35,6 +35,9 @@ function App() {
 export default App;
 
 */
+
+
+/*
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Camara from './components/camara';
@@ -54,3 +57,29 @@ export default function App(){
     </div>
   )
 }
+*/
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Formulario from "./components/Formulario";
+import PantallaDestino from "./components/PantallaDestino";
+import Scaner from "./components/camara";
+import MiAppRA from "./components/inicio";
+import "./css/inicio.css";
+
+// Importando los estilos
+import "./css/Formulario.css";
+import "./css/camara.css";
+
+function App() {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Formulario titulo="Bienvenido a Scanner Cat, ¡Registrate!" />} />
+                <Route path="/camara" element={<Scaner />} />
+                <Route path="/inicio" element={<MiAppRA />} />
+                <Route path="/configuracion" element={<>Configuración</>} />
+            </Routes>
+        </Router>
+    );
+}
+
+export default App;

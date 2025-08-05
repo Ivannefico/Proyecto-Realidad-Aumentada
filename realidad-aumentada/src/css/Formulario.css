@@ -5,28 +5,31 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
+
+    background: #d4cac4;
+    overflow-x: hidden;
 }
 
 .form-container {
-    min-height: 100vh;
-    min-width: 100vw;
+    height: max-min(100vh, 100%);
+    width: max-min(100vw, 100%);
+
+    transition: 1s ease-in-out;
 
     height: fit-content;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /*transform-style: preserve-3d;*/
 
     background: #d4cac4;
 }
 
-/* Panel glassmorphism */
+
 .glass-form {
     border-radius: 20px;
     box-sizing: border-box;
     
     margin: 5%;
     padding: 40px;
+
     width: 90vw;
     height: fit-content;
     min-height: 80vh;
@@ -34,32 +37,40 @@ body {
     background: linear-gradient(#4d4c4b,#67615f,#676463);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
+
+    position: absolute;
+    /*backface-visibility: hidden;*/
+
+    transition: 1s ease-in-out;
 }
 
-.glass-form .title-form {
+.front{
+    /*transform: rotateY(180deg);*/
+    transform: translateX(-120%);
+}
+
+.title-form {
     text-align: center;
 
-    margin-top: -2.5%;
     margin-bottom: 24px;
     margin-left: 45%;
 
     color: #ffffff;
 }
-.glass-form .title-form h2 {
+.title-form h2 {
     font-size: 24px;
     font-weight: 600;
     font-family: 'Rubik', sans-serif;
 }
+.back .title-form{
+    margin-left: -45%;
+}
 
-/* Grupo de inputs */
 .form-group {
 
     width: 70%;
-
-    margin-bottom: 5px;
 
     transition: 0.3s ease;
 }
@@ -68,8 +79,6 @@ body {
 }
 
 .form-group label {
-    margin-bottom: 8px;
-
     font-size: 14px;
 
     color: #f1f1f1;
@@ -86,9 +95,6 @@ body {
     color: #fff;
 
     font-size: 16px;
-    outline: none;
-
-    transition: background 0.3s ease;
 }
 
 .form-group input::placeholder {
@@ -99,10 +105,10 @@ body {
     background: rgba(255, 255, 255, 0.3);
 }
 
-/* Botón */
 .glass-form button {
     width: 100%;
     padding: 12px;
+
     margin-left: -10%;
 
     border-radius: 30px;
@@ -122,114 +128,138 @@ body {
 .glass-form button:hover {
     background: rgba(255, 255, 255, 0.5);
     scale: 1.05;
-    
+}
+
+.back .form-group {
+    width: 20%;
+    gap: 50px;
+
+    margin-bottom: 5%;
+    margin-left: 15%;
+}
+
+.back button{
+    min-width: 10%;
+    width: 30%;
+
+    margin-left: 10%;
 }
 
 .group {
     display: grid;
     grid-template-columns: 
-        repeat(
-            auto-fit,
-            minmax(200px, 1fr)
+    repeat(
+        auto-fit,
+        minmax(200px, 1fr)
         );
-    gap: 50px;
-
-    margin-left: 50%;
-}
-
-.img{
-    width: 35%;
-    height: 80%;
-
-    background-image: url('../../public/logo.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 1;
-
-    border-radius: 20px;
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(31, 135, 128, 0.37);
-
-    position: absolute;
-    bottom: 10%;
-    left: 5%;
-}
-
-.title-form p a{
-    padding: 5px;
-
-    text-decoration: none;
-
-    color: rgb(70, 138, 247);
-
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-
-    transition: 0.8s ease;
-}
-.title-form p a:hover{
-    text-decoration: underline;
-
-    font-size: 17px;
-
-    color: #e0e0e0;
-}
-
-@media (max-width: 768px) {
-    .glass-form {
-        width: 80%;
-        padding: 20px;
-        margin: 0;
-        height: fit-content;
-        min-height: 80vh;
+        gap: 50px;
+        
+        margin-left: 50%;
+    }
+    .img{
+        width: 35%;
+        height: 80%;
+        
+        background-image: url('../../public/logoNegro.png');
+        background-size: cover;
+        background-position: center;
+        opacity: 1;
+        
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 32px 0 rgba(31, 135, 128, 0.37);
+        
+        position: absolute;
+        bottom: 10%;
+        left: 5%;
     }
 
-    .form-group {
-        width: 100%;
+    .back .img{
+        background-image: url('../../public/logoBlanco.png');
+        left: 60%;
     }
-
-    .glass-form button {
-        width: 100%;
-        margin-left: 0;
-        padding: 10px;
-        font-size: 14px;
-    }   
-
-
-    .glass-form .title-form {
-        margin-left: 0;
-        text-align: center;
-        margin-top: 0;
-        margin-bottom: 20px;
+    .title-form button{
+        padding: 5px;
+        
+        width: fit-content;
+        margin-left: 10px;
+        font-size: 16px;
+        
+        color: rgb(53, 108, 196);
+        
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        
+        transition: 0.8s ease;
     }
-    .title-form h2 {
-        font-size: 20px;
+    .title-form button:hover {
+        text-decoration: underline;
+        color: #000000;
+        background-color: rgba(255, 255, 255, 0.823);
+        scale: 1;
     }
-    .title-form p a {
-        font-size: 14px;
-    }
+    
+    
+    @media (max-width: 1200px) {
+        .front {
+            width: 80%;
+            padding: 20px;
+            margin: 0;
+            
+            height: fit-content;
+            min-height: 80vh;
+        }
+        
+        .form-group {
+            width: 100%;
+        }
+
+        .front button {
+            width: 100%;
+            margin-left: 0;
+            padding: 10px;
+        }
+        .back button {
+            margin-left: 25%;
+            width: 50%;
+        }
+        .back .title-form button{
+            width: 50%;
+            margin-left: 0;
+            padding: 10px;
+        }   
+        
+        .title-form {
+            margin-left: 0;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .back .title-form {
+            margin-left: 5%;
+        }
+
+        .group {
+            grid-template-columns: 1fr;
+            gap: 20px;
+
+            position: relative;
+            left: -25%;
+        }
+
+        .back .form-group{
+            margin-left: 15%;
+            width: 60%;
+
+            margin-bottom: 10%;
+        }
+
+        .form-container {
+            padding: 20px;
+        }
 
 
-    .group {
-        grid-template-columns: 1fr;
-        gap: 20px;
-
-        position: relative;
-        left: -25%;
-    }
-
-    .form-group input {
-        font-size: 14px;
-    }
-    .form-group label {
-        font-size: 12px;
-    }
-    .form-container {
-        padding: 20px;
-    }
-
-
-    .glass-form .img {
-        display: none;
-    }
+        .img {
+            display: none;
+        }
 }    
