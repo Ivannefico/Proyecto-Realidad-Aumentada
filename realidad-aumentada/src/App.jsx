@@ -63,15 +63,18 @@ import Formulario from "./components/Formulario";
 import PantallaDestino from "./components/PantallaDestino";
 import Scaner from "./components/camara";
 import MiAppRA from "./components/inicio";
-import "./css/inicio.css";
+import navbar  from "./components/navbar";
+
 
 // Importando los estilos
 import "./css/Formulario.css";
 import "./css/camara.css";
+import "./css/inicio.css";
 
 function App() {
     return (
         <Router>
+          <navbar/>
             <Routes>
                 <Route path="/" element={<Formulario titulo="Bienvenido a Scanner Cat, ¡Registrate!" />} />
                 <Route path="/camara" element={<Scaner />} />
