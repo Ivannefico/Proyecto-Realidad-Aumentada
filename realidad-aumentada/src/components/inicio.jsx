@@ -10,24 +10,7 @@ class MiAppRA extends Component {
   render(){
   return (
     <>
-      <header>
-        <nav>
-          <h1 className='Logo'>Scanner Cat</h1>
-            <div>
-              <ul id="navbar" className={this.state.clicked ? "#navbar active" : "#navbar"}>
-               <li><a className="active" href="indexhtml">Home</a></li>
-               <li><a href="indexhtml">Ayuda</a></li>
-               <li><a href="indexhtml">Contacto</a></li>
-               <li><a href="indexhtml">Nosotros</a></li>
-              </ul>
-            </div>
-
-            <div id="mobile" onClick={this.handleClick}>
-               <i id="bar" className={this.state.clicked ? "fas fa-times" : "fas fa-bars"}></i>
-            </div>
-        </nav>
-      </header>
-        <section className="text">
+      <section className="text">
           <h2 className="text_2scan">Scan</h2>
           <div className="span">
             <button className="Buttons">
@@ -36,8 +19,8 @@ class MiAppRA extends Component {
             <h1>Escanear en tiempo real</h1>
             <h1>Empieza a utilizar Scanner Cat</h1>
           </div>
-        </section>
-        <section className='Nav_historial'>
+      </section>
+      <section className='Nav_historial'>
               <h2 className="text_h2">Historial de Scanner</h2>
             <div className="historial">
               <ul className="ul_historial">
