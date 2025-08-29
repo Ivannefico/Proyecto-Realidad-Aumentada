@@ -59,7 +59,9 @@ export default function App(){
 }
 */
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Formulario from "./components/Formulario";
+import Formulario_inic from "./components/Formulario_inic";
+import Formulario_regist from "./components/Formulario_regist";
+import formulario from "./pages/formulario";
 import PantallaDestino from "./components/PantallaDestino";
 import Scaner from "./components/camara";
 import MiAppRA from "./components/inicio";
