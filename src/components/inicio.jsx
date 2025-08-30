@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from './navbar';
 import "../css/inicio.css";
 
 class MiAppRA extends Component {
-  state={clicked: false};
+  state = { clicked: false };
+
   handleClick = () => {
-    this.setState({clicked: !this.state.clicked})
+    this.setState({ clicked: !this.state.clicked });
   }
-  render(){
-  return (
-    <>
-      <section className="text">
+
+  render() {
+    return (
+      <>
+        <Navbar />
+
+        <section className="text">
           <h2 className="text_2scan">Scan</h2>
           <div className="span">
             <button className="Buttons">
@@ -19,23 +24,24 @@ class MiAppRA extends Component {
             <h1>Escanear en tiempo real</h1>
             <h1>Empieza a utilizar Scanner Cat</h1>
           </div>
-      </section>
-      <section className='Nav_historial'>
-              <h2 className="text_h2">Historial de Scanner</h2>
-            <div className="historial">
-              <ul className="ul_historial">
-                <li className="derme">
-                  <p className="p2"></p>
-                    <p className="p3">Documento</p>
-                  <p className="p3"></p>
-                </li>
-              </ul>
-              <p className="no_hay_element">Busquedad</p>
-            </div>
         </section>
-    </>
-  );
-}
+
+        <section className='Nav_historial'>
+          <h2 className="text_h2">Historial de Scanner</h2>
+          <div className="historial">
+            <ul className="ul_historial">
+              <li className="derme">
+                <p className="p2"></p>
+                <p className="p3">Documento</p>
+                <p className="p3"></p>
+              </li>
+            </ul>
+            <p className="no_hay_element">Busquedas</p>
+          </div>
+        </section>
+      </>
+    );
+  }
 }
 
 export default MiAppRA;

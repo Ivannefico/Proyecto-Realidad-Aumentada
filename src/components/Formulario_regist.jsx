@@ -1,93 +1,101 @@
-import React, {useState}from "react"; 
-import {useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Formulario_regist = ({titulo = "Formulario_regist"}) => {
-    return(
-        <div className="form-container">
-              /*Formulario Registro*/ 
-            <form onSubmit={handleSignIn} className="glass-form front">
-                <div className="title-form">
-                    <h2>{titulo}</h2>
-                    <p>¿Ya tienes una cuenta? <button type="button" onClick={flipBack}>Iniciar sesion</button></p>
-                </div>
-                
-                <div className="img"></div>
+const Registro = () => {
+  const navigate = useNavigate();
 
-                <div className="group">
-                    
-                <div className="form-group">
-                    <label>Nombre</label>
-                    <input
-                    required="required"
-                    type="text"
-                    value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
-                    placeholder="Escribe tu nombre"
-                    />
-                </div>
+  const [registro, setRegistro] = useState({
+    nombre: "",
+    apellido: "",
+    correo: "",
+    telefono: "",
+    contrasena: "",
+    confirmarContrasena: "",
+  });
 
-                <div className="form-group">
-                    <label>Apellido</label>
-                    <input
-                    required="required"
-                    type="text"
-                    value={apellido}
-                    onChange={(e) => setApellido(e.target.value)}
-                    placeholder="Escribe tu apellido"
-                    />
-                </div>
+  const handleSignIn = (e) => {
+    e.preventDefault();
 
-                <div className="form-group">
-                    <label>Correo electronico</label>
-                    <input
-                    required="required"
-                    type="text"
-                    value={correo}
-                    onChange={(e) => setCorreo(e.target.value)}
-                    placeholder="Escribe tu correo electronico"
-                    />
-                </div>
+    // Validar contraseñas
+    if (registro.contrasena !== registro.confirmarContrasena) {
+      alert("Las contraseñas no coinciden");
+      return;
+    }
 
-                <div className="form-group">
-                    <label>Numero de telefono</label>
-                    <input
-                    required="required"
-                    type="text"
-                    value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
-                    placeholder="Escribe tu telefono"
-                    />
-                </div>
+    // Guardar en localStorage
+    localStorage.setItem("usuario", JSON.stringify(registro));
 
-                <div className="form-group">
-                    <label>Contraseña</label>
-                    <input
-                    required="required"
-                    type="password"
-                    value={contrasena}
-                    onChange={(e) => setContrasena(e.target.value)}
-                    placeholder="Escribe tu contraseña"
-                    />
-                </div>
+    // Recuperar y mostrar en consola
+    const datos_usuario = localStorage.getItem("usuario");
+    if (datos_usuario) {
+      const datos = JSON.parse(datos_usuario);
+      console.log("Usuario registrado:");
+      console.log(datos.nombre);
+      console.log(datos.apellido);
+      console.log(datos.correo);
+      console.log(datos.telefono);
+      console.log(datos.contrasena);
+      console.log(datos.confirmarContrasena);
+    }
 
-                <div className="form-group">
-                    <label>Confirmar Contraseña</label>
-                    <input
-                    required="required"
-                    type="password"
-                     value={confirmarContrasena}
-                    onChange={(e) => setConfirmarContrasena(e.target.value)}
-                    placeholder="Confirma tu contraseña"
-                    />
-                </div>
-                
+    // Redirigir al inicio
+    navigate("/", { replace: true });
+  };
 
-            <button type="submit">Enviar</button>
-            <button type="button">Google</button>
-
-        </div>
+  return (
+    <form onSubmit={handleSignIn} className="glass-form front">
+      <h2>Registrarse</h2>
+      <input
+        name="nombre"
+        placeholder="Nombre"
+        value={registro.nombre}
+        onChange={(e) => setRegistro({ ...registro, nombre: e.target.value })}
+        required
+      />
+      <input
+        name="apellido"
+        placeholder="Apellido"
+        value={registro.apellido}
+        onChange={(e) => setRegistro({ ...registro, apellido: e.target.value })}
+        required
+      />
+      <input
+        name="correo"
+        placeholder="Correo"
+        value={registro.correo}
+        onChange={(e) => setRegistro({ ...registro, correo: e.target.value })}
+        required
+      />
+      <input
+        name="telefono"
+        placeholder="Teléfono"
+        value={registro.telefono}
+        onChange={(e) => setRegistro({ ...registro, telefono: e.target.value })}
+        required
+      />
+      <input
+        name="contrasena"
+        type="password"
+        placeholder="Contraseña"
+        value={registro.contrasena}
+        onChange={(e) =>
+          setRegistro({ ...registro, contrasena: e.target.value })
+        }
+        required
+      />
+      <input
+        name="confirmarContrasena"
+        type="password"
+        placeholder="Confirmar Contraseña"
+        value={registro.confirmarContrasena}
+        onChange={(e) =>
+          setRegistro({ ...registro, confirmarContrasena: e.target.value })
+        }
+        required
+      />
+      <button type="submit">Registrarse</button>
     </form>
-    </div>
-    )
-}
-export default Formulario_regist
+  );
+};
+
+export default Registro;
