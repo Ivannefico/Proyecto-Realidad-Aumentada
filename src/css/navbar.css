@@ -1,0 +1,53 @@
+
+.navbar{
+    display: flex;
+    justify-content: right;
+    gap: 25px; 
+}
+.navbar button {
+    background-color: #1c9a8a;   
+  color: white;             
+  padding: 8px 22px;        
+  border: none;               
+  border-radius: 20px;        
+  font-size: 16px;           
+  cursor: pointer;          
+  transition: background-color 0.3s ease; 
+}
+.btn-icono {
+  background: transparent;    /* sin fondo */
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.btn-icono:hover {
+  background: rgba(0, 0, 0, 0.1); /* circulito gris al pasar */
+}
+
+.btn-icono img {
+  width: 17px;
+  height: 17px;
+}
+.btn-logout {
+  background: transparent;    /* sin fondo */
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  transition: background 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(0, 0, 0, 0.1); /* circulito gris al pasar */
+}
+
+.btn-logout img {
+  width: 17px;
+  height: 17px;
+}
+
+
+

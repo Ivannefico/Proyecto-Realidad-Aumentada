@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,14 +19,15 @@ const Navbar = () => {
       <button onClick={() => navigate("/contacto")}>
         Contacto
       </button>
-      <button onClick={() => navigate("./configuraciones")}>
-        Configuraciones
+      <button onClick={() => navigate("./configuraciones")} className="btn-icono">
+        <img src= "/img/tuerca.png"/>
       </button>
-      <button onClick={handleLogout}>
-        Cerrar Sesión
+      <button onClick={handleLogout} className="btn-logout">
+        <img src= "/img/logout.png"/>
       </button>
     </nav>
-  );
+
+);
 };
 export default Navbar;
 

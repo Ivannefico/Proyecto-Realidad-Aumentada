@@ -14,7 +14,6 @@ class MiAppRA extends Component {
     return (
       <>
         <Navbar />
-
         <section className="text">
           <h2 className="text_2scan">Scan</h2>
           <div className="span">
@@ -43,7 +42,6 @@ class MiAppRA extends Component {
     );
   }
 }
-
 export default MiAppRA;
 
 
