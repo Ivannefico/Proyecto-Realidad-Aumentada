@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from './navbar';
-import "../css/inicio.css";
+import "../css/Inicio.css";
+import Navbar from './Navbar.jsx';
 
 class MiAppRA extends Component {
   state = { clicked: false };

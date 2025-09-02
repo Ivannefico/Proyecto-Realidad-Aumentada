@@ -50,7 +50,7 @@ const Login = () => {
         onChange={(e) => setLogin({ ...login, contrasena: e.target.value })}
         required
       />
-      <button type="submit">Iniciar Sesión</button>
+      <button type="submit" onClick={() => navigate("/", { replace: true })}>Iniciar Sesión</button>
       <button type="button" onClick={() => navigate("/registro")}>Registrarse</button>
     </form>
   );

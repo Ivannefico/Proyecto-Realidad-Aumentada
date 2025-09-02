@@ -1,9 +1,9 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/formulario_inic.jsx";
-import Registro from "./components/formulario_regist.jsx";
-import Inicio from "./components/inicio.jsx";
-import Contacto from "./components/contacto.jsx"
+import Login from "./components/Formulario_inic.jsx";
+import Registro from "./components/Formulario_regist.jsx";
+import Inicio from "./components/Inicio.jsx";
+import Contacto from "./components/Contacto.jsx"
 import NotFound from "./components/404.jsx";
 
 function App() {
