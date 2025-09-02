@@ -3,11 +3,12 @@ Grupo Proyecto Realidad Aumentada
 Integrantes:
 
 	.Joaquín Carrasco
-	.Araya Sofía
+	.Sofía Araya
 	.Ezequiel Salazar
 	.Ivan Moreno
 	.Facundo Barros
 	.Juan Ferreyra
+	.Fiorella Gazzola Grenier
 
 Utilizamos la herramienta "Canva" para el diseño del proyecto.
 

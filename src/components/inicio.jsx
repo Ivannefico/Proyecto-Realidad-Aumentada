@@ -18,7 +18,7 @@ class MiAppRA extends Component {
           <h2 className="text_2scan">Scan</h2>
           <div className="span">
             <button className="Buttons">
-              <Link to='/camara' className="Color">Activa Camara</Link>
+              <Link to='/error404' className="Color">Activa Camara</Link>
             </button>
             <h1>Escanear en tiempo real</h1>
             <h1>Empieza a utilizar Scanner Cat</h1>

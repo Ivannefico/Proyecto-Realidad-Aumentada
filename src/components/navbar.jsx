@@ -13,13 +13,13 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <button onClick={() => navigate("/inicio")}>
+      <button onClick={() => navigate("/home")}>
         Inicio
       </button>
       <button onClick={() => navigate("/contacto")}>
         Contacto
       </button>
-      <button onClick={() => navigate("./configuraciones")} className="btn-icono">
+      <button onClick={() => navigate("/error404")} className="btn-icono">
         <img src= "/img/tuerca.png"/>
       </button>
       <button onClick={handleLogout} className="btn-logout">
