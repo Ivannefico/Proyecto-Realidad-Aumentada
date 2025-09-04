@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/Formulario.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,27 +33,47 @@ const Login = () => {
     }
   };
 
+
   return (
-    <form onSubmit={handleLoginSubmit} className="glass-form back">
-      <h2>Iniciar Sesión</h2>
-      <input
-        name="correo"
-        placeholder="Correo"
-        value={login.correo}
-        onChange={(e) => setLogin({ ...login, correo: e.target.value })}
-        required
-      />
-      <input
-        name="contrasena"
-        placeholder="Contraseña"
-        type="password"
-        value={login.contrasena}
-        onChange={(e) => setLogin({ ...login, contrasena: e.target.value })}
-        required
-      />
-      <button type="submit" onClick={() => navigate("/", { replace: true })}>Iniciar Sesión</button>
-      <button type="button" onClick={() => navigate("/registro")}>Registrarse</button>
-    </form>
+    <div className="form-container ">
+
+      <form onSubmit={handleLoginSubmit} className="glass-form">
+
+        <div className="title-form">
+          <h2>Iniciar Sesión</h2>
+          <p>¿No tienes una cuenta? <button type="button">Registrate</button></p>
+        </div>
+        
+        <div className="form-group ">
+         <input
+            name="correo"
+            placeholder="Correo"
+            value={login.correo}
+            onChange={(e) => setLogin({ ...login, correo: e.target.value })}
+            required
+          />
+        </div>
+
+        <div className="form-group ">
+          <input
+            name="contrasena"
+            placeholder="Contraseña"
+            type="password"
+            value={login.contrasena}
+            onChange={(e) => setLogin({ ...login, contrasena: e.target.value })}
+            required
+          />
+        </div>
+
+
+
+        <button type="submit">Iniciar Sesión</button>
+        
+
+        <div className="img"></div>
+
+      </form>
+    </div>
   );
 };
 

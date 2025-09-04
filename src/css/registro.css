@@ -1,0 +1,143 @@
+/* Importamos fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #d4cac4; /* Color de fondo de la maqueta */
+  overflow-x: hidden;
+}
+
+/* Contenedor principal en dos columnas */
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Panel izquierdo con paisaje */
+.left-panel {
+ background-image: url(../../public/logoBlanco.png);
+  border-radius: 20px 0 0 20px;
+  margin: 20px;
+  position: relative;
+  display: flex;
+  
+         background-size: cover;
+        background-position: center;
+        opacity: 1;
+  overflow: hidden;
+}
+
+/* Logo en la nube */
+
+
+/* Panel derecho con formulario */
+.right-panel {
+  margin: 20px;
+  padding: 40px;
+  border-radius: 0 20px 20px 0;
+  background: #d4cac4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Título principal */
+.right-panel h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #000;
+}
+
+/* Texto de login */
+.login-text {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #000;
+}
+
+.login-btn {
+  margin-left: 10px;
+  background: #4aa69c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  opacity: 0.8;
+}
+
+/* Formulario */
+.form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columnas como en el diseño */
+  gap: 15px 20px;
+  width: 100%;
+  max-width: 450px;
+}
+
+/* Input grupo */
+.input-group {
+  position: relative;
+  width: 100%;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border-radius: 20px;
+  border: 1px solid #000;
+  outline: none;
+  font-size: 14px;
+}
+
+.input-group .icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Contraseña ocupa 2 columnas */
+.input-group:nth-child(3),
+.input-group:nth-child(4),
+.input-group:nth-child(5) {
+  grid-column: span 2;
+}
+
+/* Botón principal */
+.register-btn {
+  grid-column: span 2;
+  width: 60%;
+  margin: 0 auto;
+  padding: 12px;
+  border-radius: 30px;
+  border: 1px solid #000;
+  background: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: #eee;
+}
+
+/* Texto de políticas */
+.policy {
+  grid-column: span 2;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 12px;
+  color: #333;
+}
