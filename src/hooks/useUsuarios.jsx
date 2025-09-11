@@ -10,6 +10,4 @@ const dataUsuario = snap.docs.map( d=> ({ id: d.id, ...d.dataUsuario() }));
 
 console.log(dataUsuario);
 
-} 
-
-export default useUsuarios;
+}

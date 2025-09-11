@@ -10,6 +10,4 @@ const dataAdmin = snap.docs.map( d=> ({ id: d.id, ...d.dataAdmin() }));
 
 console.log(dataAdmin);
 
-} 
-
-export default useAdmins;
+}
