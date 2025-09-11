@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import "../css/Inicio.css";
 import Navbar from './Navbar.jsx';
+import cameraIcon from "../img/camara.png";
 
 class MiAppRA extends Component {
   state = { clicked: false };
@@ -17,7 +18,7 @@ class MiAppRA extends Component {
         <section className="text">
           <div className="span"> 
             <button className="Buttons">
-              <Link to='/error404' className="Color"><img src= "/img/camara.png"/></Link>
+              <Link to='/error404' className="Color"><img src= {cameraIcon}/></Link>
               <p>Scan</p>
             </button>
           </div>
