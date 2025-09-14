@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/Registro.css";
-import { TextField, Button, Typography, Grid, Paper } from '@mui/material';
+import "../css/registro.css";
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
-import { crearUsuario } from '../hooks/useUsuarios';
+import { useUsuarios } from '../hooks/useUsuarios';
 
 const Registro = () => {
   const navigate = useNavigate();//permite navegar entre paguinas sin la necesidad de enlace
-// guarda todo dentro de reguistro
+
+  const{ crearUsuario } = useUsuarios();//llamo a crearUsuario
+  // guarda todo dentro de reguistro
+  
   const [registro, setRegistro] = useState({
-    usuario: "",
+    usuarios: "",
     correo: "",
     telefono: "",
     contrasena: "",
@@ -25,6 +27,7 @@ const Registro = () => {
 
   const handleSignIn = async (e) => {
     e.preventDefault();//evita que la paguina se recargue
+    
     if (registro.contrasena !== registro.confirmarContrasena) {
       alert("Las contraseñas no coinciden");
       return;
@@ -33,27 +36,23 @@ const Registro = () => {
     setLoading(true);
 
     try{
-      //guarda al usuario
-      const userGuardado = await crearUsuario({
-        usuario: registro.usuario,
+      await crearUsuario({
+        usuarios: registro.usuarios,
+        correo: registro.correo,
+        telefono: registro.telefono,
         contrasena: registro.contrasena,
-        rol: 'usuario'
-      });
-
-      if(!userGuardado){
-        alert("Usuarion no se guardo correctamente")
-        return;
-      }
-
-      await addDoc(collection(db, "usuario"),{
-      usuario: registro.usuario,
-      correo: registro.correo,
-      telefono: registro.telefono,
-      contrasena: registro.contrasena,
+        rol: "usuarios",
       });
 
       alert("Usuario reguistrado correctamente")
-      setRegistro({ usuario: '', correo: '', telefono: '', contrasena: '', confirmarContrasena: ''});
+      setRegistro({ 
+        usuarios: '',
+        correo: '',
+        telefono: '',
+        contrasena: '',
+        confirmarContrasena: ''
+      });
+
       navigate("/", { replace: true });
     }catch (error) {
     console.error(error);
@@ -85,9 +84,9 @@ const Registro = () => {
           <div className="input-group">
             <input
               type="text"
-              name="usuario"
-              placeholder="Nombre de usuario"
-              value={registro.usuario}
+              name="usuarios"
+              placeholder="Nombre de usuarios"
+              value={registro.usuarios}
               onChange={handleChange}
               required
             />
