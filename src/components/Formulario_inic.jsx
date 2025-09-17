@@ -41,7 +41,7 @@ const Login = () => {
 
         <div className="title-form">
           <h2>Iniciar Sesión</h2>
-          <p>¿No tienes una cuenta? <button type="button">Registrate</button></p>
+          <p>¿No tienes una cuenta? <button type="button" onClick={() => navigate("/registro")}>Registrate</button></p>
         </div>
         
         <div className="form-group ">

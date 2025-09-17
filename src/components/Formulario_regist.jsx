@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../css/Formulario.module.css";
+import styles from "../css/Registro.module.css";
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { useUsuarios } from '../hooks/useUsuarios';
 
 const Registro = () => {
-  const navigate = useNavigate();//permite navegar entre paguinas sin la necesidad de enlace
+  const navigate = useNavigate();//permite navegar entre paginas sin la necesidad de enlace
 
   const{ crearUsuario } = useUsuarios();//llamo a crearUsuario
-  // guarda todo dentro de reguistro
+  // guarda todo dentro de registro
   
   const [registro, setRegistro] = useState({
     usuarios: "",
@@ -20,13 +20,13 @@ const Registro = () => {
   });
   //define el loading
   const [loading, setLoading] = useState(false);
-//modifica el input dependiendo de su nombre
+  //modifica el input dependiendo de su nombre
   const handleChange = (e) => {
     setRegistro({...registro, [e.target.name]: e.target.value})
   };
 
   const handleSignIn = async (e) => {
-    e.preventDefault();//evita que la paguina se recargue
+    e.preventDefault();//evita que la pagina se recargue
     
     if (registro.contrasena !== registro.confirmarContrasena) {
       alert("Las contraseñas no coinciden");
