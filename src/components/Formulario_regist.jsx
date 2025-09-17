@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/registro.css";
+import styles from "../css/Formulario.module.css";
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { useUsuarios } from '../hooks/useUsuarios';

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import '../css/configuraciones.css';
+import '../css/Configuraciones.module.css';
 
 const Configuraciones = ({ titulo = "Configuraciones" }) => {
     const [notificaciones, setNotificaciones] = useState('');

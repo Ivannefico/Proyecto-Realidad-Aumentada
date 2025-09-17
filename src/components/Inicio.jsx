@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import "../css/Inicio.css";
+import "../css/Inicio.module.css";
 import Navbar from './Navbar.jsx';
 import cameraIcon from "../img/camara.png";
 

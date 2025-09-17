@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/Formulario.css";
+import "../css/Formulario.module.css";
 
 const Login = () => {
   const navigate = useNavigate();

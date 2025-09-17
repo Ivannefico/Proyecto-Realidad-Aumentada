@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/camara.css';
+import '../css/Camara.module.css'
 import { useEffect } from 'react';
 
 const Scaner = () => {
