@@ -9,8 +9,8 @@ const Registro = () => {
   const navigate = useNavigate();//permite navegar entre paginas sin la necesidad de enlace
 
   const{ crearUsuario } = useUsuarios();//llamo a crearUsuario
-  // guarda todo dentro de registro
   
+  // guarda todo dentro de registro
   const [registro, setRegistro] = useState({
     usuarios: "",
     correo: "",

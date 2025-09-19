@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Formulario.module.css";
+import { collection, getDocs, query, where} from 'firebase/firestore';
+import { db } from '../firebase/firebase';
+import { useUsuarios } from '../hooks/useUsuarios';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,34 +13,49 @@ const Login = () => {
     contrasena: "",
   });
 
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
+  const [loading, setLoading] = useState(false);
 
-    // Recuperar usuario de localStorage
-    const datos_usuario = localStorage.getItem("usuario");
-
-    if (datos_usuario) {
-      const datos = JSON.parse(datos_usuario);
-
-      if (
-        datos.correo === login.correo &&
-        datos.contrasena === login.contrasena
-      ) {
-        console.log("Login exitoso");
-        navigate("/home", { replace: true });
-      } else {
-        alert("Usuario o contraseña incorrectos");
-      }
-    } else {
-      alert("No hay usuarios registrados");
-    }
+  const handleChange = (e) => {
+    setLogin({ ... login, [e.target.name]: e.target.value });
   };
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true)
+    
+    try{
+      const q = query(
+        collection(db, "usuarios"),
+        where("correo", "==", login.correo),
+        where("contrasena", "==", login.contrasena)
+      );
+
+      const snap = await getDocs(q);
+
+      if (snap.empty){
+        alert("Correo o contraseña incorrectos");
+        return;
+      }
+
+      const usuario = snap.docs[0].data();
+
+      //guardamos en localStorage
+      localStorage.setItem("usuario", JSON.stringify(usuario));
+
+      alert(`Bienvenido ${usuario.correo}`);
+      navigate("/home");//redirige al home
+    } catch (error){
+      console.error(error);
+      alert("Ocurrio un error al iniciar sesión");
+    }finally{
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="form-container ">
 
-      <form onSubmit={handleLoginSubmit} className="glass-form">
+      <form onSubmit={handleLogin} className="glass-form">
 
         <div className="title-form">
           <h2>Iniciar Sesión</h2>
@@ -45,11 +63,11 @@ const Login = () => {
         </div>
         
         <div className="form-group ">
-         <input
+          <input
             name="correo"
             placeholder="Correo"
             value={login.correo}
-            onChange={(e) => setLogin({ ...login, correo: e.target.value })}
+            onChange={handleChange}
             required
           />
         </div>
@@ -60,14 +78,16 @@ const Login = () => {
             placeholder="Contraseña"
             type="password"
             value={login.contrasena}
-            onChange={(e) => setLogin({ ...login, contrasena: e.target.value })}
+            onChange={handleChange}
             required
           />
         </div>
 
 
 
-        <button type="submit">Iniciar Sesión</button>
+        <button type="submit" disabled={loading}>
+        {loading ? "Ingresando..." : "Iniciar Sesión"}
+        </button>
         
 
         <div className="img"></div>
