@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { updateDoc } from "firebase/firestore/lite";
 
 // Hook para manejar usuarios
 export function useUsuarios() {
@@ -22,7 +23,6 @@ export function useUsuarios() {
             console.error("Error al obtener usuarios:", error);
         }
     };
-    fetchUsuarios();
     useEffect(() => {
         leerUsuarios();
     }, []);
@@ -53,11 +53,11 @@ export function useUsuarios() {
     const actualizarUsuario = async (id, nuevosDatos) => {
         try {
             const refUsuario = doc(db, "usuarios", id);
-            await update(refUsuario, nuevosDatos)
+            await updateDoc(refUsuario, nuevosDatos)
         }catch (error) {
             console.error("Error al actualizar usuario:", error);
         }
     }
 
-    return { usuarios, crearUsuario, leerUsuarios, actualizarUsuario};
+    return { usuarios, crearUsuario, leerUsuarios, actualizarUsuario, eliminarUsuario};
 }
