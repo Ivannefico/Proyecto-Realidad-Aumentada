@@ -8,7 +8,7 @@ import { useUsuarios } from '../hooks/useUsuarios';
 const Registro = () => {
   const navigate = useNavigate();//permite navegar entre paginas sin la necesidad de enlace
 
-  const{ crearUsuario } = useUsuarios();//llamo a crearUsuario
+  const { crearUsuario } = useUsuarios();//llamo a crearUsuario
   
   // guarda todo dentro de registro
   const [registro, setRegistro] = useState({
@@ -18,24 +18,37 @@ const Registro = () => {
     contrasena: "",
     confirmarContrasena: "",
   });
-  //define el loading
+
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(""); // nuevo estado para errores
+
+  // función de validación de email
+  const validateEmail = (email) => {
+    return /^\S+@\S+\.\S+$/.test(email);
+  };
+
   //modifica el input dependiendo de su nombre
   const handleChange = (e) => {
-    setRegistro({...registro, [e.target.name]: e.target.value})
+    setRegistro({ ...registro, [e.target.name]: e.target.value });
   };
 
   const handleSignIn = async (e) => {
     e.preventDefault();//evita que la pagina se recargue
-    
+    setError(""); // limpia error anterior
+
+    if (!validateEmail(registro.correo)) {
+      setError("El correo electrónico no es válido");
+      return;
+    }
+
     if (registro.contrasena !== registro.confirmarContrasena) {
-      alert("Las contraseñas no coinciden");
+      setError("Las contraseñas no coinciden");
       return;
     }
 
     setLoading(true);
 
-    try{
+    try {
       await crearUsuario({
         usuarios: registro.usuarios,
         correo: registro.correo,
@@ -44,22 +57,22 @@ const Registro = () => {
         rol: "usuarios",
       });
 
-      alert("Usuario reguistrado correctamente")
-      setRegistro({ 
-        usuarios: '',
-        correo: '',
-        telefono: '',
-        contrasena: '',
-        confirmarContrasena: ''
+      alert("Usuario registrado correctamente");
+      setRegistro({
+        usuarios: "",
+        correo: "",
+        telefono: "",
+        contrasena: "",
+        confirmarContrasena: "",
       });
 
       navigate("/", { replace: true });
-    }catch (error) {
-    console.error(error);
-    alert("Ocurrió un error al registrar el usuario");
-  } finally {
-    setLoading(false); // termina loading
-  }
+    } catch (error) {
+      console.error(error);
+      setError("Ocurrió un error al registrar el usuario");
+    } finally {
+      setLoading(false); // termina loading
+    }
   };
 
   return (
@@ -79,6 +92,9 @@ const Registro = () => {
           ¿Ya tengo una cuenta?
           <button className="login-btn">Iniciar Sesión</button>
         </p>
+
+        {/* se muestra el error si existe */}
+        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form onSubmit={handleSignIn} className="form">
           <div className="input-group">
@@ -142,7 +158,7 @@ const Registro = () => {
           </div>
 
           <button type="submit" className="register-btn" disabled={loading}>
-            {loading ? 'Registrando...' : 'Regístrate ahora'}
+            {loading ? "Registrando..." : "Regístrate ahora"}
           </button>
 
           <p className="policy">

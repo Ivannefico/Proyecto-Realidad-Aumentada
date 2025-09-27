@@ -12,9 +12,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
+         <Route path="/registro" element={<Registro />} />
 
         <Route element={<ProtectedRoutes />}>
-              <Route path="/registro" element={<Registro />} />
               <Route path="/home" element={<Inicio />} />
               <Route path="/contacto" element={<Contacto />} />
               <Route path="/error404" element={<NotFound />} />
