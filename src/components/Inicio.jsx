@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import "../css/Inicio.module.css";
+import incio_css from "../css/Inicio.module.css";
 import Navbar from './Navbar.jsx';
 import cameraIcon from "../img/camara.png";
 
@@ -13,31 +13,35 @@ class MiAppRA extends Component {
 
   render() {
     return (
-      <>
+      <div className={incio_css.body}>
         <Navbar />
-        <section className="text">
-          <div className="span"> 
-            <button className="Buttons">
-              <Link to='/error404' className="Color"><img src= {cameraIcon}/></Link>
-              <p>Scan</p>
+        <section className={incio_css.cajainicio}>
+
+        <section className={incio_css.Nav_historial}>
+          <h2 className={incio_css.text_h2}>Historial de Scanner</h2>
+          <div className={incio_css.historial}>
+            <ul className={incio_css.ul_historial}>
+              <li className={incio_css.derme}>
+                <p className={incio_css.p2}></p>
+                <p className={incio_css.p3}>Documento</p>
+                <p className={incio_css.p3}></p>
+              </li>
+            </ul>
+            <p className={incio_css.no_hay_element}>Busquedas</p>
+          </div>
+        </section>
+
+        <section className={incio_css.text}>
+          <div className={incio_css.span}> 
+            <button className={incio_css.Buttons}>
+              <Link to='/error404' className={incio_css.Color}><img src= {cameraIcon}/></Link>
+              <div><p>Scan</p></div>
             </button>
           </div>
         </section>
 
-        <section className='Nav_historial'>
-          <h2 className="text_h2">Historial de Scanner</h2>
-          <div className="historial">
-            <ul className="ul_historial">
-              <li className="derme">
-                <p className="p2"></p>
-                <p className="p3">Documento</p>
-                <p className="p3"></p>
-              </li>
-            </ul>
-            <p className="no_hay_element">Busquedas</p>
-          </div>
         </section>
-      </>
+      </div>
     );
   }
 }

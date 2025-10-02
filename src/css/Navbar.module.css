@@ -1,53 +1,58 @@
+/* Navbar.module.css */
 
-.navbar{
-    display: flex;
-    justify-content: right;
-    gap: 25px; 
+
+.logo{
+align-items: start;
+  margin-right: auto;
 }
+
+.logo img {
+  width: 50px;
+  height: auto;
+}
+
+.navbar {
+  background-color: #17615e; /* barra navbar verde */
+  padding: 18px 20px;
+  display: flex;
+  min-height: 8vh;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
 .navbar button {
-    background-color: #1c9a8a;   
-  color: white;             
-  padding: 8px 22px;        
-  border: none;               
-  border-radius: 20px;        
-  font-size: 16px;           
-  cursor: pointer;          
-  transition: background-color 0.3s ease; 
-}
-.btn-icono {
-  background: transparent;    /* sin fondo */
+  background-color: #24968b;
+  height: 35px;
   border: none;
+  border-radius: 17px;
+  padding: 6px 16px;
+  color: #e0f2f1;
+  font-weight: 600;
   cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: background 0.2s ease;
+  transition: background-color 0.25s ease;
+  font-size: 14px;
 }
 
-.btn-icono:hover {
-  background: rgba(0, 0, 0, 0.1); /* circulito gris al pasar */
+.navbar button:hover {
+  background-color: #084640;
 }
 
-.btn-icono img {
-  width: 17px;
-  height: 17px;
+.btn_icono, .btn_logout {
+  background-color: transparent;
+  padding: 3px;
 }
-.btn-logout {
-  background: transparent;    /* sin fondo */
-  border: none;
+
+.btn_icono img, .btn_logout img {
+  width: 25px;
+  height: 25px;
+  filter: sepia(5%) saturate(136%) hue-rotate(128deg) brightness(95%) contrast(89%);
+  /* Ajusta filtro para blanco/verde claro */
   cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: background 0.2s ease;
+  transition: filter 0.3s ease;
 }
 
-.btn-logout:hover {
-  background: rgba(0, 0, 0, 0.1); /* circulito gris al pasar */
+.btn_icono:hover img, .btn_logout:hover img {
+  filter: invert(57%) sepia(67%) saturate(695%) hue-rotate(127deg) brightness(106%) contrast(92%);
 }
-
-.btn-logout img {
-  width: 17px;
-  height: 17px;
-}
-
-
-

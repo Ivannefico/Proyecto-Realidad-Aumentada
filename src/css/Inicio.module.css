@@ -7,242 +7,154 @@
 
 
 /*navegador*/
-body {
-     background-color: #d4cac4;
+.body {
+     background-color: #24968b;
 }
 
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.4% 8%;
-}
-
-#mobile {
-    display: none;
-}
-
-#mobile i {
-    color: white;
-    align-items: center;
-}
-
-@media screen and (max-width:769px) {
-    #navbar {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        position: fixed;
-        top: 60px;
-        right: -300px;
-        width: 300px;
-        height: 100vh;
-        background: seagreen;
-        box-shadow: 0 40px 60px rgba(0, 0, 0, 0.1);
-        padding: 40px 0 0 10px;
-        transition: 0.3s ease-in-out;
-    }
-    #navbar.active {
-        right: 0px;
-    }
-    #navbar li {
-        margin-bottom: 25px;
-    }
-    #mobile {
-        display: block;
-    }
-    #mobile i {
-        font-size: 24px;
-        cursor: pointer;
-    }
-}
-
-.Logo {
-    color: white;
-    font-size: 1.5rem;
-    line-height: 2rem;
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
-}
-
-
-/*Historial Scaneos*/
+/* Historial escaneos */
 
 .Nav_historial {
-    background-color: #0a7c71;
-    padding: 2%;
-    border-radius: 1.500rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    display: flex;
+  margin: 20px 40px;
+  background-color: #0d2a29; /* fondo ligeramente más oscuro */
+  color: #c3f0ed;
+  padding: 16px;
+  border-radius: 6px;
+  border-left: 3px solid #1ba8a5;
     flex-direction: column;
     align-items: center;
-    min-height: 74%;
-    position: absolute;
+    min-height: 64%;
     top: 15%;
-    margin-left: 5%;
+    margin-left: 3%;
+    width: 28%;
+    height: 70vh;
 }
 
-@media (min-width: 768px) {
-    .Nav_historial {
-        width: 22%;
-        margin-left: 10%;
-    }
+.text p {
+  margin: 8px 0 0 0;
+  font-size: 16px;
+  color: #e0f2f1; /* texto color claro */
+  font-weight: 600;
 }
 
+.cajainicio {
+    display: flex;
+    background-color: #11403f;
+    padding: 1%;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    flex-direction:row;
+    min-width: 100vw;
+    min-height: 84vh;
+    margin-top: 1vh;
+    
+}
 .text_h2 {
-    margin-right: 8px;
-    color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .historial {
-    width: 100%;
-    flex-grow: 1px;
-    overflow-y: auto;
-    padding-right: 0.5rem;
+  border-top: 1px solid #17615e;
+  margin-top: 8px;
+  padding-top: 10px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .ul_historial {
-    margin-top: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .derme {
-    display: flex;
-    background-color: #10b981;
-    padding: 9%;
-    border-radius: 1.300rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    border-width: 1px;;
-    border-color: #34d399;
+  display: flex;
+  justify-content: space-between;
+  background-color: #17615e;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 14px;
+  color: #e0f2f1;
 }
 
 .p2 {
-    display: flex;
-    color: white;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+  flex: 1;
 }
 
 .p3 {
-    display: flex;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: #d1fae5;
-    font-family: 'Inter', sans-serif;
-    margin-top: 0.25rem;
+  flex: 2;
+  text-align: center;
 }
 
 .no_hay_element {
-    display: flex;
-    color: #a7f3d0;
-    text-align: center;
-    font-family: 'Inter', sans-serif;
-    padding-top: 2.5rem;
+  text-align: center;
+  margin-top: 12px;
+  font-style: italic;
+  color: #539a98;
 }
-
 
 /*Seccion camara*/
 
 .text {
-    display: flex;
-    background-color: #11433e;
-    padding: 1%;
-    border-radius: 2.5rem;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    flex-direction:column;
-    align-items: center;
-    min-height: 538px;
-    max-height: 538px;
-    margin-right: 0%;
-    position: relative;
-    top: 30%;
-    left: 6%;
-    
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+  background-color: #11403f; /* fondo verde oscuro */
 }
 
 .span {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* ya no queda centrado */
-    margin-left:25%; 
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-    transition-duration: 300ms;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transform: translateX(var(--tw-translate-x)) translateY(var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  background-color: #17615e; /* verde medio */
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 12px #1ba8a5;
+  transition: background-color 0.3s ease;
 }
 
-@media (min-width: 768px) {
-    .text {
-        width: 88%;
-        margin-right: 12%;
-        
-    }
-}
-
-.text_2scan {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left:25%; 
-    margin-top: 13%;
-    color: white;
-    font-size: 200%;
-    line-height: 90%;
-    margin-bottom: 2%;
-    font-family: 'Inter', sans-serif;
-}
-
-h1 {
-    display: flex;
-    color: white;
-    font-family: 'Inter', sans-serif;
-}
-
-.Color {
-    color: white;
-    text-decoration: none;
-    display: flex;
+.span:hover {
+  background-color: #1ba8a5; /* verde claro hover */
+  
 }
 
 .Buttons {
-  width: 280px;
-  height: 280px;
-  background-color: #0a7c71;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
   border-radius: 50%;
+  width: 180px;
+  height: 180px;
+}
+
+.Buttons div{
   display: flex;
-  align-items: center;
   justify-content: center;
-  color: white;
-  font-weight: bold;
-  margin-left: 70px; /* lo mueves a la derecha */
-  margin-top: 120px;
+  align-items: center;
 }
 
 .Buttons p{
     display: flex;
-    align-items: center;
-    margin-top: 50%;
-    margin-right: 40%;
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 150%;
+    font-size: 130%;
 }
 
-.Buttons img{
-    display: flex;
-    align-items: center;
-    margin-top: -15%;
-    margin-left: 80%
-
+.Buttons img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
-.Buttons:hover {
-    display: flex;
-    background-color: #1daca0;
-    transform: scale(1.05);
+.Color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-
