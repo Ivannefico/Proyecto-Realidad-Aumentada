@@ -21,7 +21,6 @@ const Navbar = ({ onAbrirContacto }) => {
 
       <button onClick={() => navigate("/home")}>Inicio</button>
 
-      {/* 👇 Ahora el botón llama a la función que viene por props */}
       <button onClick={onAbrirContacto}>Contacto</button>
 
       <button onClick={() => navigate("/error404")} className={Navbar_css.btn_icono}>

@@ -8,8 +8,12 @@ const Contacto = () => {
             <section>
                 <h3 className={contacto_css.subtitle}>Quienes somos:</h3>
                 <div>
-                    <p>Joaquin Carrasco y Ezequiel Salazar: Desarrolladores Backend, Ivan Moreno y Facundo Barros: Desarrolladores Frontend, Sofia Araya y Juan Ferreyra: Diseñadores</p>
-                    <p>Si tienes alguna pregunta, no dudes en contactarnos. Somos un equipo de profesionales listos para ayudarte.</p>
+                    <p>Joaquin Carrasco y Ezequiel Salazar: Desarrolladores Backend</p>
+                    <p>Ivan Moreno y Facundo Barros: Desarrolladores Frontend</p>
+                    <p>Sofia Araya y Juan Ferreyra: Diseñadores</p>
+                    <p>Fiorella Gazzola Grenier: Documentadora</p>
+                    <p>Si tienes alguna pregunta, no dudes en contactarnos.</p>
+                    <p>Somos un equipo de profesionales listos para ayudarte.</p>
                     <ul>
                         <h3 className={contacto_css.subtitle}>Nuestros datos de contacto:</h3>
                         <li>Email: <b>scanner.cat@gmail.com</b></li>

@@ -18,7 +18,6 @@ class MiAppRA extends Component {
   render() {
     return (
       <div className={incio_css.body}>
-        {/* 👇 Pasamos la función como prop */}
         <Navbar onAbrirContacto={this.abrirContacto} />
 
         <section className={incio_css.cajainicio}>
@@ -46,7 +45,6 @@ class MiAppRA extends Component {
           </section>
         </section>
 
-        {/* ----- MODAL DE CONTACTO ----- */}
         {this.state.mostrarContacto && (
           <div className={incio_css.modalOverlay} onClick={this.cerrarContacto}>
             <div className={incio_css.modalContenido} onClick={(e) => e.stopPropagation()}>

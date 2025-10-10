@@ -34,9 +34,10 @@ Grupo Proyecto Realidad Aumentada "Scanner Cat"
 
 	-Paleta de colores:
 		#D4CAC4
-		#73E2A7
-		#1C7C54
-		#1B512D
+		#c3f0ed
+		#24968b
+		#17615e
+		#11403f
 		
 	-Extra:
 		-Se eligieron los estilos porque nos parecio un diseño límpio, sin mucha molestia visual y colores tranquilos.
