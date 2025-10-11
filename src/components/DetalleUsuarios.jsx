@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import detalle_css from "../css/DetalleUsuarios.module.css";
-import lista_css from "../css/ListaUsuarios.module.css"; // 👈 reutilizamos estilos de carga
+import lista_css from "../css/ListaUsuarios.module.css";
 import Navbar from "./Navbar.jsx";
+import Contacto from "./Contacto";
 
 const DetalleUsuario = () => {
   const { id } = useParams();
@@ -13,8 +14,8 @@ const DetalleUsuario = () => {
   const [loading, setLoading] = useState(true);
   const [editando, setEditando] = useState(false);
   const [formData, setFormData] = useState({});
+  const [mostrarContacto, setMostrarContacto] = useState(false);
 
-  // Obtener usuario al cargar
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
@@ -37,7 +38,9 @@ const DetalleUsuario = () => {
     obtenerUsuario();
   }, [id]);
 
-  // Manejar inputs de edición
+  const abrirContacto = () => setMostrarContacto(true);
+  const cerrarContacto = () => setMostrarContacto(false);
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -45,7 +48,6 @@ const DetalleUsuario = () => {
     });
   };
 
-  // Guardar cambios en Firestore
   const handleGuardar = async () => {
     try {
       const ref = doc(db, "usuarios", id);
@@ -58,7 +60,6 @@ const DetalleUsuario = () => {
     }
   };
 
-  // Eliminar usuario
   const handleEliminar = async () => {
     const confirmar = window.confirm("¿Seguro que querés eliminar este usuario?");
     if (!confirmar) return;
@@ -72,11 +73,10 @@ const DetalleUsuario = () => {
     }
   };
 
-  // 🔹 MISMA pantalla de carga que la lista
   if (loading)
     return (
       <div className={lista_css.loadingScreen}>
-        <Navbar />
+        <Navbar onAbrirContacto={abrirContacto} />
         <div className={lista_css.loadingContent}>
           <div className={lista_css.spinner}></div>
           <p>Cargando usuario...</p>
@@ -84,11 +84,12 @@ const DetalleUsuario = () => {
       </div>
     );
 
-  if (!usuario) return <p className={detalle_css.error}>No se encontró el usuario</p>;
+  if (!usuario)
+    return <p className={detalle_css.error}>No se encontró el usuario</p>;
 
   return (
     <>
-      <Navbar />
+      <Navbar onAbrirContacto={abrirContacto} />
       <p className={detalle_css.espacio_p3}></p>
       <div className={detalle_css.container}>
         <div className={detalle_css.card}>
@@ -97,28 +98,41 @@ const DetalleUsuario = () => {
           {!editando ? (
             <>
               <div className={detalle_css.info}>
-                <p><strong>Correo:</strong> {usuario.correo}</p>
-                <p><strong>Rol:</strong> {usuario.rol}</p>
-                <p><strong>Teléfono:</strong> {usuario.telefono}</p>
-                <p><strong>Contraseña:</strong> {usuario.contrasena}</p>
+                <p>
+                  <strong>Correo:</strong> {usuario.correo}
+                </p>
+                <p>
+                  <strong>Rol:</strong> {usuario.rol}
+                </p>
+                <p>
+                  <strong>Teléfono:</strong> {usuario.telefono}
+                </p>
+                <p>
+                  <strong>Contraseña:</strong> {usuario.contrasena}
+                </p>
               </div>
 
               <div className={detalle_css.botonera}>
-                <button onClick={() => setEditando(true)} className={detalle_css.boton}>
+                <button
+                  onClick={() => setEditando(true)}
+                  className={detalle_css.boton}
+                >
                   Editar
                 </button>
-                <button onClick={handleEliminar} className={detalle_css.boton}>
+                <button
+                  onClick={handleEliminar}
+                  className={detalle_css.boton}
+                >
                   Eliminar
                 </button>
                 <Link to="/listausuario">
-                  <button className={detalle_css.boton}>Volver a la lista</button>
+                  <button className={detalle_css.boton}>Volver</button>
                 </Link>
               </div>
             </>
           ) : (
             <>
               <h3 className={detalle_css.subtitulo}>Editar usuario</h3>
-
               <div className={detalle_css.form}>
                 <h3 className={detalle_css.h3}>Usuario</h3>
                 <input
@@ -127,7 +141,6 @@ const DetalleUsuario = () => {
                   name="usuarios"
                   value={formData.usuarios || ""}
                   onChange={handleChange}
-                  placeholder="Nombre"
                 />
                 <h3 className={detalle_css.h3}>Correo</h3>
                 <input
@@ -136,7 +149,6 @@ const DetalleUsuario = () => {
                   name="correo"
                   value={formData.correo || ""}
                   onChange={handleChange}
-                  placeholder="Correo"
                 />
                 <h3 className={detalle_css.h3}>Teléfono</h3>
                 <input
@@ -145,7 +157,6 @@ const DetalleUsuario = () => {
                   name="telefono"
                   value={formData.telefono || ""}
                   onChange={handleChange}
-                  placeholder="Teléfono"
                 />
                 <h3 className={detalle_css.h3}>Rol</h3>
                 <input
@@ -154,7 +165,6 @@ const DetalleUsuario = () => {
                   name="rol"
                   value={formData.rol || ""}
                   onChange={handleChange}
-                  placeholder="Rol"
                 />
                 <h3 className={detalle_css.h3}>Contraseña</h3>
                 <input
@@ -163,15 +173,20 @@ const DetalleUsuario = () => {
                   name="contrasena"
                   value={formData.contrasena || ""}
                   onChange={handleChange}
-                  placeholder="Contraseña"
                 />
               </div>
 
               <div className={detalle_css.botonera}>
-                <button onClick={handleGuardar} className={detalle_css.boton}>
+                <button
+                  onClick={handleGuardar}
+                  className={detalle_css.boton}
+                >
                   Guardar cambios
                 </button>
-                <button onClick={() => setEditando(false)} className={detalle_css.boton}>
+                <button
+                  onClick={() => setEditando(false)}
+                  className={detalle_css.boton}
+                >
                   Cancelar
                 </button>
               </div>
@@ -179,6 +194,23 @@ const DetalleUsuario = () => {
           )}
         </div>
       </div>
+
+      {mostrarContacto && (
+        <div className={detalle_css.modalOverlay} onClick={cerrarContacto}>
+          <div
+            className={detalle_css.modalContenido}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className={detalle_css.cerrarModal}
+              onClick={cerrarContacto}
+            >
+              ✕
+            </button>
+            <Contacto />
+          </div>
+        </div>
+      )}
     </>
   );
 };
