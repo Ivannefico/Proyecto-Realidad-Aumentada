@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import detalle_css from "../css/DetalleUsuarios.module.css";
-import Navbar from './Navbar.jsx';
+import lista_css from "../css/ListaUsuarios.module.css"; // 👈 reutilizamos estilos de carga
+import Navbar from "./Navbar.jsx";
 
 const DetalleUsuario = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const DetalleUsuario = () => {
   const [editando, setEditando] = useState(false);
   const [formData, setFormData] = useState({});
 
-  //   Obtener usuario al cargar
+  // Obtener usuario al cargar
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
@@ -65,82 +66,120 @@ const DetalleUsuario = () => {
     try {
       await deleteDoc(doc(db, "usuarios", id));
       alert("Usuario eliminado ❌");
-      navigate("/listausuario"); // volver a la lista
+      navigate("/listausuario");
     } catch (error) {
       console.error("Error al eliminar:", error);
     }
   };
 
-  if (loading) return <p>Cargando...</p>;
-  if (!usuario) return <p>No se encontró el usuario</p>;
+  // 🔹 MISMA pantalla de carga que la lista
+  if (loading)
+    return (
+      <div className={lista_css.loadingScreen}>
+        <Navbar />
+        <div className={lista_css.loadingContent}>
+          <div className={lista_css.spinner}></div>
+          <p>Cargando usuario...</p>
+        </div>
+      </div>
+    );
+
+  if (!usuario) return <p className={detalle_css.error}>No se encontró el usuario</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Perfil de {usuario.usuarios}</h2>
+    <>
+      <Navbar />
+      <p className={detalle_css.espacio_p3}></p>
+      <div className={detalle_css.container}>
+        <div className={detalle_css.card}>
+          <h2 className={detalle_css.titulo}>Perfil de {usuario.usuarios}</h2>
 
-      {!editando ? (
-        <>
-          <p><strong>Correo:</strong> {usuario.correo}</p>
-          <p><strong>Rol:</strong> {usuario.rol}</p>
-          <p><strong>Teléfono:</strong> {usuario.telefono}</p>
-          <p><strong>Contraseña:</strong> {usuario.contrasena}</p>
+          {!editando ? (
+            <>
+              <div className={detalle_css.info}>
+                <p><strong>Correo:</strong> {usuario.correo}</p>
+                <p><strong>Rol:</strong> {usuario.rol}</p>
+                <p><strong>Teléfono:</strong> {usuario.telefono}</p>
+                <p><strong>Contraseña:</strong> {usuario.contrasena}</p>
+              </div>
 
-          <div style={{ marginTop: "20px" }}>
-            <button onClick={() => setEditando(true)} style={{ marginRight: "10px" }}>
-              ✏️ Editar
-            </button>
-            <button onClick={handleEliminar} style={{ marginRight: "10px" }}>
-              🗑️ Eliminar
-            </button>
-            <Link to="/listausuario">Volver a la lista</Link>
-          </div>
-        </>
-      ) : (
-        <>
-          <h3>Editar usuario</h3>
-          <input
-            type="text"
-            name="usuarios"
-            value={formData.usuarios || ""}
-            onChange={handleChange}
-            placeholder="Nombre"
-          /><br />
-          <input
-            type="text"
-            name="correo"
-            value={formData.correo || ""}
-            onChange={handleChange}
-            placeholder="Correo"
-          /><br />
-          <input
-            type="text"
-            name="telefono"
-            value={formData.telefono || ""}
-            onChange={handleChange}
-            placeholder="Teléfono"
-          /><br />
-          <input
-            type="text"
-            name="rol"
-            value={formData.rol || ""}
-            onChange={handleChange}
-            placeholder="Rol"
-          /><br />
-          <input
-            type="text"
-            name="contrasena"
-            value={formData.contrasena || ""}
-            onChange={handleChange}
-            placeholder="Contraseña"
-          /><br /><br />
+              <div className={detalle_css.botonera}>
+                <button onClick={() => setEditando(true)} className={detalle_css.boton}>
+                  Editar
+                </button>
+                <button onClick={handleEliminar} className={detalle_css.boton}>
+                  Eliminar
+                </button>
+                <Link to="/listausuario">
+                  <button className={detalle_css.boton}>Volver a la lista</button>
+                </Link>
+              </div>
+            </>
+          ) : (
+            <>
+              <h3 className={detalle_css.subtitulo}>Editar usuario</h3>
 
-          <button onClick={handleGuardar} style={{ marginRight: "10px" }}>
-            💾 Guardar cambios
-          </button>
-          <button onClick={() => setEditando(false)}>Cancelar</button>
-        </>
-      )}
-    </div>
+              <div className={detalle_css.form}>
+                <h3 className={detalle_css.h3}>Usuario</h3>
+                <input
+                  className={detalle_css.input}
+                  type="text"
+                  name="usuarios"
+                  value={formData.usuarios || ""}
+                  onChange={handleChange}
+                  placeholder="Nombre"
+                />
+                <h3 className={detalle_css.h3}>Correo</h3>
+                <input
+                  className={detalle_css.input}
+                  type="text"
+                  name="correo"
+                  value={formData.correo || ""}
+                  onChange={handleChange}
+                  placeholder="Correo"
+                />
+                <h3 className={detalle_css.h3}>Teléfono</h3>
+                <input
+                  className={detalle_css.input}
+                  type="text"
+                  name="telefono"
+                  value={formData.telefono || ""}
+                  onChange={handleChange}
+                  placeholder="Teléfono"
+                />
+                <h3 className={detalle_css.h3}>Rol</h3>
+                <input
+                  className={detalle_css.input}
+                  type="text"
+                  name="rol"
+                  value={formData.rol || ""}
+                  onChange={handleChange}
+                  placeholder="Rol"
+                />
+                <h3 className={detalle_css.h3}>Contraseña</h3>
+                <input
+                  className={detalle_css.input}
+                  type="text"
+                  name="contrasena"
+                  value={formData.contrasena || ""}
+                  onChange={handleChange}
+                  placeholder="Contraseña"
+                />
+              </div>
+
+              <div className={detalle_css.botonera}>
+                <button onClick={handleGuardar} className={detalle_css.boton}>
+                  Guardar cambios
+                </button>
+                <button onClick={() => setEditando(false)} className={detalle_css.boton}>
+                  Cancelar
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
