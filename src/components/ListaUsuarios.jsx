@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from "../firebase/firebase";
+import lista_css from "../css/ListaUsuarios.module.css";
+import Navbar from "./Navbar.jsx";
 
 const ListaUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -26,32 +28,44 @@ const ListaUsuarios = () => {
     obtenerUsuarios();
   }, []);
 
-  if (loading) return <p>Cargando usuarios...</p>;
+if (loading)
+  return (
+ 
+    <div className={lista_css.loadingScreen}>
+      <Navbar />
+      <div className={lista_css.loadingContent}>
+        <div className={lista_css.spinner}></div>
+        <p>Cargando usuarios...</p>
+      </div>
+    </div>
+  );
+
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Lista de Usuarios</h2>
-      {usuarios.length === 0 ? (
-        <p>No hay usuarios registrados.</p>
-      ) : (
-        usuarios.map(usuario => (
-          <div
-            key={usuario.id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: "10px",
-              margin: "10px 0",
-              padding: "10px",
-              maxWidth: "400px"
-            }}
-          >
-            <h3>{usuario.usuarios}</h3>
-            <p><strong>Correo:</strong> {usuario.correo}</p>
-            <Link to={`/usuario/${usuario.id}`}>Ver detalle</Link>
-          </div>
-        ))
-      )}
-    </div>
+    <>
+      <Navbar />
+          <p className={lista_css.espacio_p3}></p>
+      <div className={lista_css.contenedorPrincipal}>
+        <div className={lista_css.contenedorLista}>
+
+          {usuarios.length === 0 ? (
+            <p>No hay usuarios registrados.</p>
+          ) : (
+            <div className={lista_css.gridUsuarios}>
+              {usuarios.map(usuario => (
+                <div key={usuario.id} className={lista_css.tarjetaUsuario}>
+                  <h3>{usuario.usuarios}</h3>
+                  <p><strong>Correo:</strong> {usuario.correo}</p>
+                  <Link to={`/usuario/${usuario.id}`} className={lista_css.botonDetalle}>
+                    Ver detalle
+                  </Link>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 

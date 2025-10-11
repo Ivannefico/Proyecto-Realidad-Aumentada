@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import detalle_css from "../css/DetalleUsuarios.module.css";
+import Navbar from './Navbar.jsx';
 
 const DetalleUsuario = () => {
   const { id } = useParams();

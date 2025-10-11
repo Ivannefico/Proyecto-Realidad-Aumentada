@@ -5,20 +5,26 @@
    
 }
 
-html {
-  background-color: #11403f;
+.inicioContainer {
+  min-height: 100vh;     
+  background-color: #11403f; 
+  display: flex;
+  flex-direction: column;
 }
 
-/*navegador*/
-.body {
-     background-color: #24968b;
+.espacio_p3 {
+  background-color: #24968b;
+  height: 4.4px; 
+   background-image: linear-gradient(  
+    to top,
+    #17615e, 
+    #24968b 
+  );
 }
-
-/* Historial escaneos */
 
 .Nav_historial {
   margin: 20px 40px;
-  background-color: #0d2a29; /* fondo ligeramente más oscuro */
+  background-color: #0d2a29; 
   color: #c3f0ed;
   padding: 16px;
   border-radius: 6px;
@@ -106,11 +112,11 @@ html {
   height: 70vh;
   width: 100%;
   
-  background-color: #11403f; /* fondo verde oscuro */
+  background-color: #11403f; 
 }
 
 .span {
-  background-color: #17615e; /* verde medio */
+  background-color: #17615e; 
   border-radius: 50%;
   width: 180px;
   height: 180px;

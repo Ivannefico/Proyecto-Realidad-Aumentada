@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar_css from "../css/Navbar.module.css";
 import tuercaIcon from "../img/tuerca.png";
 import logoutIcon from "../img/logout.png";
-import logoblanco from "../img/logoBlanco.png";
+import logo from "../img/logo.png";
 
 const Navbar = ({ onAbrirContacto }) => {
   const navigate = useNavigate();
@@ -16,18 +16,18 @@ const Navbar = ({ onAbrirContacto }) => {
   return (
     <nav className={Navbar_css.navbar}>
       <div className={Navbar_css.logo}>
-        <img src={logoblanco} alt="Logo" />
+        <img src={logo} alt="Logo" />
       </div>
 
       <button onClick={() => navigate("/home")}>Inicio</button>
 
       <button onClick={onAbrirContacto}>Contacto</button>
 
+      <button onClick={() => navigate("/listausuario")}> Lista de Usuarios </button>
+
       <button onClick={() => navigate("/error404")} className={Navbar_css.btn_icono}>
         <img src={tuercaIcon} alt="Configuración" />
       </button>
-
-      <button onClick={() => navigate("/listausuario")}> Lista de Usuarios </button>
 
       <button onClick={handleLogout} className={Navbar_css.btn_logout}>
         <img src={logoutIcon} alt="Logout" />
