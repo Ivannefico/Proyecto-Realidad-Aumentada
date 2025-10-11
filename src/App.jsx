@@ -14,9 +14,11 @@ function App() {
         <Route path="/" element={<Login />} />
          <Route path="/registro" element={<Registro />} />
 
+        <Route element={<ProtectedRoutes />}>
               <Route path="/home" element={<Inicio />} />
               <Route path="/contacto" element={<Contacto />} />
               <Route path="/error404" element={<NotFound />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

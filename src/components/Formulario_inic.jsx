@@ -20,37 +20,49 @@ const Login = () => {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true)
-    
-    try{
-      const q = query(
-        collection(db, "usuarios"),
-        where("correo", "==", login.correo),
-        where("contrasena", "==", login.contrasena)
-      );
+  e.preventDefault();
+  setLoading(true);
+  console.log("🔹 handleLogin iniciado");
+  console.log("Datos del login:", login);
 
-      const snap = await getDocs(q);
+  try {
+    const q = query(
+      collection(db, "usuarios"),
+      where("correo", "==", login.correo),
+      where("contrasena", "==", login.contrasena)
+    );
 
-      if (snap.empty){
-        alert("Correo o contraseña incorrectos");
-        return;
-      }
+    console.log("🔹 Ejecutando query en Firestore...");
+    const snap = await getDocs(q);
+    console.log("📄 Cantidad de documentos encontrados:", snap.size);
 
-      const usuario = snap.docs[0].data();
-
-      //guardamos en localStorage
-      localStorage.setItem("usuario", JSON.stringify(usuario));
-
-      alert(`Bienvenido ${usuario.correo}`);
-      navigate("/home");//redirige al home
-    } catch (error){
-      console.error(error);
-      alert("Ocurrio un error al iniciar sesión");
-    }finally{
+    if (snap.empty) {
+      alert("Correo o contraseña incorrectos");
+      console.log("❌ No se encontró ningún usuario que coincida");
       setLoading(false);
+      return;
     }
-  };
+
+    const usuario = snap.docs[0].data();
+    console.log("✅ Usuario encontrado:", usuario);
+
+    localStorage.setItem("usuario", JSON.stringify(usuario));
+    console.log("💾 Usuario guardado en localStorage");
+
+    alert(`Bienvenido ${usuario.correo}`);
+
+    console.log("➡️ Navegando hacia /home ...");
+    navigate("/home");
+    console.log("✅ navigate('/home') ejecutado");
+
+  } catch (error) {
+    console.error("❗ Error en handleLogin:", error);
+    alert("Ocurrió un error al iniciar sesión");
+  } finally {
+    setLoading(false);
+    console.log("🔚 handleLogin finalizado (loading = false)");
+  }
+};
 
   return (
     <div className="form-container ">
