@@ -27,6 +27,8 @@ const Navbar = ({ onAbrirContacto }) => {
         <img src={tuercaIcon} alt="Configuración" />
       </button>
 
+      <button onClick={() => navigate("/listausuario")}> Lista de Usuarios </button>
+
       <button onClick={handleLogout} className={Navbar_css.btn_logout}>
         <img src={logoutIcon} alt="Logout" />
       </button>
