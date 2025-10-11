@@ -6,6 +6,7 @@ import Inicio from "./components/Inicio.jsx";
 import Contacto from "./components/Contacto.jsx"
 import NotFound from "./components/404.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
+import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
          <Route path="/registro" element={<Registro />} />
+         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
 
         <Route element={<ProtectedRoutes />}>
               <Route path="/home" element={<Inicio />} />
