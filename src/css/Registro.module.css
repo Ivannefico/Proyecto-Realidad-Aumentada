@@ -20,7 +20,7 @@ body {
 }
 
 /* Panel izquierdo con paisaje */
-.left-panel {
+.left_panel {
  background-image: url(../../public/logoBlanco.png);
   border-radius: 20px 0 0 20px;
   margin: 20px;
@@ -36,7 +36,7 @@ body {
 
 
 /* Panel derecho con formulario */
-.right-panel {
+.right_panel {
   margin: 20px;
   padding: 40px;
   border-radius: 0 20px 20px 0;
@@ -48,7 +48,7 @@ body {
 }
 
 /* Título principal */
-.right-panel h2 {
+.right_panel h2 {
   font-size: 22px;
   margin-bottom: 10px;
   text-align: center;
@@ -56,14 +56,14 @@ body {
 }
 
 /* Texto de login */
-.login-text {
+.login_text {
   text-align: center;
   margin-bottom: 20px;
   font-size: 14px;
   color: #fff;
 }
 
-.login-btn {
+.login_btn {
   margin-left: 10px;
   background: #4aa69c;
   color: white;
@@ -73,7 +73,7 @@ body {
   cursor: pointer;
 }
 
-.login-btn:hover {
+.login_btn:hover {
   opacity: 0.8;
 }
 
@@ -87,12 +87,12 @@ body {
 }
 
 /* Input grupo */
-.input-group {
+.input_group {
   position: relative;
   width: 100%;
 }
 
-.input-group input {
+.input_group input {
   width: 100%;
   padding: 12px 40px 12px 15px;
   border-radius: 20px;
@@ -101,7 +101,7 @@ body {
   font-size: 14px;
 }
 
-.input-group .icon {
+.input_group .icon {
   position: absolute;
   right: 15px;
   top: 50%;
@@ -109,14 +109,14 @@ body {
 }
 
 /* Contraseña ocupa 2 columnas */
-.input-group:nth-child(3),
-.input-group:nth-child(4),
-.input-group:nth-child(5) {
+.input_group:nth-child(3),
+.input_group:nth-child(4),
+.input_group:nth-child(5) {
   grid-column: span 2;
 }
 
 /* Botón principal */
-.register-btn {
+.register_btn {
   grid-column: span 2;
   width: 60%;
   margin: 0 auto;
@@ -130,7 +130,7 @@ body {
   transition: 0.3s;
 }
 
-.register-btn:hover {
+.register_btn:hover {
   background: #eee;
 }
 

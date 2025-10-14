@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../css/Formulario.module.css";
+import formuinicio_css from "../css/Formulario.module.css";
 import { collection, getDocs, query, where} from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { useUsuarios } from '../hooks/useUsuarios';
@@ -65,16 +65,16 @@ const Login = () => {
 };
 
   return (
-    <div className="form-container ">
+    <div className={formuinicio_css.form_container}>
 
-      <form onSubmit={handleLogin} className="glass-form">
+      <form onSubmit={handleLogin} className={formuinicio_css.glass_form}>
 
-        <div className="title-form">
+        <div className= {formuinicio_css.title_form}>
           <h2>Iniciar Sesión</h2>
           <p>¿No tienes una cuenta? <button type="button" onClick={() => navigate("/registro")}>Registrate</button></p>
         </div>
         
-        <div className="form-group ">
+        <div className= {formuinicio_css.form_group} >
           <input
             name="correo"
             placeholder="Correo"
@@ -84,7 +84,7 @@ const Login = () => {
           />
         </div>
 
-        <div className="form-group ">
+        <div className={formuinicio_css.form_group}>
           <input
             name="contrasena"
             placeholder="Contraseña"
@@ -102,7 +102,7 @@ const Login = () => {
         </button>
         
 
-        <div className="img"></div>
+        <div className={formuinicio_css.img}></div>
 
       </form>
     </div>

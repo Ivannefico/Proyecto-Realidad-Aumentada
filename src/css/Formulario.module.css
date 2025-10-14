@@ -13,7 +13,7 @@ body {
     overflow-x: hidden;
 }
 
-.form-container {
+.form_container {
     height: max-min(100vh, 100%);
     width: max-min(100vw, 100%);
 
@@ -26,7 +26,7 @@ body {
 }
 
 
-.glass-form {
+.glass_form {
     border-radius: 20px;
     box-sizing: border-box;
     
@@ -54,7 +54,7 @@ body {
     transform: translateX(-120%);
 }
 
-.title-form {
+.title_form {
     text-align: center;
 
     margin-bottom: 24px;
@@ -62,32 +62,32 @@ body {
 
     color: #ffffff;
 }
-.title-form h2 {
+.title_form h2 {
     font-size: 24px;
     font-weight: 600;
     font-family: 'Rubik', sans-serif;
 }
-.back .title-form{
+.back .title_form{
     margin-left: -45%;
 }
 
-.form-group {
+.form_group {
 
     width: 70%;
 
     transition: 0.3s ease;
 }
-.form-group:hover {
+.form_group:hover {
     transform: translateY(-4px);
 }
 
-.form-group label {
+.form_group label {
     font-size: 14px;
 
     color: #f1f1f1;
 }
 
-.form-group input {
+.form_group input {
     padding: 10px;
     width: 100%;
 
@@ -100,15 +100,15 @@ body {
     font-size: 16px;
 }
 
-.form-group input::placeholder {
+.form_group input::placeholder {
     color: #e0e0e0;
 }
 
-.form-group input:focus {
+.form_group input:focus {
     background: rgba(255, 255, 255, 0.3);
 }
 
-.glass-form button {
+.glass_form button {
     width: 100%;
     padding: 12px;
 
@@ -128,12 +128,12 @@ body {
     transition:  0.5s linear;
 }
 
-.glass-form button:hover {
+.glass_form button:hover {
     background: rgba(255, 255, 255, 0.5);
     scale: 1.05;
 }
 
-.back .form-group {
+.back .form_group {
     width: 20%;
     gap: 50px;
 
@@ -195,7 +195,7 @@ body {
         
         transition: 0.8s ease;
     }
-    .title-form button:hover {
+    .title_form button:hover {
         text-decoration: underline;
         color: #000000;
         background-color: rgba(255, 255, 255, 0.823);
@@ -213,7 +213,7 @@ body {
             min-height: 80vh;
         }
         
-        .form-group {
+        .form_group {
             width: 100%;
         }
 
@@ -226,20 +226,20 @@ body {
             margin-left: 25%;
             width: 50%;
         }
-        .back .title-form button{
+        .back .title_form button{
             width: 50%;
             margin-left: 0;
             padding: 10px;
         }   
         
-        .title-form {
+        .title_form {
             margin-left: 0;
             margin-top: 0;
             margin-bottom: 20px;
             text-align: center;
         }
 
-        .back .title-form {
+        .back .title_form {
             margin-left: 5%;
         }
 
@@ -251,14 +251,14 @@ body {
             left: -25%;
         }
 
-        .back .form-group{
+        .back .form_group{
             margin-left: 15%;
             width: 60%;
 
             margin-bottom: 10%;
         }
 
-        .form-container {
+        .form_container {
             padding: 20px;
         }
 

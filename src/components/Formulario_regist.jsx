@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "../css/Registro.module.css";
+import formuregis_css from "../css/Registro.module.css";
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import { useUsuarios } from '../hooks/useUsuarios';
@@ -76,28 +76,28 @@ const Registro = () => {
   };
 
   return (
-    <div className="container">
+    <div className={formuregis_css.container}>
       {/* Panel izquierdo con paisaje y logo */}
-      <div className="left-panel">
-        <div className="logo">Logo</div>
+      <div className={formuregis_css.left_panel}>
+        <div className={formuregis_css.logo}>Logo</div>
       </div>
 
       {/* Panel derecho con formulario */}
-      <div className="right-panel">
+      <div className={formuregis_css.right_panel}>
         <h2>
           Te damos la bienvenida a <br /> “nombre de la pagina”
         </h2>
 
-        <p className="login-text">
+        <p className={formuregis_css.login_text}>
           ¿Ya tengo una cuenta?
-          <button className="login-btn">Iniciar Sesión</button>
+          <button className={formuregis_css.login_btn}>Iniciar Sesión</button>
         </p>
 
         {/* se muestra el error si existe */}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <form onSubmit={handleSignIn} className="form">
-          <div className="input-group">
+        <form onSubmit={handleSignIn} className={formuregis_css.form}>
+          <div className={formuregis_css.input_group}>
             <input
               type="text"
               name="usuarios"
@@ -106,10 +106,10 @@ const Registro = () => {
               onChange={handleChange}
               required
             />
-            <span className="icon">👤</span>
+            <span className={formuregis_css.icon}>👤</span>
           </div>
 
-          <div className="input-group">
+          <div className={formuregis_css.input_group}>
             <input
               type="email"
               name="correo"
@@ -118,10 +118,10 @@ const Registro = () => {
               onChange={handleChange}
               required
             />
-            <span className="icon">✉️</span>
+            <span className={formuregis_css.icon}>✉️</span>
           </div>
 
-          <div className="input-group">
+          <div className={formuregis_css.input_group}>
             <input
               type="tel"
               name="telefono"
@@ -130,10 +130,10 @@ const Registro = () => {
               onChange={handleChange}
               required
             />
-            <span className="icon">📞</span>
+            <span className={formuregis_css.icon}>📞</span>
           </div>
 
-          <div className="input-group">
+          <div className={formuregis_css.input_group}>
             <input
               type="password"
               name="contrasena"
@@ -142,10 +142,10 @@ const Registro = () => {
               onChange={handleChange}
               required
             />
-            <span className="icon">👁</span>
+            <span className={formuregis_css.icon}>👁</span>
           </div>
 
-          <div className="input-group">
+          <div className={formuregis_css.input_group}>
             <input
               type="password"
               name="confirmarContrasena"
@@ -154,14 +154,14 @@ const Registro = () => {
               onChange={handleChange}
               required
             />
-            <span className="icon">🔒</span>
+            <span className={formuregis_css.icon}>🔒</span>
           </div>
 
-          <button type="submit" className="register-btn" disabled={loading}>
+          <button type="submit" className={formuregis_css.register_btn} disabled={loading}>
             {loading ? "Registrando..." : "Regístrate ahora"}
           </button>
 
-          <p className="policy">
+          <p className={formuregis_css.policy}>
             Información de servicios, política y avisos
           </p>
         </form>
