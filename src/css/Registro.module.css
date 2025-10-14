@@ -1,144 +1,197 @@
-/* Importamos fuentes */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+/* Registro.module.css */
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Montserrat', sans-serif;
-  background: #d4cac4; /* Color de fondo de la maqueta */
-  overflow-x: hidden;
-}
-
-@media (max-width: 1200px){ }
-
-/* Contenedor principal en dos columnas */
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columnas iguales */
-  height: 100vh;
-  width: 100vw;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
 }
 
-/* Panel izquierdo con paisaje */
+/* PANEL IZQUIERDO */
 .left_panel {
- background-image: url(../../public/logoBlanco.png);
-  border-radius: 20px 0 0 20px;
-  margin: 20px;
-  position: relative;
-  display: flex;
-  background-size: cover;
-  background-position: center;
-  opacity: 1;
-  overflow: hidden;
+    position: relative;
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
-/* Logo en la nube */
+.background_image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75);
+    z-index: 0;
+}
 
-
-/* Panel derecho con formulario */
+/* PANEL DERECHO */
 .right_panel {
-  margin: 20px;
-  padding: 40px;
-  border-radius: 0 20px 20px 0;
-  background: #d4cac4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    align-items: center;
+    padding: 4rem 4rem 3rem 4rem; 
+    overflow-y: auto; 
 }
 
-/* Título principal */
 .right_panel h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  text-align: center;
-  color: #000;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    margin-bottom: 0.5rem;
 }
 
-/* Texto de login */
 .login_text {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 14px;
-  color: #fff;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem; 
+    color: #555;
 }
 
 .login_btn {
-  margin-left: 10px;
-  background: #4aa69c;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 5px 12px;
-  cursor: pointer;
+    background: none;
+    border: none;
+    color: #0077ff;
+    font-weight: 600;
+    margin-left: 0.4rem;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .login_btn:hover {
-  opacity: 0.8;
+    color: #005dcc;
+    text-decoration: underline;
 }
 
-/* Formulario */
+/* FORMULARIO */
 .form {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columnas como en el diseño */
-  gap: 15px 20px;
-  width: 100%;
-  max-width: 450px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    margin: 0; 
 }
 
-/* Input grupo */
 .input_group {
-  position: relative;
-  width: 100%;
+    position: relative;
 }
 
 .input_group input {
-  width: 100%;
-  padding: 12px 40px 12px 15px;
-  border-radius: 20px;
-  border: 1px solid #000;
-  outline: none;
-  font-size: 14px;
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 2.5rem;
+    border: 1.8px solid #ccc;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border 0.3s ease;
+    background-color: #fff;
+    color: #000;
 }
 
-.input_group .icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
+.input_group input:focus {
+    border-color: #0077ff;
+    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
 }
 
-/* Contraseña ocupa 2 columnas */
-.input_group:nth-child(3),
-.input_group:nth-child(4),
-.input_group:nth-child(5) {
-  grid-column: span 2;
+.input_group input::placeholder {
+    color: #999; 
 }
 
-/* Botón principal */
+/* Iconos de Usuario, Email, Teléfono */
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #999;
+}
+
+/* Iconos de Contraseña (Ojo/Candado) */
+.password_toggle {
+    position: absolute;
+    top: 50%;
+    left: 10px; 
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #999;
+    cursor: pointer; 
+    transition: color 0.2s;
+}
+
+.password_toggle:hover {
+    color: #555;
+}
+
 .register_btn {
-  grid-column: span 2;
-  width: 60%;
-  margin: 0 auto;
-  padding: 12px;
-  border-radius: 30px;
-  border: 1px solid #000;
-  background: white;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+    background-color: #0077ff;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 .register_btn:hover {
-  background: #eee;
+    background-color: #005dcc;
 }
 
-/* Texto de políticas */
 .policy {
-  grid-column: span 2;
-  text-align: center;
-  margin-top: 15px;
-  font-size: 12px;
-  color: #333;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: #666;
+    text-align: center;
 }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left_panel {
+        width: 100%;
+        height: 35vh;
+        align-items: center; 
+    }
+
+    .right_panel {
+        width: 100%;
+        height: auto;
+        padding-top: 3rem; 
+        padding-bottom: 2rem;
+    }
+}
+
+.password_toggle {
+    position: absolute;
+    top: 50%;
+    left: 10px; 
+    transform: translateY(-50%);
+    font-size: 1.2rem; 
+    color: #999;
+    cursor: pointer; 
+    transition: color 0.2s;
+    
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.password_toggle img {
+    width: 24px; 
+    height: 24px;
+    object-fit: contain; 
+}
+
