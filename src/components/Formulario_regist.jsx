@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // 🔑 Importación de Link y useNavigate
 import formuregis_css from "../css/Registro.module.css";
 import { useUsuarios } from "../hooks/useUsuarios";
 import logoNegro from "../img/logoNegro.png";
@@ -34,6 +34,10 @@ const Registro = () => {
 
     const handleLoginRedirect = () => {
         navigate("/"); 
+    };
+
+    const handlePrivacyPolicy = () => {
+        navigate("/privacypolicy"); 
     };
     
     const handleSignIn = async (e) => {
@@ -193,9 +197,13 @@ const Registro = () => {
                         {loading ? "Registrando..." : "Regístrate ahora"}
                     </button>
 
-                    <p className={formuregis_css.policy}>
+                    <button 
+                        className={formuregis_css.policy}
+                        onClick={handlePrivacyPolicy} 
+                    >
                         Información de servicios, política y avisos
-                    </p>
+                    </button>
+                    
                 </form>
             </div>
         </div>

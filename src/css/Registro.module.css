@@ -78,6 +78,7 @@
     flex-direction: column;
     gap: 1.1rem;
     margin: 0; 
+    right: 16%;
 }
 
 .input_group {
@@ -148,10 +149,18 @@
 }
 
 .policy {
+  background: none;
     margin-top: 1rem;
     font-size: 0.8rem;
     color: #666;
     text-align: center;
+}
+
+.policy:hover {
+    text-decoration: underline;
+    color: #333;
+    cursor: pointer;
+    background: none;
 }
 
 /* RESPONSIVE */

@@ -15,6 +15,9 @@ justify-content: center;
 align-items: flex-start;
 }
 
+p, h2, li{
+    color:black;
+}
 .card {
 width: 100%;
 max-width: 900px;
