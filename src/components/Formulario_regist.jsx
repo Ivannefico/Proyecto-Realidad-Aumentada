@@ -96,6 +96,7 @@ const Registro = () => {
 
             {/* PANEL DERECHO */}
             <div className={formuregis_css.right_panel}>
+              <div className={formuregis_css.text_container}>
                 <h2>
                     Te damos la bienvenida a <br /> “nombre de la página”
                 </h2>
@@ -109,6 +110,7 @@ const Registro = () => {
                         Iniciar Sesión
                     </button>
                 </p>
+                </div>
 
                 {error && <p style={{ color: "red" }}>{error}</p>}
 

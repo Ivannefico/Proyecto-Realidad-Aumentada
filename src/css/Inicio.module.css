@@ -57,6 +57,7 @@
     
 }
 .text_h2 {
+  color:#a8eeed;
   font-weight: bold;
   margin-bottom: 10px;
   font-size: 20px;
@@ -92,6 +93,7 @@
 }
 
 .p3 {
+  color:#a8eeed;
   flex: 2;
   text-align: center;
 }

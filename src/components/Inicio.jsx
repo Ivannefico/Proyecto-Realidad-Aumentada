@@ -35,7 +35,7 @@ const MiAppRA = () => {
         <section className={inicio_css.text}>
           <div className={inicio_css.span}>
             <button
-              onClick={() => navigate("/error404")}
+              onClick={() => navigate("/camara")}
               className={inicio_css.Buttons}
             >
               <img src={cameraIcon} alt="camera" />

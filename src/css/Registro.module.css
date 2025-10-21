@@ -6,6 +6,7 @@
     width: 100%;
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
+    flex-wrap: nowrap;
 }
 
 /* PANEL IZQUIERDO */
@@ -17,6 +18,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    min-height: 250px;
 }
 
 .background_image {
@@ -37,7 +39,8 @@
     flex-direction: column;
     justify-content: flex-start; 
     align-items: center;
-    padding: 4rem 4rem 3rem 4rem; 
+    text-align: center;
+    padding: 1rem 0rem 2rem 4rem; 
     overflow-y: auto; 
 }
 
@@ -46,13 +49,23 @@
     font-weight: 600;
     color: #333;
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0rem; /* más espacio con el form */
+    line-height: 2rem;
 }
 
 .login_text {
     font-size: 0.95rem;
     margin-bottom: 1.5rem; 
     color: #555;
+
+}
+
+.text_container {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
 }
 
 .login_btn {
@@ -78,7 +91,6 @@
     flex-direction: column;
     gap: 1.1rem;
     margin: 0; 
-    right: 16%;
 }
 
 .input_group {
@@ -122,14 +134,23 @@
     top: 50%;
     left: 10px; 
     transform: translateY(-50%);
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
     color: #999;
     cursor: pointer; 
     transition: color 0.2s;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
 }
 
 .password_toggle:hover {
     color: #555;
+}
+
+.password_toggle img {
+    width: 24px; 
+    height: 24px;
+    object-fit: contain; 
 }
 
 .register_btn {
@@ -163,44 +184,82 @@
     background: none;
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
+/* --- RESPONSIVE --- */
+
+/* PANTALLAS MEDIANAS (tablets / laptops pequeñas) */
+@media (max-width: 1024px) {
     .container {
         flex-direction: column;
+        height: auto;
     }
 
     .left_panel {
         width: 100%;
         height: 35vh;
-        align-items: center; 
     }
 
     .right_panel {
         width: 100%;
         height: auto;
-        padding-top: 3rem; 
-        padding-bottom: 2rem;
+        padding: 3rem 2rem;
+    }
+
+    .form {
+        max-width: 450px;
     }
 }
 
-.password_toggle {
-    position: absolute;
-    top: 50%;
-    left: 10px; 
-    transform: translateY(-50%);
-    font-size: 1.2rem; 
-    color: #999;
-    cursor: pointer; 
-    transition: color 0.2s;
-    
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
+/* CELULARES GRANDES */
+@media (max-width: 768px) {
+    .left_panel {
+        height: 30vh;
+    }
+
+    .right_panel {
+        padding: 2rem 1.5rem;
+    }
+
+    .form {
+        max-width: 90%;
+    }
+
+    .right_panel h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
+    }
 }
 
-.password_toggle img {
-    width: 24px; 
-    height: 24px;
-    object-fit: contain; 
-}
+/* CELULARES PEQUEÑOS */
+@media (max-width: 480px) {
+    .left_panel {
+        height: 25vh;
+    }
 
+    .right_panel {
+        padding: 1.5rem 1rem;
+        justify-content: flex-start; /* asegura que empiece arriba */
+    }
+
+    .right_panel h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .login_text {
+        font-size: 0.85rem;
+    }
+
+    .form {
+        max-width: 95%;
+        gap: 0.9rem;
+    }
+
+    .register_btn {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .policy {
+        font-size: 0.75rem;
+    }
+}
