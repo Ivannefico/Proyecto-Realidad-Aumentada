@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import detalle_css from "../css/DetalleUsuarios.module.css";
 import lista_css from "../css/ListaUsuarios.module.css";
@@ -25,8 +25,6 @@ const DetalleUsuario = () => {
         if (snap.exists()) {
           setUsuario(snap.data());
           setFormData(snap.data());
-        } else {
-          console.log("No existe ese usuario");
         }
       } catch (error) {
         console.error("Error al obtener usuario:", error);
@@ -54,22 +52,18 @@ const DetalleUsuario = () => {
       await updateDoc(ref, formData);
       setUsuario(formData);
       setEditando(false);
-      alert("Usuario actualizado correctamente ✅");
     } catch (error) {
       console.error("Error al actualizar:", error);
     }
   };
 
-  const handleEliminar = async () => {
-    const confirmar = window.confirm("¿Seguro que querés eliminar este usuario?");
-    if (!confirmar) return;
-
+  const toggleActivo = async () => {
     try {
-      await deleteDoc(doc(db, "usuarios", id));
-      alert("Usuario eliminado ❌");
-      navigate("/listausuario");
+      const ref = doc(db, "usuarios", id);
+      await updateDoc(ref, { activo: usuario.activo === false ? true : false });
+      setUsuario({ ...usuario, activo: usuario.activo === false ? true : false });
     } catch (error) {
-      console.error("Error al eliminar:", error);
+      console.error("Error al cambiar estado del usuario:", error);
     }
   };
 
@@ -110,6 +104,10 @@ const DetalleUsuario = () => {
                 <p>
                   <strong>Contraseña:</strong> {usuario.contrasena}
                 </p>
+                <p>
+                  <strong>Estado:</strong>{" "}
+                  {usuario.activo === false ? "Deshabilitado" : "Activo"}
+                </p>
               </div>
 
               <div className={detalle_css.botonera}>
@@ -119,12 +117,11 @@ const DetalleUsuario = () => {
                 >
                   Editar
                 </button>
-                <button
-                  onClick={handleEliminar}
-                  className={detalle_css.boton}
-                >
-                  Eliminar
+
+                <button onClick={toggleActivo} className={detalle_css.boton}>
+                  {usuario.activo === false ? "Habilitar" : "Deshabilitar"}
                 </button>
+
                 <Link to="/listausuario">
                   <button className={detalle_css.boton}>Volver</button>
                 </Link>
@@ -177,10 +174,7 @@ const DetalleUsuario = () => {
               </div>
 
               <div className={detalle_css.botonera}>
-                <button
-                  onClick={handleGuardar}
-                  className={detalle_css.boton}
-                >
+                <button onClick={handleGuardar} className={detalle_css.boton}>
                   Guardar cambios
                 </button>
                 <button
