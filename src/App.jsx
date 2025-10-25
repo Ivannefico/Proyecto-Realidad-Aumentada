@@ -1,4 +1,3 @@
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./components/Formulario_inic.jsx";
 import Registro from "./components/Formulario_regist.jsx";

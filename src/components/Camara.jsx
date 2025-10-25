@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import * as cocoSsd from "@tensorflow-models/coco-ssd";
+import * as tf from "@tensorflow/tfjs";
 import camara_css from "../css/Camara.module.css";
 import logo from "../img/logo.png";
 import girar from "../img/girar.png";
@@ -12,8 +14,11 @@ export default function CameraScan() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const streamRef = useRef(null);
+  const modelRef = useRef(null);
+  const animationFrameRef = useRef(null); // 👈 nuevo ref para controlar el loop
   const [cameraOn, setCameraOn] = useState(false);
   const [facingMode, setFacingMode] = useState("environment");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,14 +30,23 @@ export default function CameraScan() {
 
   async function startCamera() {
     try {
-      stopCamera();
+      stopCamera(); // detener cualquier stream previo
       const constraints = { video: { facingMode } };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
       streamRef.current = stream;
+
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         await videoRef.current.play();
       }
+
+      if (!modelRef.current) {
+        setLoading(true);
+        modelRef.current = await cocoSsd.load();
+        setLoading(false);
+      }
+
+      detectObjects();
     } catch (err) {
       console.error("Error al acceder a la cámara:", err);
       alert("No se pudo acceder a la cámara.");
@@ -41,10 +55,16 @@ export default function CameraScan() {
   }
 
   function stopCamera() {
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current); // 👈 detener el loop
+      animationFrameRef.current = null;
+    }
+
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((t) => t.stop());
       streamRef.current = null;
     }
+
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
@@ -54,66 +74,67 @@ export default function CameraScan() {
     setFacingMode((f) => (f === "environment" ? "user" : "environment"));
   }
 
-  async function captureAndScan() {
-    if (!videoRef.current) return;
+  async function detectObjects() {
+    if (!videoRef.current || !canvasRef.current || !modelRef.current) return;
+
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    canvas.width = video.videoWidth || 1280;
-    canvas.height = video.videoHeight || 720;
     const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const blob = await new Promise((res) =>
-      canvas.toBlob(res, "image/jpeg", 0.9)
-    );
+    const loop = async () => {
+      if (!cameraOn) return;
 
-    if (!blob) {
-      alert("Error al capturar la imagen");
-      return;
-    }
-
-    const file = new File([blob], "capture.jpg", { type: "image/jpeg" });
-    await scanImage(file);
-  }
-
-  async function scanImage(file) {
-    try {
-      const form = new FormData();
-      form.append("image", file);
-      const API_URL = "https://tu-api/scan";
-
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: form,
-      });
-
-      if (!res.ok) {
-        alert("La API devolvió un error");
+      // ✅ Validar dimensiones antes de procesar
+      if (video.videoWidth === 0 || video.videoHeight === 0) {
+        console.warn("Video sin dimensiones válidas. Loop detenido.");
         return;
       }
 
-      const data = await res.json();
-      console.log("Resultado del escaneo:", data);
-      alert("Escaneo completado (ver consola)");
-    } catch (err) {
-      console.error("Error en scanImage:", err);
-      alert("No se pudo conectar con la API.");
-    }
-  }
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
+      const predictions = await modelRef.current.detect(video);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      predictions.forEach((p) => {
+        const [x, y, width, height] = p.bbox;
+        const text = `${p.class} (${Math.round(p.score * 100)}%)`;
+
+        ctx.strokeStyle = "#00ff88";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(x, y, width, height);
+
+        ctx.fillStyle = "rgba(0,0,0,0.6)";
+        const textWidth = ctx.measureText(text).width;
+        ctx.fillRect(x, y - 20, textWidth + 10, 20);
+
+        ctx.fillStyle = "#00ff88";
+        ctx.font = "16px Arial";
+        ctx.fillText(text, x + 5, y - 5);
+      });
+
+      animationFrameRef.current = requestAnimationFrame(loop); // 👈 guardar ID del frame
+    };
+
+    loop();
+  }
   return (
     <div className={camara_css.shell}>
       <div className={camara_css.card}>
-        {/* Logo */}
         <div className={camara_css.logo}>
           <img src={logo} alt="Logo" />
         </div>
 
-        {/* Zona central */}
         <div className={camara_css.center}>
           {!cameraOn && (
             <div className={camara_css.eyeWrapper}>
-              <img src={camapagada} alt="Camara Apagada" className={camara_css.camIcon} />
+              <img
+                src={camapagada}
+                alt="Camara Apagada"
+                className={camara_css.camIcon}
+              />
             </div>
           )}
 
@@ -121,12 +142,17 @@ export default function CameraScan() {
             ref={videoRef}
             className={cameraOn ? camara_css.videoOn : camara_css.videoOff}
             playsInline
+            muted
           />
+          <canvas ref={canvasRef} className={camara_css.overlay} />
 
-          <canvas ref={canvasRef} style={{ display: "none" }} />
+          {loading && (
+            <div className={camara_css.loading}>
+              Cargando modelo de detección...
+            </div>
+          )}
         </div>
 
-        {/* Controles */}
         <div className={camara_css.controls}>
           <button
             className={camara_css.controlBtn}
