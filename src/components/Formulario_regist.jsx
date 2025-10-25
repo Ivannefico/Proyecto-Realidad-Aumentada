@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom"; // 🔑 Importación de Link y useNavigate
+import { useNavigate, Link } from "react-router-dom";
 import formuregis_css from "../css/Registro.module.css";
 import { useUsuarios } from "../hooks/useUsuarios";
 import logoNegro from "../img/logoNegro.png";
-import cerrado from "../img/ojocerrado.png"; 
-import abierto from "../img/ojoabierto.png"; 
+import cerrado from "../img/ojocerrado.png";
+import abierto from "../img/ojoabierto.png";
+import user from "../img/user.png";
+import correo from "../img/correo.png";
+import telefono from "../img/phone.png";
+
 
 const Registro = () => {
     const navigate = useNavigate();
@@ -33,13 +37,13 @@ const Registro = () => {
     };
 
     const handleLoginRedirect = () => {
-        navigate("/"); 
+        navigate("/");
     };
 
     const handlePrivacyPolicy = () => {
-        navigate("/privacypolicy"); 
+        navigate("/privacypolicy");
     };
-    
+
     const handleSignIn = async (e) => {
         e.preventDefault();
         setError("");
@@ -89,32 +93,35 @@ const Registro = () => {
             <div className={formuregis_css.left_panel}>
                 <img
                     src={logoNegro}
-                    alt="paisaje"
+                    alt="patita negra"
                     className={formuregis_css.background_image}
                 />
             </div>
 
             {/* PANEL DERECHO */}
-            <div className={formuregis_css.right_panel}>
-              <div className={formuregis_css.text_container}>
-                <h2>
-                    Te damos la bienvenida a <br /> “nombre de la página”
-                </h2>
+            <div className={`${formuregis_css.right_panel} ${formuregis_css.fadee_in}`}>
+                
 
-                <p className={formuregis_css.login_text}>
-                    ¿Ya tengo una cuenta?
-                    <button 
-                        className={formuregis_css.login_btn}
-                        onClick={handleLoginRedirect} 
-                    >
-                        Iniciar Sesión
-                    </button>
-                </p>
-                </div>
 
                 {error && <p style={{ color: "red" }}>{error}</p>}
 
-                <form onSubmit={handleSignIn} className={formuregis_css.form}>
+            <form onSubmit={handleSignIn} className={formuregis_css.form}>
+                <div className={formuregis_css.text_container}>
+                    <h2>
+                        Te damos la bienvenida a <br /> “Scan cat”
+                    </h2>
+
+                    <p className={formuregis_css.login_text}>
+                        ¿Ya tengo una cuenta?
+                        <button
+                            onClick={handleLoginRedirect}
+                            className={formuregis_css.login_btn}
+                        >
+                            Iniciar Sesión
+                        </button>
+                    </p>
+                </div>
+                <div className={formuregis_css.formcajas}>
                     <div className={formuregis_css.input_group}>
                         <input
                             type="text"
@@ -124,19 +131,18 @@ const Registro = () => {
                             onChange={handleChange}
                             required
                         />
-                        <span className={formuregis_css.icon}>👤</span>
+                        <span className={formuregis_css.icon}><img src={user} alt="Usuario" /></span>
                     </div>
 
                     <div className={formuregis_css.input_group}>
                         <input
-                            type="email"
                             name="correo"
                             placeholder="Correo electrónico"
                             value={registro.correo}
                             onChange={handleChange}
                             required
                         />
-                        <span className={formuregis_css.icon}>✉️</span>
+                        <span className={formuregis_css.icon}><img src={correo} alt="Correo" /></span>
                     </div>
 
                     <div className={formuregis_css.input_group}>
@@ -148,10 +154,9 @@ const Registro = () => {
                             onChange={handleChange}
                             required
                         />
-                        <span className={formuregis_css.icon}>📞</span>
+                        <span className={formuregis_css.icon}><img src={telefono} alt="Teléfono" /></span>
                     </div>
 
-                    {/* CAMPO DE CONTRASEÑA */}
                     <div className={formuregis_css.input_group}>
                         <input
                             type={showPassword ? "text" : "password"}
@@ -161,17 +166,18 @@ const Registro = () => {
                             onChange={handleChange}
                             required
                         />
-                        <span 
-                            onClick={togglePasswordVisibility} 
-                            className={formuregis_css.password_toggle} 
+                        <span
+                            onClick={togglePasswordVisibility}
+                            className={formuregis_css.password_toggle}
                         >
-                            {showPassword 
-                                ? <img src={cerrado} alt="Ojo cerrado" /> 
-                                : <img src={abierto} alt="Ojo abierto" />}
+                            {showPassword ? (
+                                <img src={abierto} alt="Ojo abierto" />
+                            ) : (
+                                <img src={cerrado} alt="Ojo cerrado" />
+                            )}
                         </span>
                     </div>
 
-                    {/* CAMPO DE CONFIRMAR CONTRASEÑA */}
                     <div className={formuregis_css.input_group}>
                         <input
                             type={showPassword ? "text" : "password"}
@@ -181,13 +187,15 @@ const Registro = () => {
                             onChange={handleChange}
                             required
                         />
-                        <span 
+                        <span
                             onClick={togglePasswordVisibility}
-                            className={formuregis_css.password_toggle} 
+                            className={formuregis_css.password_toggle}
                         >
-                            {showPassword 
-                                ? <img src={cerrado} alt="Ojo cerrado" /> 
-                                : <img src={abierto} alt="Ojo abierto" />}
+                            {showPassword ? (
+                                <img src={abierto} alt="Ojo abierto" />
+                            ) : (
+                                <img src={cerrado} alt="Ojo cerrado" />
+                            )}
                         </span>
                     </div>
 
@@ -198,14 +206,14 @@ const Registro = () => {
                     >
                         {loading ? "Registrando..." : "Regístrate ahora"}
                     </button>
-
-                    <button 
+            
+                    <button
                         className={formuregis_css.policy}
-                        onClick={handlePrivacyPolicy} 
+                        onClick={handlePrivacyPolicy}
                     >
                         Información de servicios, política y avisos
                     </button>
-                    
+                     </div> 
                 </form>
             </div>
         </div>
