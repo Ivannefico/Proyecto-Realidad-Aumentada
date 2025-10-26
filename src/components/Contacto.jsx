@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import contacto_css from "../css/Contacto.module.css";
 
 const Contacto = () => {
+
+    useEffect(() => {
+        document.body.classList.add("no-theme");
+
+        return () => {
+            document.body.classList.remove("no-theme");
+        };
+    }, []);
+
     return (
         <div className={contacto_css.contacto_container}>
             <h2 className={contacto_css.title}>Contacto</h2>
@@ -25,20 +34,21 @@ const Contacto = () => {
             </section>
             <form className={contacto_css.formulario}>
                 <div>
-                    <label>Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" required />
+                    <label className={contacto_css.mensaje}>Nombre:</label>
+                    <input className={contacto_css.input} type="text" id="nombre" name="nombre" required />
                 </div>
                 <div>
-                    <label>Email:</label>
-                    <input type="email" id="email" name="email" required />
+                    <label className={contacto_css.mensaje}>Email:</label>
+                    <input className={contacto_css.input} type="email" id="email" name="email" required />
                 </div>
                 <div>
                     <label className={contacto_css.mensaje}>Mensaje:</label>
-                    <textarea id="mensaje" name="mensaje" required></textarea>
+                    <textarea className={contacto_css.textarea} id="mensaje" name="mensaje" required></textarea>
                 </div>
                 <button type="submit" className={contacto_css.button}>Enviar</button>
             </form>
         </div>
     );
 };
+
 export default Contacto;

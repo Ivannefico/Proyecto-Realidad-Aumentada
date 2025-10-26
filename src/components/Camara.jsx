@@ -15,7 +15,7 @@ export default function CameraScan() {
   const canvasRef = useRef(null);
   const streamRef = useRef(null);
   const modelRef = useRef(null);
-  const animationFrameRef = useRef(null); // 👈 nuevo ref para controlar el loop
+  const animationFrameRef = useRef(null); 
   const [cameraOn, setCameraOn] = useState(false);
   const [facingMode, setFacingMode] = useState("environment");
   const [loading, setLoading] = useState(false);
@@ -25,7 +25,7 @@ export default function CameraScan() {
     if (cameraOn) startCamera();
     else stopCamera();
     return () => stopCamera();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [cameraOn, facingMode]);
 
   async function startCamera() {
@@ -56,7 +56,7 @@ export default function CameraScan() {
 
   function stopCamera() {
     if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current); // 👈 detener el loop
+      cancelAnimationFrame(animationFrameRef.current); 
       animationFrameRef.current = null;
     }
 
@@ -84,7 +84,6 @@ export default function CameraScan() {
     const loop = async () => {
       if (!cameraOn) return;
 
-      // ✅ Validar dimensiones antes de procesar
       if (video.videoWidth === 0 || video.videoHeight === 0) {
         console.warn("Video sin dimensiones válidas. Loop detenido.");
         return;
@@ -115,7 +114,7 @@ export default function CameraScan() {
         ctx.fillText(text, x + 5, y - 5);
       });
 
-      animationFrameRef.current = requestAnimationFrame(loop); // 👈 guardar ID del frame
+      animationFrameRef.current = requestAnimationFrame(loop); 
     };
 
     loop();
