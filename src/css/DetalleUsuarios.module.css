@@ -78,6 +78,12 @@
   display: inline-block;
 }
 
+.info .p{
+    text-align: left;
+    font-size: 1.1rem;
+    color: #fff;
+}
+
 .link:hover {
   text-decoration: underline;
 }

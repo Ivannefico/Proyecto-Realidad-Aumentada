@@ -92,19 +92,19 @@ const DetalleUsuario = () => {
           {!editando ? (
             <>
               <div className={detalle_css.info}>
-                <p>
+                <p className={detalle_css.p}>
                   <strong>Correo:</strong> {usuario.correo}
                 </p>
-                <p>
+                <p className={detalle_css.p}>
                   <strong>Rol:</strong> {usuario.rol}
                 </p>
-                <p>
+                <p className={detalle_css.p}>
                   <strong>Teléfono:</strong> {usuario.telefono}
                 </p>
-                <p>
+                <p className={detalle_css.p}>
                   <strong>Contraseña:</strong> {usuario.contrasena}
                 </p>
-                <p>
+                <p className={detalle_css.p}>
                   <strong>Estado:</strong>{" "}
                   {usuario.activo === false ? "Deshabilitado" : "Activo"}
                 </p>

@@ -29,6 +29,7 @@ body {
         
 }    
 .title {
+    color: #ffffff;
     text-align: center;
     font-size: 2rem;
     border-bottom: 2px solid white;
@@ -43,11 +44,11 @@ body {
     text-align: center;
     font-size: 1.5rem;
 }
-section{
+.info{
     width: 50%;
     left: 0;
 }
-form{
+.formulario{
     width: 40%;
     right: 10%;
     position: absolute;
@@ -57,24 +58,26 @@ form{
     gap: 1rem;
 }
 
-p{
+.p{
     text-align: left;
-    font-size: 1rem;
-    
+    font-size: 1.4rem;
+    color: #fff;
 }
 
-ul{
+.ul{
     text-align: left;
     font-size: 1rem;
     list-style-type: none;
     padding: 0;
 }
-li{
+.li{
     color: #ffffff;
+    font-size: 1.2rem  ;
     margin: 0.5rem 0;
     padding: 0.5rem 1rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     text-align: center;
+    list-style-type: none;
 }
 
 label {
@@ -94,7 +97,7 @@ input, textarea {
 
     font-size: 16px;
 }
-button {
+.button {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
@@ -103,7 +106,7 @@ button {
     font-size: 16px;
     cursor: pointer;
 }
-button:hover {
+.button:hover {
     background: #36b8a1;
 }
 
