@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./components/Formulario_inic.jsx";
+import Formulario from "./components/Formulario.jsx";
 import Registro from "./components/Formulario_regist.jsx";
 import Inicio from "./components/Inicio.jsx";
 import Camara from "./components/Camara.jsx";
@@ -14,7 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Formulario />} />
          <Route path="/registro" element={<Registro />} />
          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
 

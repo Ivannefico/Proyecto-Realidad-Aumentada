@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import formuinicio_css from "../css/Formulario.module.css";
+import formuinicio_css from "../css/InicioSesion.module.css";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useUsuarios } from "../hooks/useUsuarios";
@@ -12,7 +12,7 @@ import abierto from "../img/ojoabierto.png";
 import Logoblanco from "../img/logoBlanco.png";
 import correo from "../img/correo.png";
 
-const Login = () => {
+const Login = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
   const { crearUsuario } = useUsuarios();
 
@@ -78,103 +78,92 @@ const Login = () => {
 
       localStorage.setItem("usuario", JSON.stringify(usuarioData));
       alert(`Bienvenido ${user.displayName || "usuario"} (Google)`);
-      navigate("/home");
     } catch (error) {
       console.error(error);
-      setError("Error al iniciar sesión con Google. Inténtalo de nuevo.");
+      setError("Error al iniciar sesión con Google.");
     }
-  };
-
-  const handleRegisterRedirect = () => {
-    navigate("/registro");
   };
 
   return (
     <div className={formuinicio_css.container}>
-      {/* PANEL IZQUIERDO */}
-      <div className={`${formuinicio_css.left_panel} ${formuinicio_css.fade_in}`}>
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        {/* FORMULARIO */}
-        <form onSubmit={handleLogin} className={formuinicio_css.form}>
-        <div className={formuinicio_css.text_container}>
-          <h2>
-            Iniciar Sesión
-          </h2>
-          
-          <p className={formuinicio_css.register_text}>
-            ¿No tienes una cuenta?
-            <button
-              type="button"
-              onClick={handleRegisterRedirect}
-              className={formuinicio_css.register_btn}
-            >
-              Regístrate
-            </button>
-          </p>
-        </div>
-    <div className={formuinicio_css.formcajas}>
-          <div className={formuinicio_css.input_group}>
-            <input
-              name="correo"
-              placeholder="Correo Electrónico"
-              value={login.correo}
-              onChange={handleChange}
-              required
-            />
-            <span className={formuinicio_css.icon}><img src={correo} alt="Correo" /></span>
-          </div>
-
-          <div className={formuinicio_css.input_group}>
-            <input
-              name="contrasena"
-              placeholder="Contraseña"
-              type={showPassword ? "text" : "password"}
-              value={login.contrasena}
-              onChange={handleChange}
-              required
-            />
-            <span
-              onClick={togglePasswordVisibility}
-              className={formuinicio_css.password_toggle}
-            >
-              {showPassword ? (
-                <img src={abierto} alt="Ojo abierto" />
-              ) : (
-                <img src={cerrado} alt="Ojo cerrado" />
-              )}
-            </span>
-          </div>
-
-          <button
-            type="submit"
-            className={formuinicio_css.login_button}
-            disabled={loading}
-          >
-            {loading ? "Ingresando..." : "Iniciar Sesión"}
-          </button>
-
-          <div className={formuinicio_css.google_btn} onClick={handleGoogleSignIn}>
-            <img
-              src={googleIcon}
-              alt="Google"
-              className={formuinicio_css.google_icon}
-            />
-            <p>Iniciar sesión con Google</p>
-          </div>
-          </div>
-        </form>
-      </div>
-
-      {/* PANEL DERECHO */}
-      <div className={formuinicio_css.right_panel}>
+              <div className={formuinicio_css.right_panel}>
         <img
           src={Logoblanco}
           alt="patita blanca"
           className={formuinicio_css.background_image}
         />
       </div>
+      <div className={formuinicio_css.left_panel}>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
+        <form onSubmit={handleLogin} className={formuinicio_css.form}>
+          <div className={formuinicio_css.text_container}>
+            <h2>Iniciar Sesión</h2>
+
+            <p className={formuinicio_css.register_text}>
+              ¿No tienes una cuenta?
+              <button
+                type="button"
+                onClick={onCambiarFormulario}
+                className={formuinicio_css.register_btn}
+              >
+                Regístrate
+              </button>
+            </p>
+          </div>
+
+          <div className={formuinicio_css.formcajas}>
+            <div className={formuinicio_css.input_group}>
+              <input
+                name="correo"
+                placeholder="Correo Electrónico"
+                value={login.correo}
+                onChange={handleChange}
+                required
+              />
+              <span className={formuinicio_css.icon}>
+                <img src={correo} alt="Correo" />
+              </span>
+            </div>
+
+            <div className={formuinicio_css.input_group}>
+              <input
+                name="contrasena"
+                placeholder="Contraseña"
+                type={showPassword ? "text" : "password"}
+                value={login.contrasena}
+                onChange={handleChange}
+                required
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className={formuinicio_css.password_toggle}
+              >
+                <img src={showPassword ? abierto : cerrado} alt="toggle" />
+              </span>
+            </div>
+
+            <button
+              type="submit"
+              className={formuinicio_css.login_button}
+              disabled={loading}
+            >
+              {loading ? "Ingresando..." : "Iniciar Sesión"}
+            </button>
+
+            <div
+              className={formuinicio_css.google_btn}
+              onClick={handleGoogleSignIn}
+            >
+              <img src={googleIcon} alt="Google" className={formuinicio_css.google_icon} />
+              <p>Iniciar sesión con Google</p>
+            </div>
+          </div>
+        </form>
+      </div>
+
+
     </div>
   );
 };
