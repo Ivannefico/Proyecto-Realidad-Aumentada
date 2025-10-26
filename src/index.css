@@ -5,60 +5,46 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Variables iniciales */
-  background-color: var(--bg);
+  background-color: var(--bg-a);
   color: var(--text);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Fuente del código (no cambia con el tema) */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
-/* VARIABLES DE COLOR */
 :root {
   --bg-a: #d4c4c4;
+  --bg-b: #e7d5d5;
   --text: #000000;
-  --primary: #4a90e2;
-  --secondary: #f2f2f2;
+  --primary: #333;
+  --secondary: #555;
 }
 
 /* Tema oscuro */
 body.dark {
   --bg-a: #181616;
+  --bg-b: #272727;
   --text: #f5f5f5;
-  --primary: #bb86fc;
-  --secondary: #222222;
+  --primary: #e9e0e0;
+  --secondary: #cfcfcf;
 }
 
-/* ELEMENTOS COMUNES*/
 
-/* Fondo y texto general */
 body {
   background-color: var(--bg-a);
   color: var(--text);
 }
 
-/* Navbar */
-.navbar {
-  background-color: var(--secondary);
-  transition: background-color 0.25s ease;
-}
-body.dark .navbar {
-  background-color: #1f1f1f;
-}
 
-/* Formularios */
 .formulario {
   background-color: var(--secondary);
   border-radius: 8px;
   padding: 1rem;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
-body.dark .formulario {
-  background-color: #2c2c2c;
-}
+
 
 /* Botón del modo oscuro */
 .theme-button {
@@ -92,19 +78,16 @@ body.dark select {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* TRANSICIONES SUAVES */
 * {
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: background-color 0.20s ease, color 0.20s ease;
 }
 
-/* ==========================
-   DETECCIÓN AUTOMÁTICA DEL TEMA DEL SISTEMA
-========================== */
+/* DETECCIÓN AUTOMÁTICA DEL TEMA DEL SISTEMA */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-a: #181616;
-    --text: #f5f5f5;
-    --primary: #bb86fc;
-    --secondary: #222222;
+  --bg-a: #181616;
+  --text: #f5f5f5;
+  --primary: #e9e0e0;
+  --secondary: #cfcfcf;
   }
 }

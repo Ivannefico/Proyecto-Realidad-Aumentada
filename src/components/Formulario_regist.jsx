@@ -3,25 +3,23 @@ import { useNavigate } from "react-router-dom";
 import formuregis_css from "../css/Registro.module.css";
 import { useUsuarios } from "../hooks/useUsuarios";
 
-// ✅ Logos por tema
-import logoLight from "../img/logoBlancoReves.png"; // Modo Claro
-import logoDark from "../img/logoNegroReves.png"; // Modo Oscuro
+import logoDark from "../img/logoBlancoReves.png"; // Modo Claro
+import logoLight from "../img/logoNegroReves.png"; // Modo Oscuro
 
-// ✅ Iconos por tema (provisorios)
 import userLight from "../img/user.png";
-import userDark from "../img/userBlanco.png"; // ⚠️ crea después
+import userDark from "../img/userBlanco.png"; 
 
 import correoLight from "../img/correo.png";
-import correoDark from "../img/correoBlanco.png"; // ⚠️ crea después
+import correoDark from "../img/correoBlanco.png";
 
 import phoneLight from "../img/phone.png";
-import phoneDark from "../img/phoneBlanco.png"; // ⚠️ crea después
+import phoneDark from "../img/phoneBlanco.png";
 
 import ojoAbiertoLight from "../img/ojoabierto.png";
-import ojoAbiertoDark from "../img/ojoabiertoBlanco.png"; // ⚠️ crea después
+import ojoAbiertoDark from "../img/ojoabiertoBlanco.png";
 
 import ojoCerradoLight from "../img/ojocerrado.png";
-import ojoCerradoDark from "../img/ojocerradoBlanco.png"; // ⚠️ crea después
+import ojoCerradoDark from "../img/ojocerradoBlanco.png";
 
 const Registro = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
@@ -40,7 +38,6 @@ const Registro = ({ onCambiarFormulario }) => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // ✅ Detectar tema del body
   useEffect(() => {
     const handleTheme = () => setIsDark(document.body.classList.contains("dark"));
     handleTheme();
@@ -90,7 +87,6 @@ const Registro = ({ onCambiarFormulario }) => {
     }
   };
 
-  // ✅ Elegimos íconos según tema
  const logo = isDark ? logoDark : logoLight;
  const iconUser = isDark ? userDark : userLight;
  const iconCorreo = isDark ? correoDark : correoLight;
@@ -190,7 +186,7 @@ const Registro = ({ onCambiarFormulario }) => {
               {loading ? "Registrando..." : "Regístrate ahora"}
             </button>
 
-            <button className={formuregis_css.policy}>
+            <button  type="button" className={formuregis_css.policy} onClick={() => navigate("/privacypolicy")}>
               Información de servicios, política y avisos
             </button>
           </div>
