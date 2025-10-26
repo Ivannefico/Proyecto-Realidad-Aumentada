@@ -1,17 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import formuregis_css from "../css/Registro.module.css";
 import { useUsuarios } from "../hooks/useUsuarios";
-import logoNegro from "../img/logoNegro.png";
-import cerrado from "../img/ojocerrado.png";
-import abierto from "../img/ojoabierto.png";
-import user from "../img/user.png";
-import correo from "../img/correo.png";
-import telefono from "../img/phone.png";
+
+// ✅ Logos por tema
+import logoLight from "../img/logoBlancoReves.png"; // Modo Claro
+import logoDark from "../img/logoNegroReves.png"; // Modo Oscuro
+
+// ✅ Iconos por tema (provisorios)
+import userLight from "../img/user.png";
+import userDark from "../img/userBlanco.png"; // ⚠️ crea después
+
+import correoLight from "../img/correo.png";
+import correoDark from "../img/correoBlanco.png"; // ⚠️ crea después
+
+import phoneLight from "../img/phone.png";
+import phoneDark from "../img/phoneBlanco.png"; // ⚠️ crea después
+
+import ojoAbiertoLight from "../img/ojoabierto.png";
+import ojoAbiertoDark from "../img/ojoabiertoBlanco.png"; // ⚠️ crea después
+
+import ojoCerradoLight from "../img/ojocerrado.png";
+import ojoCerradoDark from "../img/ojocerradoBlanco.png"; // ⚠️ crea después
 
 const Registro = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
   const { crearUsuario } = useUsuarios();
+  const [isDark, setIsDark] = useState(false);
 
   const [registro, setRegistro] = useState({
     usuarios: "",
@@ -25,15 +40,22 @@ const Registro = ({ onCambiarFormulario }) => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const validateEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
+  // ✅ Detectar tema del body
+  useEffect(() => {
+    const handleTheme = () => setIsDark(document.body.classList.contains("dark"));
+    handleTheme();
+    const observer = new MutationObserver(handleTheme);
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   const handleChange = (e) => {
     setRegistro({ ...registro, [e.target.name]: e.target.value });
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const validateEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -50,7 +72,6 @@ const Registro = ({ onCambiarFormulario }) => {
     }
 
     setLoading(true);
-
     try {
       await crearUsuario({
         usuarios: registro.usuarios,
@@ -61,29 +82,26 @@ const Registro = ({ onCambiarFormulario }) => {
       });
 
       alert("Usuario registrado correctamente");
-
-      setRegistro({
-        usuarios: "",
-        correo: "",
-        telefono: "",
-        contrasena: "",
-        confirmarContrasena: "",
-      });
       navigate("/", { replace: true });
-    } catch (error) {
-      console.error(error);
-      setError("Ocurrió un error al registrar el usuario");
+    } catch {
+      setError("Error al registrar");
     } finally {
       setLoading(false);
     }
   };
 
+  // ✅ Elegimos íconos según tema
+ const logo = isDark ? logoDark : logoLight;
+ const iconUser = isDark ? userDark : userLight;
+ const iconCorreo = isDark ? correoDark : correoLight;
+ const iconPhone = isDark ? phoneDark : phoneLight;
+ const iconPass = showPassword
+    ? (isDark ? ojoAbiertoDark : ojoAbiertoLight)
+    : (isDark ? ojoCerradoDark : ojoCerradoLight);
+
   return (
     <div className={formuregis_css.container}>
-
-
       <div className={formuregis_css.right_panel}>
-
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form onSubmit={handleSignIn} className={formuregis_css.form}>
@@ -92,11 +110,7 @@ const Registro = ({ onCambiarFormulario }) => {
 
             <p className={formuregis_css.login_text}>
               ¿Ya tienes una cuenta?
-              <button
-                type="button"
-                onClick={onCambiarFormulario}
-                className={formuregis_css.login_btn}
-              >
+              <button type="button" onClick={onCambiarFormulario} className={formuregis_css.login_btn}>
                 Iniciar Sesión
               </button>
             </p>
@@ -113,7 +127,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 required
               />
               <span className={formuregis_css.icon}>
-                <img src={user} alt="Usuario" />
+                <img src={iconUser} alt="Usuario" />
               </span>
             </div>
 
@@ -126,7 +140,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 required
               />
               <span className={formuregis_css.icon}>
-                <img src={correo} alt="Correo" />
+                <img src={iconCorreo} alt="Correo" />
               </span>
             </div>
 
@@ -140,7 +154,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 required
               />
               <span className={formuregis_css.icon}>
-                <img src={telefono} alt="Teléfono" />
+                <img src={iconPhone} alt="Teléfono" />
               </span>
             </div>
 
@@ -153,11 +167,8 @@ const Registro = ({ onCambiarFormulario }) => {
                 onChange={handleChange}
                 required
               />
-              <span
-                onClick={togglePasswordVisibility}
-                className={formuregis_css.password_toggle}
-              >
-                <img src={showPassword ? abierto : cerrado} alt="toggle" />
+              <span onClick={togglePasswordVisibility} className={formuregis_css.password_toggle}>
+                <img src={iconPass} alt="toggle" />
               </span>
             </div>
 
@@ -170,19 +181,12 @@ const Registro = ({ onCambiarFormulario }) => {
                 onChange={handleChange}
                 required
               />
-              <span
-                onClick={togglePasswordVisibility}
-                className={formuregis_css.password_toggle}
-              >
-                <img src={showPassword ? abierto : cerrado} alt="toggle" />
+              <span onClick={togglePasswordVisibility} className={formuregis_css.password_toggle}>
+                <img src={iconPass} alt="toggle" />
               </span>
             </div>
 
-            <button
-              type="submit"
-              className={formuregis_css.register_btn}
-              disabled={loading}
-            >
+            <button type="submit" className={formuregis_css.register_btn} disabled={loading}>
               {loading ? "Registrando..." : "Regístrate ahora"}
             </button>
 
@@ -192,12 +196,9 @@ const Registro = ({ onCambiarFormulario }) => {
           </div>
         </form>
       </div>
-            <div className={formuregis_css.left_panel}>
-        <img
-          src={logoNegro}
-          alt="patita negra"
-          className={formuregis_css.background_image}
-        />
+
+      <div className={formuregis_css.left_panel}>
+        <img src={logo} alt="logo" className={formuregis_css.background_image} />
       </div>
     </div>
   );

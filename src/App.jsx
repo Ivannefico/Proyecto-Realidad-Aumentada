@@ -3,28 +3,33 @@ import Formulario from "./components/Formulario.jsx";
 import Registro from "./components/Formulario_regist.jsx";
 import Inicio from "./components/Inicio.jsx";
 import Camara from "./components/Camara.jsx";
-import Contacto from "./components/Contacto.jsx"
+import Contacto from "./components/Contacto.jsx";
 import NotFound from "./components/404.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 import ListaUsuarios from "./components/ListaUsuarios.jsx";
 import DetalleUsuarios from "./components/DetalleUsuarios.jsx";
+import Themes from "./components/Themes.jsx";
 
 function App() {
   return (
     <BrowserRouter>
+      <div style={{ position: "fixed", top: "1rem", right: "1rem", zIndex: 1000 }}>
+        <Themes />
+      </div>
+
       <Routes>
         <Route path="/" element={<Formulario />} />
-         <Route path="/registro" element={<Registro />} />
-         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
 
         <Route element={<ProtectedRoutes />}>
-              <Route path="/home" element={<Inicio />} />
-              <Route path="/contacto" element={<Contacto />} />
-              <Route path="/error404" element={<NotFound />} />
-              <Route path="/camara" element={<Camara />} />
-              <Route path="/listausuario" element={<ListaUsuarios />} />
-              <Route path="/usuario/:id" element={<DetalleUsuarios />} />
+          <Route path="/home" element={<Inicio />} />
+          <Route path="/contacto" element={<Contacto />} />
+          <Route path="/error404" element={<NotFound />} />
+          <Route path="/camara" element={<Camara />} />
+          <Route path="/listausuario" element={<ListaUsuarios />} />
+          <Route path="/usuario/:id" element={<DetalleUsuarios />} />
         </Route>
       </Routes>
     </BrowserRouter>
