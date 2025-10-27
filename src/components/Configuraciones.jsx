@@ -22,10 +22,6 @@ const UserInfoSettings = () => (
             <label htmlFor="change-email">Cambiar e-mail</label>
             <input type="email" id="change-email" className={config_css.setting_input_line} />
         </div>
-        <div className={config_css.setting_item}>
-            <label>Otros</label>
-            <div className={config_css.setting_input_line}></div>
-        </div>
     </div>
 );
 
@@ -56,7 +52,7 @@ const ThemeSettings = () => {
         <div className={config_css.settings_card}>
             <p className={config_css.theme_label}>
                 Modo oscuro:
-
+            
             {/* ✅ SWITCH */}
             <label className={config_css.switch}>
                 <input type="checkbox" checked={isDark} onChange={toggleTheme} />
@@ -81,7 +77,8 @@ const SettingsPage = () => {
 
     return (
         <div className={config_css.settings_container}>
-            <Navbar />
+          <Navbar />
+            <p className={config_css.espacio_p3}></p>
 
             <div className={config_css.settings_content_wrapper}>
                 <div className={config_css.sidebar}>

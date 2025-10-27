@@ -1,115 +1,128 @@
-/* Variables de color para un mantenimiento más fácil */
 :root {
-    --dark-teal: #005a5a; 
-    --medium-teal: #007b7b; 
-    --light-teal: #009999; 
-    --off-white: #f0f0f0;
-    --border-color: #00caca;
+  --dark-teal: #11403f;
+  --medium-teal: #17615e;
+  --light-teal: #009999;
+  --off-white: #f0f0f0;
+  --border-color: #00caca;
 }
 
-/* --- Estilos de la página completa --- */
+/* --- Estructura general --- */
 .settings_container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: var(--dark-teal); /* Color de fondo general */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--dark-teal);
 }
 
-/* Estructura principal debajo del Navbar: Sidebar y Contenido */
+/* Contenedor principal debajo del navbar */
 .settings_content_wrapper {
-    display: flex;
-    flex: 1; /* Para que ocupe el espacio restante */
+  display: flex;
+  flex: 1;
+  padding: 2rem;
+  gap: 2rem;
+  flex-wrap: wrap; /* ✅ hace que en pantallas pequeñas se apilen */
+  justify-content: center;
 }
 
-/* --- Estilos de la Barra Lateral (Sidebar) --- */
+/* --- Sidebar --- */
 .sidebar {
-    width: 250px; 
-    min-height: calc(100vh - 80px); /* Ajusta 80px a la altura de tu Navbar */
-    background-color: var(--medium-teal); /* Color del fondo de la sidebar */
-    padding-top: 20px;
-    border-right: 1px solid var(--dark-teal); /* Línea divisoria vertical */
-}
-
-.sidebar_link {
-    padding: 15px 20px;
-    cursor: pointer;
-    color: var(--off-white);
-    font-size: 1.1em;
-    border-top: 1px solid var(--dark-teal); /* Separa los ítems */
-    border-bottom: 1px solid var(--dark-teal);
-    transition: background-color 0.2s;
-}
-
-/* Estilo para el enlace activo/seleccionado */
-.active { /* Esta clase se aplica directamente sin prefijo 'sidebar-link' */
-    background-color: var(--light-teal);
-    font-weight: bold;
-}
-
-.sidebar_link:hover:not(.active) {
-    background-color: #006666;
+  flex: 0 0 500px; /* ancho fijo razonable pero adaptable */
+  background-color: var(--medium-teal);
+  border-radius: 20px;
+  padding: 2rem 0 32.2rem;
+  height: fit-content;
+  min-width: 230px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .sidebar_section_title {
-    padding: 15px 20px;
-    color: var(--off-white);
-    font-weight: bold;
-    border-bottom: 2px solid var(--dark-teal);
+  padding: 1rem 1.5rem;
+  color: var(--off-white);
+  font-weight: bold;
+  border-bottom: 2px solid var(--dark-teal);
 }
 
-/* --- Estilos del Contenido Principal (Main Settings) --- */
+.sidebar_link {
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  color: var(--off-white);
+  font-size: 1.05em;
+  border-top: 1px solid var(--dark-teal);
+  border-bottom: 2px solid var(--dark-teal);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.sidebar_link:hover:not(.active) {
+  background-color: #006666;
+  transform: translateX(4px);
+}
+
+.active {
+  background-color: var(--light-teal);
+  font-weight: bold;
+}
+
+/* --- Contenido principal --- */
 .main_settings {
-    flex: 1; /* Para que ocupe todo el espacio restante horizontalmente */
-    padding: 30px;
-    background-color: var(--dark-teal); /* Color de fondo del contenido */
+  flex: 1;
+  min-width: 320px;
+  display: flex;
+  justify-content: center;
 }
 
 .settings_card {
-    background-color: var(--medium-teal); /* Tarjeta de contenido (similar al diseño) */
-    padding: 30px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 400px; /* Para mantener la altura visual */
+  background-color: var(--medium-teal);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1200px; /* ✅ tamaño máximo adaptable */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  color: var(--off-white);
 }
 
 .setting_item {
-    margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+}
+
+.theme_label {
+    font-size: 20px;
+}
+
+ input{
+      background-color: transparent !important;
 }
 
 .setting_item label {
-    display: block;
-    color: var(--off-white);
-    font-size: 1.2em;
-    margin-bottom: 8px;
+  display: block;
+  color: var(--off-white);
+  font-size: 1.1em;
+  margin-bottom: 0.6rem;
+}
+
+.setting_input_line input{
+    background: transparent !important;
 }
 
 .setting_input_line {
-    width: 100%;
-    /* Simula la línea de entrada del diseño */
-    height: 1px; 
-    border: none;
-    border-bottom: 2px solid var(--off-white); /* La línea blanca */
-    background: transparent;
-    color: var(--off-white); 
-    padding: 5px 0;
-    font-size: 1em;
-    outline: none;
-    margin-top: 5px; 
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--off-white);
+    background-color: transparent !important;
+  color: var(--off-white);
+  padding: 6px 0;
+  font-size: 1em;
+  outline: none;
 }
 
-/* Asegura que los inputs no tengan el fondo blanco por defecto */
-input.setting_input_line {
-    /* Solo para los inputs de texto/email/password */
-    background-color: transparent;
-}
-
-/* ✅ Switch estilo iOS */
+/* --- Switch de tema oscuro --- */
 .switch {
-    left: 0.8%;
   position: relative;
   width: 50px;
   height: 26px;
+  left: 10px;
+  top: 2px;
   display: inline-block;
+  margin-left: 0.5rem;
 }
 
 .switch input {
@@ -139,11 +152,33 @@ input.setting_input_line {
   transition: 0.3s;
 }
 
-/* ✅ ON */
 .switch input:checked + .slider {
   background: #11403f;
 }
 
 .switch input:checked + .slider:before {
   transform: translateX(24px);
+}
+
+.espacio_p3 {
+  background-image: linear-gradient(to top, #17615e, #24968b);
+  height: 4px;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .settings_content_wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .settings_card {
+    max-width: 600px;
+    padding: 1.5rem;
+  }
 }
