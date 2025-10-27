@@ -19,7 +19,14 @@ reportWebVitals();
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './index.css'
+import './index.css';
+
+// Importá el Provider del contexto
+import { LanguageProvider } from './components/Idioma';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+root.render(
+  <LanguageProvider>
+    <App />
+  </LanguageProvider>
+);

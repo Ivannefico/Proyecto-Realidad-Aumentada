@@ -88,10 +88,6 @@
     font-size: 20px;
 }
 
- input{
-      background-color: transparent !important;
-}
-
 .setting_item label {
   display: block;
   color: var(--off-white);
@@ -99,15 +95,10 @@
   margin-bottom: 0.6rem;
 }
 
-.setting_input_line input{
-    background: transparent !important;
-}
-
 .setting_input_line {
   width: 100%;
   border: none;
   border-bottom: 2px solid var(--off-white);
-    background-color: transparent !important;
   color: var(--off-white);
   padding: 6px 0;
   font-size: 1em;
