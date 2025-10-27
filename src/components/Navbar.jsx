@@ -54,7 +54,7 @@ const Navbar = ({ onAbrirContacto }) => {
         </button>
       )}
 
-      <button onClick={() => navigate("/error404")} className={Navbar_css.btn_icono}>
+      <button onClick={() => navigate("/configuracion")} className={Navbar_css.btn_icono}>
         <img src={tuercaIcon} alt="Configuración" />
       </button>
 

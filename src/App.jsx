@@ -4,6 +4,7 @@ import Registro from "./components/Formulario_regist.jsx";
 import Inicio from "./components/Inicio.jsx";
 import Camara from "./components/Camara.jsx";
 import Contacto from "./components/Contacto.jsx";
+import Configuracion from "./components/Configuraciones.jsx";
 import NotFound from "./components/404.jsx";
 import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/home" element={<Inicio />} />
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/error404" element={<NotFound />} />
+          <Route path="/configuracion" element={<Configuracion />} />
           <Route path="/camara" element={<Camara />} />
           <Route path="/listausuario" element={<ListaUsuarios />} />
           <Route path="/usuario/:id" element={<DetalleUsuarios />} />

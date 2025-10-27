@@ -1,127 +1,149 @@
-/* Fondo general con gradiente */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
+/* Variables de color para un mantenimiento más fácil */
+:root {
+    --dark-teal: #005a5a; 
+    --medium-teal: #007b7b; 
+    --light-teal: #009999; 
+    --off-white: #f0f0f0;
+    --border-color: #00caca;
 }
 
-.form-container {
+/* --- Estilos de la página completa --- */
+.settings_container {
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
-    min-width: 100vw;
+    background-color: var(--dark-teal); /* Color de fondo general */
+}
 
-    height: fit-content;
-
+/* Estructura principal debajo del Navbar: Sidebar y Contenido */
+.settings_content_wrapper {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    background: #d4cac4;
+    flex: 1; /* Para que ocupe el espacio restante */
 }
 
-/* Panel glassmorphism */
-.glass-form {
-    border-radius: 20px;
-    box-sizing: border-box;
-    
-    margin: 5%;
-    padding: 40px;
-    width: 90vw;
-    height: fit-content;
-    min-height: 80vh;
-
-    
-    background: linear-gradient(#4d4c4b,#67615f,#676463);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
+/* --- Estilos de la Barra Lateral (Sidebar) --- */
+.sidebar {
+    width: 250px; 
+    min-height: calc(100vh - 80px); /* Ajusta 80px a la altura de tu Navbar */
+    background-color: var(--medium-teal); /* Color del fondo de la sidebar */
+    padding-top: 20px;
+    border-right: 1px solid var(--dark-teal); /* Línea divisoria vertical */
 }
 
-.glass-form .title-form {
-    text-align: center;
-
-    margin-top: -2.5%;
-    margin-bottom: 24px;
-
-    color: #ffffff;
-}
-.glass-form .title-form h2 {
-    font-size: 24px;
-    font-weight: 600;
-    font-family: 'Rubik', sans-serif;
-}
-
-/* Grupo de inputs */
-.form-group {
-    margin-bottom: 50px;
-    gap: 24px;
-    transition: 0.3s ease;
-}
-
-
-.form-group label {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #f1f1f1;
-}
-
-.form-group input {
-    padding: 10px;
-    width: 30%;
-    border-radius: 10px;
-    border: none;
-    background: rgba(255, 255, 255, 0.2);
-    color: #fff;
-    font-size: 16px;
-    outline: none;
-    transition: background 0.3s ease;
-}
-
-.form-group input[type="radio"] {
-    margin-top: 14.5px;
-    width: 18px;
-    height: 18px;
+.sidebar_link {
+    padding: 15px 20px;
     cursor: pointer;
+    color: var(--off-white);
+    font-size: 1.1em;
+    border-top: 1px solid var(--dark-teal); /* Separa los ítems */
+    border-bottom: 1px solid var(--dark-teal);
+    transition: background-color 0.2s;
 }
 
-.form-group input::placeholder {
-    color: #e0e0e0;
-}
-
-.form-group input:focus {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-/* Botón */
-.glass-form button {
-    width: 30%;
-    padding: 12px;
-
-    border-radius: 30px;
-    border: none;
-
-    background: rgba(255, 255, 255, 0.3);
-    color: #000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
+/* Estilo para el enlace activo/seleccionado */
+.active { /* Esta clase se aplica directamente sin prefijo 'sidebar-link' */
+    background-color: var(--light-teal);
     font-weight: bold;
-    font-size: 16px;
-
-    cursor: pointer;
-    transition:  0.5s linear;
-
-    display: block;
-    margin: 0 auto;
 }
 
-.glass-form button:hover {
-    background: rgba(255, 255, 255, 0.5);
-    scale: 1.05;
-    
+.sidebar_link:hover:not(.active) {
+    background-color: #006666;
+}
+
+.sidebar_section_title {
+    padding: 15px 20px;
+    color: var(--off-white);
+    font-weight: bold;
+    border-bottom: 2px solid var(--dark-teal);
+}
+
+/* --- Estilos del Contenido Principal (Main Settings) --- */
+.main_settings {
+    flex: 1; /* Para que ocupe todo el espacio restante horizontalmente */
+    padding: 30px;
+    background-color: var(--dark-teal); /* Color de fondo del contenido */
+}
+
+.settings_card {
+    background-color: var(--medium-teal); /* Tarjeta de contenido (similar al diseño) */
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 400px; /* Para mantener la altura visual */
+}
+
+.setting_item {
+    margin-bottom: 20px;
+}
+
+.setting_item label {
+    display: block;
+    color: var(--off-white);
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.setting_input_line {
+    width: 100%;
+    /* Simula la línea de entrada del diseño */
+    height: 1px; 
+    border: none;
+    border-bottom: 2px solid var(--off-white); /* La línea blanca */
+    background: transparent;
+    color: var(--off-white); 
+    padding: 5px 0;
+    font-size: 1em;
+    outline: none;
+    margin-top: 5px; 
+}
+
+/* Asegura que los inputs no tengan el fondo blanco por defecto */
+input.setting_input_line {
+    /* Solo para los inputs de texto/email/password */
+    background-color: transparent;
+}
+
+/* ✅ Switch estilo iOS */
+.switch {
+    left: 0.8%;
+  position: relative;
+  width: 50px;
+  height: 26px;
+  display: inline-block;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #ccc;
+  border-radius: 50px;
+  transition: 0.3s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+/* ✅ ON */
+.switch input:checked + .slider {
+  background: #11403f;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(24px);
 }

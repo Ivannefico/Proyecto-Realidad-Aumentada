@@ -1,125 +1,108 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import '../css/Configuraciones.module.css';
+import React, { useState, useEffect } from 'react';
+import Navbar from './Navbar.jsx';
+import config_css from '../css/Configuraciones.module.css';
 
-const Configuraciones = ({ titulo = "Configuraciones" }) => {
-    const [notificaciones, setNotificaciones] = useState('');
-    const [privacidad, setPrivacidad] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [cambiarContrasena, setCambiarContrasena] = useState('');
-    const [fotoPerfil, setFotoPerfil] = useState(null);
-    const navigate = useNavigate();
+const sections = [
+    { id: 'usuario', label: 'Usuario', component: 'UserInfoSettings' },
+    { id: 'idioma', label: 'Idioma', component: 'LanguageSettings' },
+    { id: 'tema', label: 'Tema', component: 'ThemeSettings' },
+];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+const UserInfoSettings = () => (
+    <div className={config_css.settings_card}>
+        <div className={config_css.setting_item}>
+            <label htmlFor="edit-name">Editar Nombre</label>
+            <input type="text" id="edit-name" className={config_css.setting_input_line} />
+        </div>
+        <div className={config_css.setting_item}>
+            <label htmlFor="change-password">Cambiar contraseña</label>
+            <input type="password" id="change-password" className={config_css.setting_input_line} />
+        </div>
+        <div className={config_css.setting_item}>
+            <label htmlFor="change-email">Cambiar e-mail</label>
+            <input type="email" id="change-email" className={config_css.setting_input_line} />
+        </div>
+        <div className={config_css.setting_item}>
+            <label>Otros</label>
+            <div className={config_css.setting_input_line}></div>
+        </div>
+    </div>
+);
+
+const LanguageSettings = () => (
+    <div className={config_css.settings_card}>
+        <p>Configuración de Idioma...</p>
+    </div>
+);
+
+const ThemeSettings = () => {
+    const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+        const darkActive = savedTheme === "dark";
+        setIsDark(darkActive);
+        document.body.classList.toggle("dark", darkActive);
+    }, []);
+
+    const toggleTheme = () => {
+        const newTheme = !isDark;
+        setIsDark(newTheme);
+        document.body.classList.toggle("dark", newTheme);
+        localStorage.setItem("theme", newTheme ? "dark" : "light");
     };
 
     return (
-        <div className="config-container">
-            <form onSubmit={handleSubmit} className="glass-form">
-                <div className="title-form">
-                    <h2>{titulo}</h2>
-                </div>
-                
-                {/* Apartado para la privacidad del perfil */}
-                <div className="group">
-                    <div className="form-group">
-                        <label>Privacidad:</label>
-                        <div>
-                            <label>
-                                <p>Público - Cualquiera puede ver tu perfil</p>
-                                <input
-                                    type="radio"
-                                    name="privacidad"
-                                    value="publico"
-                                    checked={privacidad === "publico"}
-                                    onChange={() => setPrivacidad("publico")}
-                                />
-                            </label>
-                            <label>
-                                <p>Privado - Solo tú puedes ver tu perfil</p>
-                                <input
-                                    type="radio"
-                                    name="privacidad"
-                                    value="privado"
-                                    checked={privacidad === "privado"}
-                                    onChange={() => setPrivacidad("privado")}
-                                />
-                            </label>
-                        </div>
-                    </div>
+        <div className={config_css.settings_card}>
+            <p className={config_css.theme_label}>
+                Modo oscuro:
 
-                    {/* Apartado para cambiar foto de perfil */}
-                    <div className="form-group">
-                        <label>Cambiar foto de perfil:</label>
-                        <input
-                            type="file"
-                            onChange={(e) => setFotoPerfil(e.target.files[0])}
-                        />
-                        <div className="fotoPerfil">
-                        </div>
-                    </div>
-
-                    {/* Apartado para activar notificaciones */}
-                    <div className="form-group">
-                        <label>Notificaciones:</label>
-                        <div>
-                            <label>
-                                <p>Activadas</p>
-                                <input
-                                    type="radio"
-                                    name="notificaciones"
-                                    value="activadas"
-                                    checked={notificaciones === "activadas"}
-                                    onChange={() => setNotificaciones("activadas")}
-                                />
-                            </label>
-                            <label>
-                                <p>Desactivadas</p>
-                                <input
-                                    type="radio"
-                                    name="notificaciones"
-                                    value="desactivadas"
-                                    checked={notificaciones === "desactivadas"}
-                                    onChange={() => setNotificaciones("desactivadas")}
-                                />
-                            </label>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <label>Cambiar correo:</label>
-                        <input
-                            type="email"
-                            value={correo}
-                            onChange={(e) => setCorreo(e.target.value)}
-                            placeholder="Nuevo correo electrónico"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Cambiar contraseña:</label>
-                        <input
-                            type="password"
-                            value={cambiarContrasena}
-                            onChange={(e) => setCambiarContrasena(e.target.value)}
-                            placeholder="Nueva contraseña"
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Cambiar teléfono:</label>
-                        <input
-                            type="tel"
-                            value={telefono}
-                            onChange={(e) => setTelefono(e.target.value)}
-                            placeholder="Nuevo número de teléfono"
-                        />
-                    </div>
-                </div>
-
-                <button type="submit">Confirmar Cambios</button>
-            </form>
+            {/* ✅ SWITCH */}
+            <label className={config_css.switch}>
+                <input type="checkbox" checked={isDark} onChange={toggleTheme} />
+                <span className={config_css.slider}></span>
+            </label>
+            </p>
         </div>
     );
 };
 
-export default  Configuraciones;
+const SectionComponents = {
+    UserInfoSettings,
+    LanguageSettings,
+    ThemeSettings,
+};
+
+const SettingsPage = () => {
+    const [activeSection, setActiveSection] = useState('usuario');
+
+    const currentSection = sections.find(sec => sec.id === activeSection);
+    const SettingsComponent = currentSection ? SectionComponents[currentSection.component] : null;
+
+    return (
+        <div className={config_css.settings_container}>
+            <Navbar />
+
+            <div className={config_css.settings_content_wrapper}>
+                <div className={config_css.sidebar}>
+                    <div className={config_css.sidebar_section_title}>Opciones</div>
+                    {sections.map((section) => (
+                        <div
+                            key={section.id}
+                            className={`${config_css.sidebar_link} ${activeSection === section.id ? config_css.active : ''}`}
+                            onClick={() => setActiveSection(section.id)}
+                        >
+                            {section.label}
+                        </div>
+                    ))}
+                </div>
+
+                <div className={config_css.main_settings}>
+                    {SettingsComponent ? <SettingsComponent /> : <div>Selecciona una opción</div>}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default SettingsPage;
