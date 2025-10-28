@@ -1,4 +1,6 @@
+// src/idiomas/Idioma.jsx
 import React, { createContext, useState, useEffect } from "react";
+import texts from "../idiomas/traducciones";
 
 export const LanguageContext = createContext();
 
@@ -16,8 +18,8 @@ export const LanguageProvider = ({ children }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ idioma, cambiarIdioma }}>
+    <LanguageContext.Provider value={{ idioma, cambiarIdioma, texts: texts[idioma] }}>
       {children}
     </LanguageContext.Provider>
-  );
+  );
 };

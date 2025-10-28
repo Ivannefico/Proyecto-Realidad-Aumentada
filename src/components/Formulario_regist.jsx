@@ -1,30 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import formuregis_css from "../css/Registro.module.css";
 import { useUsuarios } from "../hooks/useUsuarios";
+import { LanguageContext } from "./Idioma.jsx";
+import traducciones from "../idiomas/traducciones.js";
 
-import logoDark from "../img/logoBlancoReves.png"; // Modo Claro
-import logoLight from "../img/logoNegroReves.png"; // Modo Oscuro
-
+import logoDark from "../img/logoBlancoReves.png";
+import logoLight from "../img/logoNegroReves.png";
 import userLight from "../img/user.png";
-import userDark from "../img/userBlanco.png"; 
-
+import userDark from "../img/userBlanco.png";
 import correoLight from "../img/correo.png";
 import correoDark from "../img/correoBlanco.png";
-
 import phoneLight from "../img/phone.png";
 import phoneDark from "../img/phoneBlanco.png";
-
 import ojoAbiertoLight from "../img/ojoabierto.png";
 import ojoAbiertoDark from "../img/ojoabiertoBlanco.png";
-
 import ojoCerradoLight from "../img/ojocerrado.png";
 import ojoCerradoDark from "../img/ojocerradoBlanco.png";
 
 const Registro = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
   const { crearUsuario } = useUsuarios();
+  
+  const { idioma } = useContext(LanguageContext);
+  const t = traducciones[idioma].registro;
+
   const [isDark, setIsDark] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [registro, setRegistro] = useState({
     usuarios: "",
@@ -36,7 +38,6 @@ const Registro = ({ onCambiarFormulario }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const handleTheme = () => setIsDark(document.body.classList.contains("dark"));
@@ -51,7 +52,6 @@ const Registro = ({ onCambiarFormulario }) => {
   };
 
   const validateEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
-
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
   const handleSignIn = async (e) => {
@@ -59,12 +59,12 @@ const Registro = ({ onCambiarFormulario }) => {
     setError("");
 
     if (!validateEmail(registro.correo)) {
-      setError("El correo electrónico no es válido");
+      setError(t.errorEmail);
       return;
     }
 
     if (registro.contrasena !== registro.confirmarContrasena) {
-      setError("Las contraseñas no coinciden");
+      setError(t.errorPass);
       return;
     }
 
@@ -78,20 +78,19 @@ const Registro = ({ onCambiarFormulario }) => {
         rol: "usuarios",
       });
 
-      alert("Usuario registrado correctamente");
       navigate("/", { replace: true });
     } catch {
-      setError("Error al registrar");
+      setError("Error");
     } finally {
       setLoading(false);
     }
   };
 
- const logo = isDark ? logoDark : logoLight;
- const iconUser = isDark ? userDark : userLight;
- const iconCorreo = isDark ? correoDark : correoLight;
- const iconPhone = isDark ? phoneDark : phoneLight;
- const iconPass = showPassword
+  const logo = isDark ? logoDark : logoLight;
+  const iconUser = isDark ? userDark : userLight;
+  const iconCorreo = isDark ? correoDark : correoLight;
+  const iconPhone = isDark ? phoneDark : phoneLight;
+  const iconPass = showPassword
     ? (isDark ? ojoAbiertoDark : ojoAbiertoLight)
     : (isDark ? ojoCerradoDark : ojoCerradoLight);
 
@@ -102,12 +101,18 @@ const Registro = ({ onCambiarFormulario }) => {
 
         <form onSubmit={handleSignIn} className={formuregis_css.form}>
           <div className={formuregis_css.text_container}>
-            <h2>Te damos la bienvenida a <br /> “Scan cat”</h2>
+            <h2>
+              {t.titulo} <br /> {t.subtitulo}
+            </h2>
 
             <p className={formuregis_css.login_text}>
-              ¿Ya tienes una cuenta?
-              <button type="button" onClick={onCambiarFormulario} className={formuregis_css.login_btn}>
-                Iniciar Sesión
+              {t.pregunta}
+              <button
+                type="button"
+                onClick={onCambiarFormulario}
+                className={formuregis_css.login_btn}
+              >
+                {t.iniciarSesion}
               </button>
             </p>
           </div>
@@ -117,7 +122,7 @@ const Registro = ({ onCambiarFormulario }) => {
               <input
                 type="text"
                 name="usuarios"
-                placeholder="Nombre de usuario"
+                placeholder={t.usuario}
                 value={registro.usuarios}
                 onChange={handleChange}
                 required
@@ -130,7 +135,7 @@ const Registro = ({ onCambiarFormulario }) => {
             <div className={formuregis_css.input_group}>
               <input
                 name="correo"
-                placeholder="Correo electrónico"
+                placeholder={t.correo}
                 value={registro.correo}
                 onChange={handleChange}
                 required
@@ -144,7 +149,7 @@ const Registro = ({ onCambiarFormulario }) => {
               <input
                 type="tel"
                 name="telefono"
-                placeholder="Número de teléfono"
+                placeholder={t.telefono}
                 value={registro.telefono}
                 onChange={handleChange}
                 required
@@ -158,7 +163,7 @@ const Registro = ({ onCambiarFormulario }) => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="contrasena"
-                placeholder="Contraseña"
+                placeholder={t.contrasena}
                 value={registro.contrasena}
                 onChange={handleChange}
                 required
@@ -172,7 +177,7 @@ const Registro = ({ onCambiarFormulario }) => {
               <input
                 type={showPassword ? "text" : "password"}
                 name="confirmarContrasena"
-                placeholder="Confirma contraseña"
+                placeholder={t.confirmar}
                 value={registro.confirmarContrasena}
                 onChange={handleChange}
                 required
@@ -183,11 +188,15 @@ const Registro = ({ onCambiarFormulario }) => {
             </div>
 
             <button type="submit" className={formuregis_css.register_btn} disabled={loading}>
-              {loading ? "Registrando..." : "Regístrate ahora"}
+              {loading ? "..." : t.registrar}
             </button>
 
-            <button  type="button" className={formuregis_css.policy} onClick={() => navigate("/privacypolicy")}>
-              Información de servicios, política y avisos
+            <button
+              type="button"
+              className={formuregis_css.policy}
+              onClick={() => navigate("/privacypolicy")}
+            >
+              {t.politica}
             </button>
           </div>
         </form>

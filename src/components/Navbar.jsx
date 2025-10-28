@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar_css from "../css/Navbar.module.css";
 import tuercaIcon from "../img/tuerca.png";
@@ -7,17 +7,21 @@ import logo from "../img/logo.png";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
+import { LanguageContext } from "./Idioma.jsx";
+import traducciones from "../idiomas/traducciones.js";
+
 const Navbar = ({ onAbrirContacto }) => {
   const navigate = useNavigate();
   const [rolUsuario, setRolUsuario] = useState(null);
 
+  const { idioma } = useContext(LanguageContext);
+  const t = traducciones[idioma].navbar;
+
   useEffect(() => {
     const obtenerRolUsuario = async () => {
-      // Tomamos el usuario guardado en localStorage
       const usuarioLocal = JSON.parse(localStorage.getItem("usuario"));
       if (!usuarioLocal || !usuarioLocal.correo) return;
 
-      // Buscamos ese usuario en Firestore
       const col = collection(db, "usuarios");
       const snap = await getDocs(col);
       const usuarioEncontrado = snap.docs
@@ -43,23 +47,19 @@ const Navbar = ({ onAbrirContacto }) => {
         <img src={logo} alt="Logo" />
       </div>
 
-      <button onClick={() => navigate("/home")}>Inicio</button>
+      <button onClick={() => navigate("/home")}>{t.home}</button>
+      <button onClick={onAbrirContacto}>{t.contact}</button>
 
-      <button onClick={onAbrirContacto}>Contacto</button>
-
-      {/* 🔥 Solo se muestra si el usuario es admin */}
       {rolUsuario === "admin" && (
-        <button onClick={() => navigate("/listausuario")}>
-          Lista de Usuarios
-        </button>
+        <button onClick={() => navigate("/listausuario")}>{t.userList}</button>
       )}
 
       <button onClick={() => navigate("/configuracion")} className={Navbar_css.btn_icono}>
-        <img src={tuercaIcon} alt="Configuración" />
+        <img src={tuercaIcon} alt={t.settings} />
       </button>
 
       <button onClick={handleLogout} className={Navbar_css.btn_logout}>
-        <img src={logoutIcon} alt="Logout" />
+        <img src={logoutIcon} alt={t.logout} />
       </button>
     </nav>
   );

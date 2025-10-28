@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import formuinicio_css from "../css/InicioSesion.module.css";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -6,25 +6,27 @@ import { db } from "../firebase/firebase";
 import { useUsuarios } from "../hooks/useUsuarios";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/firebase";
+import { LanguageContext } from "./Idioma.jsx";
+import traducciones from "../idiomas/traducciones.js";
 
-import logoDark from "../img/logoBlanco.png"; // Modo Claro
-import logoLight from "../img/logoNegro.png"; // Modo Oscuro
-
+import logoDark from "../img/logoBlanco.png";
+import logoLight from "../img/logoNegro.png";
 import correoLight from "../img/correo.png";
 import correoDark from "../img/correoBlanco.png";
-
 import ojoAbiertoLight from "../img/ojoabierto.png";
-import ojoAbiertoDark from "../img/ojoabiertoBlanco.png"; 
-
+import ojoAbiertoDark from "../img/ojoabiertoBlanco.png";
 import ojoCerradoLight from "../img/ojocerrado.png";
-import ojoCerradoDark from "../img/ojocerradoBlanco.png"; 
-
+import ojoCerradoDark from "../img/ojocerradoBlanco.png";
 import googleIcon from "../img/google.png";
 
 const Login = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
   const { crearUsuario } = useUsuarios();
   const [isDark, setIsDark] = useState(false);
+
+const { idioma } = useContext(LanguageContext);
+const t = traducciones[idioma]?.login || traducciones["es"].login;
+
 
   const [login, setLogin] = useState({
     correo: "",
@@ -46,9 +48,8 @@ const Login = ({ onCambiarFormulario }) => {
     return () => observer.disconnect();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setLogin({ ...login, [e.target.name]: e.target.value });
-  };
 
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -66,7 +67,7 @@ const Login = ({ onCambiarFormulario }) => {
       const snap = await getDocs(q);
 
       if (snap.empty) {
-        setError("Correo o contraseña incorrectos");
+        setError(t.error);
         setLoading(false);
         return;
       }
@@ -75,7 +76,7 @@ const Login = ({ onCambiarFormulario }) => {
       localStorage.setItem("usuario", JSON.stringify(usuario));
       navigate("/home");
     } catch {
-      setError("Ocurrió un error al iniciar sesión");
+      setError("Error");
     } finally {
       setLoading(false);
     }
@@ -95,10 +96,9 @@ const Login = ({ onCambiarFormulario }) => {
       };
 
       localStorage.setItem("usuario", JSON.stringify(usuarioData));
-      alert(`Bienvenido ${usuarioData.usuarios}`);
       navigate("/home");
     } catch {
-      setError("Error con Google");
+      setError("Error Google");
     }
   };
 
@@ -119,12 +119,16 @@ const Login = ({ onCambiarFormulario }) => {
 
         <form onSubmit={handleLogin} className={formuinicio_css.form}>
           <div className={formuinicio_css.text_container}>
-            <h2>Iniciar Sesión</h2>
+            <h2>{t.titulo}</h2>
 
             <p className={formuinicio_css.register_text}>
-              ¿No tienes una cuenta?
-              <button type="button" onClick={onCambiarFormulario} className={formuinicio_css.register_btn}>
-                Regístrate
+              {t.pregunta}
+              <button
+                type="button"
+                onClick={onCambiarFormulario}
+                className={formuinicio_css.register_btn}
+              >
+                {t.registrar}
               </button>
             </p>
           </div>
@@ -133,7 +137,7 @@ const Login = ({ onCambiarFormulario }) => {
             <div className={formuinicio_css.input_group}>
               <input
                 name="correo"
-                placeholder="Correo Electrónico"
+                placeholder={t.correo}
                 value={login.correo}
                 onChange={handleChange}
                 required
@@ -146,8 +150,8 @@ const Login = ({ onCambiarFormulario }) => {
             <div className={formuinicio_css.input_group}>
               <input
                 name="contrasena"
-                placeholder="Contraseña"
                 type={showPassword ? "text" : "password"}
+                placeholder={t.contrasena}
                 value={login.contrasena}
                 onChange={handleChange}
                 required
@@ -158,12 +162,12 @@ const Login = ({ onCambiarFormulario }) => {
             </div>
 
             <button type="submit" className={formuinicio_css.login_button} disabled={loading}>
-              {loading ? "Ingresando..." : "Iniciar Sesión"}
+              {loading ? "..." : t.ingresar}
             </button>
 
             <div className={formuinicio_css.google_btn} onClick={handleGoogleSignIn}>
               <img src={googleIcon} alt="Google" className={formuinicio_css.google_icon} />
-              <p>Iniciar sesión con Google</p>
+              <p>{t.google}</p>
             </div>
           </div>
         </form>

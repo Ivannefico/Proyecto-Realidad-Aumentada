@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import inicio_css from "../css/Inicio.module.css";
 import Navbar from "./Navbar.jsx";
-import cameraIcon from "../img/camara.png";
 import Contacto from "./Contacto";
+import cameraIcon from "../img/camara.png";
+import { LanguageContext } from "./Idioma.jsx";
+import traducciones from "../idiomas/traducciones.js";
 
 const MiAppRA = () => {
   const navigate = useNavigate();
-  const [mostrarContacto, setMostrarContacto] = useState(false);
+  const { idioma } = useContext(LanguageContext);
+  const t = traducciones[idioma]?.home || traducciones["es"].home;
 
-  const abrirContacto = () => setMostrarContacto(true);
-  const cerrarContacto = () => setMostrarContacto(false);
+  const [mostrarContacto, setMostrarContacto] = useState(false);
 
   return (
     <div className={inicio_css.inicioContainer}>
-      <Navbar onAbrirContacto={abrirContacto} />
-      <p className={inicio_css.espacio_p3}></p>
+      <Navbar onAbrirContacto={() => setMostrarContacto(true)} />
 
       <section className={inicio_css.cajainicio}>
+        
+        {/* 📌 Historial */}
         <section className={inicio_css.Nav_historial}>
-          <h2 className={inicio_css.text_h2}>Historial de Scanner</h2>
+          <h2 className={inicio_css.text_h2}>{t.historial}</h2>
+
           <div className={inicio_css.historial}>
             <ul className={inicio_css.ul_historial}>
               <li className={inicio_css.derme}>
-                <p className={inicio_css.p2}></p>
-                <p className={inicio_css.p3}>Documento</p>
-                <p className={inicio_css.p3}></p>
+                <p className={inicio_css.p3}>{t.documento}</p>
+              </li>
+              <li className={inicio_css.derme}>
+                <p className={inicio_css.p3}>{t.busquedas}</p>
               </li>
             </ul>
-            <p className={inicio_css.no_hay_element}>Busquedas</p>
+
+            <p className={inicio_css.no_hay_element}>
+              {t.noBusquedas }
+            </p>
           </div>
         </section>
 
@@ -39,23 +47,29 @@ const MiAppRA = () => {
               className={inicio_css.Buttons}
             >
               <img src={cameraIcon} alt="camera" />
-              <div><p>Scan</p></div>
+              <div>
+
+                <p>{t.escanear}</p>
+              </div>
             </button>
           </div>
         </section>
+
       </section>
 
       {mostrarContacto && (
-        <div className={inicio_css.modalOverlay} onClick={cerrarContacto}>
+        <div
+          className={inicio_css.modalOverlay}
+          onClick={() => setMostrarContacto(false)}
+        >
           <div
             className={inicio_css.modalContenido}
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className={inicio_css.cerrarModal}
-              onClick={cerrarContacto}
-            >
-            </button>
+              onClick={() => setMostrarContacto(false)}
+            ></button>
             <Contacto />
           </div>
         </div>

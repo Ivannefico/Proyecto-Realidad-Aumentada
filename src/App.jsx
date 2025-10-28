@@ -10,15 +10,10 @@ import ProtectedRoutes from "./utils/ProtectedRoutes.jsx";
 import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 import ListaUsuarios from "./components/ListaUsuarios.jsx";
 import DetalleUsuarios from "./components/DetalleUsuarios.jsx";
-import Themes from "./components/Themes.jsx";
 
 function App() {
   return (
     <BrowserRouter>
-      <div style={{ position: "fixed", top: "1rem", right: "1rem", zIndex: 1000 }}>
-        <Themes />
-      </div>
-
       <Routes>
         <Route path="/" element={<Formulario />} />
         <Route path="/registro" element={<Registro />} />
