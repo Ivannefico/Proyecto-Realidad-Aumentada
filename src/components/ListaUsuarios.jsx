@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.jsx";
 import lista_css from "../css/ListaUsuarios.module.css";
 import Navbar from "./Navbar.jsx";
 import Contacto from "./Contacto";

@@ -1,7 +1,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.jsx";
 import detalle_css from "../css/DetalleUsuarios.module.css";
 import lista_css from "../css/ListaUsuarios.module.css";
 import Navbar from "./Navbar.jsx";

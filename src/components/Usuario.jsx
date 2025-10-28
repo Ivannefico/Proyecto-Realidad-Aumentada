@@ -1,5 +1,5 @@
-import { collection, getDocs, addDoc } from "../firebase/firestore";
-import { db } from "../firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase.jsx";
 
 // Obtener todos los usuarios
 export const getUsuarios = async () => {

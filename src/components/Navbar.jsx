@@ -5,7 +5,7 @@ import tuercaIcon from "../img/tuerca.png";
 import logoutIcon from "../img/logout.png";
 import logo from "../img/logo.png";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/firebase.jsx";
 
 import { LanguageContext } from "./Idioma.jsx";
 import traducciones from "../idiomas/traducciones.js";
