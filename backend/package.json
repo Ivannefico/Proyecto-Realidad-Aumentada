@@ -5,8 +5,7 @@
   "main": "index.js",
   "homepage": "https://ScannerCat.github.io/Proyecto-Realidad-Aumentada/",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
