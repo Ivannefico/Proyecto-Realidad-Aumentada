@@ -11,13 +11,9 @@ import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
 import ListaUsuarios from "./components/ListaUsuarios.jsx";
 import DetalleUsuarios from "./components/DetalleUsuarios.jsx";
 
-
-const basename = process.env.NODE_ENV === "production" ? "/Proyecto-Realidad-Aumentada" : "/";
-
 function App() {
   return (
-
-      <BrowserRouter basename={basename}>
+    <BrowserRouter basename="/Proyecto-Realidad-Aumentada">
       <Routes>
         <Route path="/" element={<Formulario />} />
         <Route path="/registro" element={<Registro />} />
