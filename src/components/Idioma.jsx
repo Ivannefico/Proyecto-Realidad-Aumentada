@@ -1,6 +1,6 @@
 // src/idiomas/Idioma.jsx
 import React, { createContext, useState, useEffect } from "react";
-import texts from "../idiomas/traducciones";
+import texts from "../language/traducciones";
 
 export const LanguageContext = createContext();
 

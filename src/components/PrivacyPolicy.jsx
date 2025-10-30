@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styles from "../css/PrivacyPolicy.module.css";
 import { LanguageContext } from "./Idioma.jsx";
-import traducciones from "../idiomas/traducciones.js";
+import traducciones from "../language/traducciones.js";
 
 export default function PrivacyPolicy() {
   const { idioma } = useContext(LanguageContext);

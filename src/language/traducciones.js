@@ -139,6 +139,31 @@ const traducciones = {
       ]
     }
   ]
+  },
+  detalleUsuario: {
+  cargando: "Cargando usuario...",
+  noEncontrado: "No se encontró el usuario",
+  perfilDe: "Perfil de",
+  correo: "Correo",
+  rol: "Rol",
+  telefono: "Teléfono",
+  contrasena: "Contraseña",
+  estado: "Estado",
+  activo: "Activo",
+  deshabilitado: "Deshabilitado",
+  editar: "Editar",
+  habilitar: "Habilitar",
+  deshabilitar: "Deshabilitar",
+  volver: "Volver",
+  editarUsuario: "Editar usuario",
+  guardar: "Guardar cambios",
+  cancelar: "Cancelar",
+},
+listaUsuarios: {
+  cargando: "Cargando usuarios...",
+  noUsuarios: "No hay usuarios registrados.",
+  correo: "Correo",
+  verDetalle: "Ver detalle",
 }
 
   },
@@ -283,7 +308,33 @@ privacidad: {
       ]
     }
   ]
+},
+detalleUsuario: {
+  cargando: "Loading user...",
+  noEncontrado: "User not found",
+  perfilDe: "Profile of",
+  correo: "Email",
+  rol: "Role",
+  telefono: "Phone",
+  contrasena: "Password",
+  estado: "Status",
+  activo: "Active",
+  deshabilitado: "Disabled",
+  editar: "Edit",
+  habilitar: "Enable",
+  deshabilitar: "Disable",
+  volver: "Back",
+  editarUsuario: "Edit user",
+  guardar: "Save changes",
+  cancelar: "Cancel",
+},
+listaUsuarios: {
+  cargando: "Loading users...",
+  noUsuarios: "No registered users.",
+  correo: "Email",
+  verDetalle: "View info",
 }
+
 
   }
 };

@@ -5,7 +5,7 @@ import Navbar from "./Navbar.jsx";
 import Contacto from "./Contacto";
 import cameraIcon from "../img/camara.png";
 import { LanguageContext } from "./Idioma.jsx";
-import traducciones from "../idiomas/traducciones.js";
+import traducciones from "../language/traducciones.js";
 
 const MiAppRA = () => {
   const navigate = useNavigate();

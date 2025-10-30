@@ -6,7 +6,7 @@ import { db } from "../firebase/firebase.jsx";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase/firebase.jsx";
 import { LanguageContext } from "./Idioma.jsx";
-import traducciones from "../idiomas/traducciones.js";
+import traducciones from "../language/traducciones.js";
 
 import logoDark from "../img/logoBlanco.png";
 import logoLight from "../img/logoNegro.png";
@@ -18,13 +18,14 @@ import ojoCerradoLight from "../img/ojocerrado.png";
 import ojoCerradoDark from "../img/ojocerradoBlanco.png";
 import googleIcon from "../img/google.png";
 
+
 const Login = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
+
   const [isDark, setIsDark] = useState(false);
 
 const { idioma } = useContext(LanguageContext);
 const t = traducciones[idioma]?.login || traducciones["es"].login;
-
 
   const [login, setLogin] = useState({
     correo: "",
@@ -139,6 +140,7 @@ const t = traducciones[idioma]?.login || traducciones["es"].login;
                 value={login.correo}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span className={formuinicio_css.icon}>
                 <img src={iconCorreo} alt="Correo" />
@@ -153,6 +155,7 @@ const t = traducciones[idioma]?.login || traducciones["es"].login;
                 value={login.contrasena}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span onClick={togglePasswordVisibility} className={formuinicio_css.password_toggle}>
                 <img src={iconPassword} alt="toggle" />

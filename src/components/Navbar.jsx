@@ -8,7 +8,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase.jsx";
 
 import { LanguageContext } from "./Idioma.jsx";
-import traducciones from "../idiomas/traducciones.js";
+import traducciones from "../language/traducciones.js";
 
 const Navbar = ({ onAbrirContacto }) => {
   const navigate = useNavigate();

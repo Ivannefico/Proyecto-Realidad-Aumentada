@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from "../firebase/firebase.jsx";
 import lista_css from "../css/ListaUsuarios.module.css";
 import Navbar from "./Navbar.jsx";
 import Contacto from "./Contacto";
+import { LanguageContext } from "./Idioma.jsx";
+import traducciones from "../language/traducciones.js";
 
 const ListaUsuarios = () => {
+  const { idioma } = useContext(LanguageContext);
+  const t = traducciones[idioma].listaUsuarios;
+
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mostrarContacto, setMostrarContacto] = useState(false);
@@ -15,11 +20,7 @@ const ListaUsuarios = () => {
     const obtenerUsuarios = async () => {
       try {
         const snapshot = await getDocs(collection(db, "usuarios"));
-        const lista = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setUsuarios(lista);
+        setUsuarios(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
       } finally {
@@ -39,27 +40,11 @@ const ListaUsuarios = () => {
         <Navbar onAbrirContacto={abrirContacto} />
         <div className={lista_css.loadingContent}>
           <div className={lista_css.spinner}></div>
-          <p>Cargando usuarios...</p>
+          <p>{t.cargando}</p>
         </div>
-
-        {mostrarContacto && (
-          <div className={lista_css.modalOverlay} onClick={cerrarContacto}>
-            <div
-              className={lista_css.modalContenido}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                className={lista_css.cerrarModal}
-                onClick={cerrarContacto}
-              >
-                ✕
-              </button>
-              <Contacto />
-            </div>
-          </div>
-        )}
       </div>
     );
+
 
   return (
     <>
@@ -68,20 +53,17 @@ const ListaUsuarios = () => {
       <div className={lista_css.contenedorPrincipal}>
         <div className={lista_css.contenedorLista}>
           {usuarios.length === 0 ? (
-            <p>No hay usuarios registrados.</p>
+            <p>{t.noUsuarios}</p>
           ) : (
             <div className={lista_css.gridUsuarios}>
               {usuarios.map((usuario) => (
                 <div key={usuario.id} className={lista_css.tarjetaUsuario}>
                   <h3>{usuario.usuarios}</h3>
                   <p>
-                    <strong>Correo:</strong> {usuario.correo}
+                    <strong>{t.correo}:</strong> {usuario.correo}
                   </p>
-                  <Link
-                    to={`/usuario/${usuario.id}`}
-                    className={lista_css.botonDetalle}
-                  >
-                    Ver detalle
+                  <Link to={`/usuario/${usuario.id}`} className={lista_css.botonDetalle}>
+                    {t.verDetalle}
                   </Link>
                 </div>
               ))}
@@ -92,13 +74,8 @@ const ListaUsuarios = () => {
 
       {mostrarContacto && (
         <div className={lista_css.modalOverlay} onClick={cerrarContacto}>
-          <div
-            className={lista_css.modalContenido}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className={lista_css.cerrarModal} onClick={cerrarContacto}>
-              ✕
-            </button>
+          <div className={lista_css.modalContenido} onClick={(e) => e.stopPropagation()}>
+            <button className={lista_css.cerrarModal} onClick={cerrarContacto}>✕</button>
             <Contacto />
           </div>
         </div>

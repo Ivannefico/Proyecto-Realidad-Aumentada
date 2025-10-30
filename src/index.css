@@ -10,10 +10,6 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
-}
-
 :root {
   --bg-a: #d4c4c4;
   --bg-b: #e7d5d5;
@@ -31,22 +27,25 @@ body.dark {
   --secondary: #cfcfcf;
 }
 
+* {
+  transition: background-color 0.20s ease, color 0.20s ease;
+}
 
-body {
+/* ✅ NUEVO - Inputs que deben cambiar con el modo oscuro */
+.input-tema {
   background-color: var(--bg-a);
   color: var(--text);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
 }
 
-
-.formulario {
-  background-color: var(--secondary);
-  border-radius: 8px;
-  padding: 1rem;
-  transition: background-color 0.25s ease, color 0.25s ease;
+body.dark .input-tema {
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
-
-/* Botón del modo oscuro */
+/* Botón modo oscuro */
 .theme-button {
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -55,39 +54,17 @@ body {
   cursor: pointer;
   font-size: 1.1rem;
   color: inherit;
-  transition: transform 0.15s ease, background-color 0.2s ease;
 }
 .theme-button:hover {
   transform: scale(1.08);
 }
 
-/* Ejemplo: inputs que cambian con el tema */
-input,
-textarea,
-select {
-  background-color: var(--bg-a);
-  color: var(--text);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-body.dark input,
-body.dark textarea,
-body.dark select {
-  background-color: #2a2a2a;
-  color: #f5f5f5;
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-* {
-  transition: background-color 0.20s ease, color 0.20s ease;
-}
-
-/* DETECCIÓN AUTOMÁTICA DEL TEMA DEL SISTEMA */
+/* Detectar tema del sistema */
 @media (prefers-color-scheme: dark) {
   :root {
-  --bg-a: #181616;
-  --text: #f5f5f5;
-  --primary: #e9e0e0;
-  --secondary: #cfcfcf;
+    --bg-a: #181616;
+    --text: #f5f5f5;
+    --primary: #e9e0e0;
+    --secondary: #cfcfcf;
   }
 }

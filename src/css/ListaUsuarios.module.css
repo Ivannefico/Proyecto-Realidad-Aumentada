@@ -84,6 +84,19 @@
   background-color: #0f9999;
 }
 
+.botonDetalle {
+  background: none;
+  border: none;
+  color: #00ffff;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.botonDetalle:hover {
+  color: #b366ff; 
+}
+
 .loadingScreen {
   background-color: #0b3838;
   min-height: 100vh;

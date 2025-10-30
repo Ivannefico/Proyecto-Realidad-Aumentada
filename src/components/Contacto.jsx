@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import contacto_css from "../css/Contacto.module.css";
 import { LanguageContext } from "./Idioma.jsx";
-import traducciones from "../idiomas/traducciones.js";
+import traducciones from "../language/traducciones.js";
 
 const Contacto = () => {
   const { idioma } = useContext(LanguageContext);
@@ -14,8 +14,9 @@ const Contacto = () => {
 
   return (
     <div className={contacto_css.contacto_container}>
-      <h2 className={contacto_css.title}>{t.titulo}</h2>
+      
 
+      {/* --- IZQUIERDA: INFORMACIÓN --- */}
       <section className={contacto_css.info}>
         <h3 className={contacto_css.subtitle}>{t.quienesSomos}</h3>
 
@@ -36,20 +37,24 @@ const Contacto = () => {
         </div>
       </section>
 
+
+
+      {/* --- DERECHA: FORMULARIO --- */}
       <form className={contacto_css.formulario}>
+                  <h2 className={contacto_css.title}>{t.titulo}</h2>
         <div>
-          <label className={contacto_css.mensaje}>{t.formNombre}</label>
-          <input className={contacto_css.input} type="text" required />
+          <label className={contacto_css.mensaje} htmlFor="nombre">{t.formNombre}</label>
+          <input id="nombre" className={contacto_css.input} type="text" required />
         </div>
 
         <div>
-          <label className={contacto_css.mensaje}>{t.formCorreo}</label>
-          <input className={contacto_css.input} type="email" required />
+          <label className={contacto_css.mensaje} htmlFor="correo">{t.formCorreo}</label>
+          <input id="correo" className={contacto_css.input} type="email" required />
         </div>
 
         <div>
-          <label className={contacto_css.mensaje}>{t.formMensaje}</label>
-          <textarea className={contacto_css.textarea} required></textarea>
+          <label className={contacto_css.mensaje} htmlFor="mensaje">{t.formMensaje}</label>
+          <textarea id="mensaje" className={contacto_css.textarea} required></textarea>
         </div>
 
         <button type="submit" className={contacto_css.button}>

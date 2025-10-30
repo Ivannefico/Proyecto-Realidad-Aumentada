@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import formuregis_css from "../css/Registro.module.css";
 import { useUsuarios } from "../hooks/useUsuarios";
 import { LanguageContext } from "./Idioma.jsx";
-import traducciones from "../idiomas/traducciones.js";
+import traducciones from "../language/traducciones.js";
 
 import logoDark from "../img/logoBlancoReves.png";
 import logoLight from "../img/logoNegroReves.png";
@@ -126,6 +126,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 value={registro.usuarios}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span className={formuregis_css.icon}>
                 <img src={iconUser} alt="Usuario" />
@@ -139,6 +140,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 value={registro.correo}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span className={formuregis_css.icon}>
                 <img src={iconCorreo} alt="Correo" />
@@ -153,6 +155,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 value={registro.telefono}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span className={formuregis_css.icon}>
                 <img src={iconPhone} alt="Teléfono" />
@@ -167,6 +170,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 value={registro.contrasena}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span onClick={togglePasswordVisibility} className={formuregis_css.password_toggle}>
                 <img src={iconPass} alt="toggle" />
@@ -181,6 +185,7 @@ const Registro = ({ onCambiarFormulario }) => {
                 value={registro.confirmarContrasena}
                 onChange={handleChange}
                 required
+                className="input-tema"
               />
               <span onClick={togglePasswordVisibility} className={formuregis_css.password_toggle}>
                 <img src={iconPass} alt="toggle" />
