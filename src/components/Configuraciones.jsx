@@ -5,7 +5,7 @@ import config_css from "../css/Configuraciones.module.css";
 import { LanguageContext } from "../components/Idioma.jsx";
 import traducciones from "../language/traducciones.js";
 
-{/* settings de todo config */}
+/* settings de todo config */
 const SettingsPage = () => {
   const [activeSection, setActiveSection] = useState('usuario');
   const { idioma } = useContext(LanguageContext);
@@ -57,7 +57,7 @@ const SettingsPage = () => {
   );
 };
 
-{/* settings de usuario */ }
+/* settings de usuario */ 
 const UserInfoSettings = () => {
   const { idioma } = useContext(LanguageContext);
   const t = traducciones[idioma].configuraciones;
@@ -80,7 +80,7 @@ const UserInfoSettings = () => {
   );
 };
 
-{/* settings de idioma */ }
+/* settings de idioma */ 
 const LanguageSettings = () => {
   const { idioma, cambiarIdioma } = useContext(LanguageContext);
   const t = traducciones[idioma].configuraciones;
@@ -104,7 +104,7 @@ const LanguageSettings = () => {
   );
 };
 
-{/* settings de tema */ }
+/* settings de tema */ 
 const ThemeSettings = () => {
   const { idioma } = useContext(LanguageContext);
   const t = traducciones[idioma].configuraciones;
