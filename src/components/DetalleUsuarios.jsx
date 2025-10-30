@@ -9,7 +9,6 @@ import Contacto from "./Contacto";
 
 const DetalleUsuario = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editando, setEditando] = useState(false);

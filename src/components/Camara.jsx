@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
-import * as tf from "@tensorflow/tfjs";
 import camara_css from "../css/Camara.module.css";
 import logo from "../img/logo.png";
 import girar from "../img/girar.png";
@@ -21,40 +20,8 @@ export default function CameraScan() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (cameraOn) startCamera();
-    else stopCamera();
-    return () => stopCamera();
-
-  }, [cameraOn, facingMode]);
-
-  async function startCamera() {
-    try {
-      stopCamera(); // detener cualquier stream previo
-      const constraints = { video: { facingMode } };
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      streamRef.current = stream;
-
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
-      }
-
-      if (!modelRef.current) {
-        setLoading(true);
-        modelRef.current = await cocoSsd.load();
-        setLoading(false);
-      }
-
-      detectObjects();
-    } catch (err) {
-      console.error("Error al acceder a la cámara:", err);
-      alert("No se pudo acceder a la cámara.");
-      setCameraOn(false);
-    }
-  }
-
-  function stopCamera() {
+  // --- stopCamera ---
+  const stopCamera = useCallback(() => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current); 
       animationFrameRef.current = null;
@@ -68,13 +35,10 @@ export default function CameraScan() {
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-  }
+  }, []);
 
-  function rotateCamera() {
-    setFacingMode((f) => (f === "environment" ? "user" : "environment"));
-  }
-
-  async function detectObjects() {
+  // --- detectObjects ---
+  const detectObjects = useCallback(() => {
     if (!videoRef.current || !canvasRef.current || !modelRef.current) return;
 
     const video = videoRef.current;
@@ -118,7 +82,48 @@ export default function CameraScan() {
     };
 
     loop();
-  }
+  }, [cameraOn]);
+
+  // --- startCamera ---
+  const startCamera = useCallback(async () => {
+    try {
+      stopCamera(); // detener cualquier stream previo
+      const constraints = { video: { facingMode } };
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      streamRef.current = stream;
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        await videoRef.current.play();
+      }
+
+      if (!modelRef.current) {
+        setLoading(true);
+        modelRef.current = await cocoSsd.load();
+        setLoading(false);
+      }
+
+      detectObjects(); // inicia la detección una vez que el video está listo
+    } catch (err) {
+      console.error("Error al acceder a la cámara:", err);
+      alert("No se pudo acceder a la cámara.");
+      setCameraOn(false);
+    }
+  }, [facingMode, stopCamera, detectObjects]);
+
+  // --- useEffect principal ---
+  useEffect(() => {
+    if (cameraOn) startCamera();
+    else stopCamera();
+
+    return () => stopCamera();
+  }, [cameraOn, startCamera, stopCamera]);
+
+  // --- rotateCamera ---
+  const rotateCamera = () => {
+    setFacingMode((f) => (f === "environment" ? "user" : "environment"));
+  };
+
   return (
     <div className={camara_css.shell}>
       <div className={camara_css.card}>

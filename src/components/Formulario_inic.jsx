@@ -21,7 +21,6 @@ import googleIcon from "../img/google.png";
 
 const Login = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
-  const { crearUsuario } = useUsuarios();
   const [isDark, setIsDark] = useState(false);
 
 const { idioma } = useContext(LanguageContext);
