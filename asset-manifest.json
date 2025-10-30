@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Proyecto-Realidad-Aumentada/static/css/main.c6fea05b.css",
-    "main.js": "/Proyecto-Realidad-Aumentada/static/js/main.c36fae9b.js",
+    "main.js": "/Proyecto-Realidad-Aumentada/static/js/main.62ce0e98.js",
     "static/media/logo.png": "/Proyecto-Realidad-Aumentada/static/media/logo.744cb3535653379e9a1b.png",
     "static/media/logoBlancoReves.png": "/Proyecto-Realidad-Aumentada/static/media/logoBlancoReves.cf535152880b98b691ff.png",
     "static/media/logoBlanco.png": "/Proyecto-Realidad-Aumentada/static/media/logoBlanco.e2c3bfca2a2fab5fa36f.png",
@@ -9,10 +9,10 @@
     "static/media/logoNegro.png": "/Proyecto-Realidad-Aumentada/static/media/logoNegro.35d59b209b7d4510be33.png",
     "index.html": "/Proyecto-Realidad-Aumentada/index.html",
     "main.c6fea05b.css.map": "/Proyecto-Realidad-Aumentada/static/css/main.c6fea05b.css.map",
-    "main.c36fae9b.js.map": "/Proyecto-Realidad-Aumentada/static/js/main.c36fae9b.js.map"
+    "main.62ce0e98.js.map": "/Proyecto-Realidad-Aumentada/static/js/main.62ce0e98.js.map"
   },
   "entrypoints": [
     "static/css/main.c6fea05b.css",
-    "static/js/main.c36fae9b.js"
+    "static/js/main.62ce0e98.js"
   ]
 }
