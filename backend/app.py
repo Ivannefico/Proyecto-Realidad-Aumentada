@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Cargar el modelo YOLO
-model = YOLO("yolov8n.pt")  # descarga automática si no lo tienes
+model = YOLO("yolov8s.pt")  # descarga automática si no lo tienes
 
 @app.route("/scan", methods=["POST"])
 def scan_image():
@@ -24,7 +24,7 @@ def scan_image():
 
     try:
         # Ejecutar detección
-        results = model(temp_path)
+        results = model(temp_path, conf=0.35)
         detections = []
         for result in results:
             for box in result.boxes:

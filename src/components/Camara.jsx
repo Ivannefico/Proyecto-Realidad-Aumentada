@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import * as tf from "@tensorflow/tfjs";
+import "@tensorflow/tfjs-backend-webgl"; // 👈 registra backend WebGL
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import camara_css from "../css/Camara.module.css";
 import logo from "../img/logo.png";
@@ -14,16 +16,18 @@ export default function CameraScan() {
   const canvasRef = useRef(null);
   const streamRef = useRef(null);
   const modelRef = useRef(null);
-  const animationFrameRef = useRef(null); 
+  const animationFrameRef = useRef(null);
+
   const [cameraOn, setCameraOn] = useState(false);
   const [facingMode, setFacingMode] = useState("environment");
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  // --- stopCamera ---
+  // --- Detener cámara ---
   const stopCamera = useCallback(() => {
     if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current); 
+      cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
     }
 
@@ -37,8 +41,8 @@ export default function CameraScan() {
     }
   }, []);
 
-  // --- detectObjects ---
-  const detectObjects = useCallback(() => {
+  // --- Detectar objetos ---
+  const detectObjects = useCallback(async () => {
     if (!videoRef.current || !canvasRef.current || !modelRef.current) return;
 
     const video = videoRef.current;
@@ -47,11 +51,6 @@ export default function CameraScan() {
 
     const loop = async () => {
       if (!cameraOn) return;
-
-      if (video.videoWidth === 0 || video.videoHeight === 0) {
-        console.warn("Video sin dimensiones válidas. Loop detenido.");
-        return;
-      }
 
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -70,48 +69,72 @@ export default function CameraScan() {
         ctx.strokeRect(x, y, width, height);
 
         ctx.fillStyle = "rgba(0,0,0,0.6)";
-        const textWidth = ctx.measureText(text).width;
-        ctx.fillRect(x, y - 20, textWidth + 10, 20);
+        ctx.fillRect(x, y - 20, ctx.measureText(text).width + 10, 20);
 
         ctx.fillStyle = "#00ff88";
         ctx.font = "16px Arial";
         ctx.fillText(text, x + 5, y - 5);
       });
 
-      animationFrameRef.current = requestAnimationFrame(loop); 
+      animationFrameRef.current = requestAnimationFrame(loop);
     };
 
     loop();
   }, [cameraOn]);
 
-  // --- startCamera ---
+  // --- Iniciar cámara ---
   const startCamera = useCallback(async () => {
     try {
-      stopCamera(); // detener cualquier stream previo
-      const constraints = { video: { facingMode } };
-      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      stopCamera();
+      let stream = null;
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode },
+        });
+      } catch (err) {
+        console.warn(
+          `No se pudo usar facingMode="${facingMode}", intentando cámara por defecto...`,
+          err
+        );
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      }
+
       streamRef.current = stream;
 
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        await new Promise((resolve) => {
+          videoRef.current.onloadedmetadata = () => {
+            videoRef.current
+              .play()
+              .catch((err) => console.log("Error al reproducir video:", err));
+            resolve();
+          };
+        });
       }
+
+      // --- 🔧 Inicializar backend de TensorFlow ---
+      setLoading(true);
+      if (!tf.getBackend()) {
+        await tf.setBackend("webgl");
+      }
+      await tf.ready();
 
       if (!modelRef.current) {
-        setLoading(true);
         modelRef.current = await cocoSsd.load();
-        setLoading(false);
       }
+      setLoading(false);
 
-      detectObjects(); // inicia la detección una vez que el video está listo
+      detectObjects();
     } catch (err) {
-      console.error("Error al acceder a la cámara:", err);
-      alert("No se pudo acceder a la cámara.");
+      console.error("Error al acceder a la cámara:", err.name, err.message);
+      alert(`No se pudo acceder a la cámara: ${err.message}`);
       setCameraOn(false);
     }
   }, [facingMode, stopCamera, detectObjects]);
 
-  // --- useEffect principal ---
+  // --- Efectos ---
   useEffect(() => {
     if (cameraOn) startCamera();
     else stopCamera();
@@ -119,7 +142,11 @@ export default function CameraScan() {
     return () => stopCamera();
   }, [cameraOn, startCamera, stopCamera]);
 
-  // --- rotateCamera ---
+  useEffect(() => {
+    if (cameraOn) startCamera();
+  }, [facingMode]);
+
+  // --- Rotar cámara ---
   const rotateCamera = () => {
     setFacingMode((f) => (f === "environment" ? "user" : "environment"));
   };
@@ -136,7 +163,7 @@ export default function CameraScan() {
             <div className={camara_css.eyeWrapper}>
               <img
                 src={camapagada}
-                alt="Camara Apagada"
+                alt="Cámara apagada"
                 className={camara_css.camIcon}
               />
             </div>
