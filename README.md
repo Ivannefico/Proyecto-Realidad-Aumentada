@@ -41,3 +41,19 @@ Grupo Proyecto Realidad Aumentada "Scanner Cat"
 		
 	-Extra:
 		-Se eligieron los estilos porque nos parecio un diseño límpio, sin mucha molestia visual y colores tranquilos.
+
+
+	-Instrucciones paso a paso para hacer el deploy de la página:
+	
+		1- Tener el repositorio en GitHub
+		2- Ajustar el package.json (del frontend)
+		3- Revisar la versión de "react-scripts"
+		4- Ajustar la ruta para GitHub Pages
+		5- Configurar GitHub Actions
+		6- Router actualizado con "basename"
+		7- Instalar la dependencia de gh-pages
+		8- Crear la carpeta GitHub con workflows en su interior y el archivo deploy.yml
+		9- Hacemos "npm run build" para ver que corra bien
+		10- Realizas un push
+
+	Link de la página: https://ivannefico.github.io/Proyecto-Realidad-Aumentada
