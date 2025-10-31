@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import * as tf from "@tensorflow/tfjs";
-import "@tensorflow/tfjs-backend-webgl"; // 👈 registra backend WebGL
+import "@tensorflow/tfjs-backend-webgl";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
 import camara_css from "../css/Camara.module.css";
 import logo from "../img/logo.png";
@@ -26,18 +26,28 @@ export default function CameraScan() {
 
   // --- Detener cámara ---
   const stopCamera = useCallback(() => {
+    // Cancelar la animación de detección
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
     }
 
+    // Detener transmisión de video
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((t) => t.stop());
       streamRef.current = null;
     }
 
+    // Limpiar video y canvas
     if (videoRef.current) {
+      videoRef.current.pause();
       videoRef.current.srcObject = null;
+      videoRef.current.load();
+    }
+
+    if (canvasRef.current) {
+      const ctx = canvasRef.current.getContext("2d");
+      ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     }
   }, []);
 
@@ -50,31 +60,36 @@ export default function CameraScan() {
     const ctx = canvas.getContext("2d");
 
     const loop = async () => {
-      if (!cameraOn) return;
+      // Si se apagó la cámara, salir del bucle
+      if (!cameraOn || !video.srcObject) return;
 
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      const predictions = await modelRef.current.detect(video);
+      try {
+        const predictions = await modelRef.current.detect(video);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      predictions.forEach((p) => {
-        const [x, y, width, height] = p.bbox;
-        const text = `${p.class} (${Math.round(p.score * 100)}%)`;
+        predictions.forEach((p) => {
+          const [x, y, width, height] = p.bbox;
+          const text = `${p.class} (${Math.round(p.score * 100)}%)`;
 
-        ctx.strokeStyle = "#00ff88";
-        ctx.lineWidth = 2;
-        ctx.strokeRect(x, y, width, height);
+          ctx.strokeStyle = "#00ff88";
+          ctx.lineWidth = 2;
+          ctx.strokeRect(x, y, width, height);
 
-        ctx.fillStyle = "rgba(0,0,0,0.6)";
-        ctx.fillRect(x, y - 20, ctx.measureText(text).width + 10, 20);
+          ctx.fillStyle = "rgba(0,0,0,0.6)";
+          ctx.fillRect(x, y - 20, ctx.measureText(text).width + 10, 20);
 
-        ctx.fillStyle = "#00ff88";
-        ctx.font = "16px Arial";
-        ctx.fillText(text, x + 5, y - 5);
-      });
+          ctx.fillStyle = "#00ff88";
+          ctx.font = "16px Arial";
+          ctx.fillText(text, x + 5, y - 5);
+        });
+      } catch (err) {
+        console.warn("Error en detección:", err);
+      }
 
       animationFrameRef.current = requestAnimationFrame(loop);
     };
@@ -114,7 +129,7 @@ export default function CameraScan() {
         });
       }
 
-      // --- 🔧 Inicializar backend de TensorFlow ---
+      // Backend de TensorFlow
       setLoading(true);
       if (!tf.getBackend()) {
         await tf.setBackend("webgl");
