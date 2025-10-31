@@ -158,8 +158,9 @@ export default function CameraScan() {
   }, [cameraOn, startCamera, stopCamera]);
 
   useEffect(() => {
-    if (cameraOn) startCamera();
-  }, [facingMode]);
+  if (cameraOn) startCamera();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [facingMode, cameraOn, startCamera]);
 
   // --- Rotar cámara ---
   const rotateCamera = () => {
