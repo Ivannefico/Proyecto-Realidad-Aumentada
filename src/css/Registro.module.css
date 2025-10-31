@@ -1,5 +1,3 @@
-/* Registro.module.css */
-
 .container {
     display: flex;
     height: 100vh;
@@ -214,107 +212,219 @@
   color: #535353;
   cursor: pointer;
 }
-
-/* --- RESPONSIVE --- */
-
-@media (max-width: 1024px) {
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .left_panel {
-    width: 100%;
-    height: 35vh;
-  }
-
-  .right_panel {
-    width: 100%;
-    height: auto;
-    padding: 3rem 2rem;
-  }
-
-  .form {
-    max-width: 450px;
-  }
-}
-
-@media (max-width: 768px) {
-  .left_panel {
-    height: 30vh;
-  }
-
-  .right_panel {
-    padding: 2rem 1.5rem;
-  }
-
-  .form {
-    max-width: 90%;
-  }
-
-  .right_panel h2 {
-    font-size: 1.6rem;
-  }
-}
+/* ---------- AJUSTES PARA VISTA MÓVIL ---------- */
 
 @media (max-width: 480px) {
-  .left_panel {
-    height: 25vh;
+  .form {
+    gap: 0.8rem;
   }
 
-  .right_panel {
-    padding: 1.5rem 1rem;
-    justify-content: flex-start;
-  }
-
-  .right_panel h2 {
-    font-size: 1.4rem;
+  .register_btn {
+    font-size: 0.9rem;
+    padding: 0.8rem;
   }
 
   .login_text {
     font-size: 0.85rem;
   }
 
-  .form {
-    max-width: 95%;
-    gap: 0.9rem;
-  }
-
-  .register_btn {
-    padding: 0.8rem;
-    font-size: 0.9rem;
-  }
-
   .policy {
     font-size: 0.75rem;
   }
 }
+/* --- Ajuste para vista móvil: imagen arriba, formulario abajo --- */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
 
-.right_panel {
-  display: flex;
-  flex-direction: column; 
-  gap: 1rem;            
-  position: relative;    
-  z-index: 2;             
+  /* Imagen arriba en ambos formularios */
+  .left_panel {
+    order: -1;
+    width: 100%;
+    height: 240px;
+    padding: 1rem 0;
+  }
+
+  .background_image {
+    object-fit: contain !important;
+    object-position: center top !important;
+    background-color: transparent !important;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* Formulario más abajo */
+  .form {
+    transform: none;
+    margin-top: 2.5rem;
+    max-width: 90%;
+  }
+
+  /* Centrar texto y mantener proporciones */
+  .text_container {
+    transform: none;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
 }
-.left_panel {
-  position: relative; 
-  overflow: hidden;
-}
-.background_image {
+
+/* ---------- FIX TABLET: 769px - 1024px ---------- */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* contenedor: mantiene la imagen ARRIBA y formulario centrado */
+  .container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-top: 2rem;
+  }
+
+  /* panel imagen (left_panel o right_panel) */
+  .left_panel {
+    order: -1;                /* imagen arriba */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 1rem 0;
+  }
+
+  /* hace que la imagen no esté absoluta y se center realmente */
+  .background_image {
+    position: static !important;
+    display: block;
+    margin: 0 auto;
+    width: 85%;
+    max-width: 520px;
+    height: auto;
+    object-fit: contain !important;
+    object-position: center center !important;
+    background-color: transparent !important;
+  }
+
+  /* texto encima del form - centrado y con margen */
+  .text_container {
+    width: 100%;
+    max-width: 520px;
+    margin: 1rem auto 0.5rem;
+    text-align: center;
+    transform: none;
+  }
+  .text_container h2,
+  .text_container p {
+    margin: 0.25rem 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* FORM: centrado, inputs largos y coherentes */
+  .form {
+    width: 90%;
+    max-width: 520px;
+    margin: 1.25rem auto 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    align-items: center;
+    box-sizing: border-box;
+    transform: none;
+  }
+
+  /* input_group base */
+  .input_group {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* inputs: ocupan todo el ancho, padding para icono izquierdo y ojo derecho */
+  .input_group input,
+  .form input {
+    width: 100%;
+    padding: 12px 44px 12px 40px; /* left space for icon, right space for eye */
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    background: #fff;
+    box-sizing: border-box;
+  }
+
+  /* icono fijo a la izquierda (sobre el input) */
+  .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .icon img { width: 20px; height: 20px; object-fit: contain; }
+
+  /* password toggle (ojo) a la derecha */
+  .password_toggle,
+  .eyeIcon {
   position: absolute;
-  inset: 0;        
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
+  right: 250px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  }
+
+  .password_toggle img,
+  .eyeIcon img {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* botón principal: ancho completo del form */
+  .login_button,
+  .register_btn {
+    width: 100%;
+    max-width: 520px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  /* botón google (mantener proporciones y ancho) */
+  .google_btn {
+    width: 100%;
+    max-width: 520px;
+    padding: 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+  }
 }
 
+@media (max-width: 1024px) {
+  html, body {
+    height: 100%;
+    overflow-y: auto; /* permite scroll */
+    -webkit-overflow-scrolling: touch; /* suaviza el scroll en móviles */
+  }
 
-.form {
-  position: relative;
-  top:0%;
-  z-index: 3;
+  .container {
+    overflow-y: auto;
+    max-height: 100vh;
+    scrollbar-width: none; /* Firefox: oculta la barra */
+    -ms-overflow-style: none; /* IE y Edge antiguos */
+  }
+
+  .container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
 }
 
 

@@ -20,18 +20,20 @@
   flex: 1;
   padding: 2rem;
   gap: 2rem;
-  flex-wrap: wrap;
   justify-content: center;
+  align-items: stretch; /* ✅ Sidebar y contenido igual altura */
 }
 
 /* --- Sidebar --- */
 .sidebar {
-  flex: 0 0 500px; /* ancho fijo razonable pero adaptable */
+  flex: 0 0 320px;
   background-color: var(--medium-teal);
   border-radius: 20px;
-  padding: 2rem 0 32.2rem;
-  height: fit-content;
-  min-width: 230px;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
@@ -65,8 +67,8 @@
 /* --- Contenido principal --- */
 .main_settings {
   flex: 1;
-  min-width: 320px;
   display: flex;
+  align-items: stretch; /* ✅ Alinea con sidebar */
   justify-content: center;
 }
 
@@ -74,10 +76,10 @@
   background-color: var(--medium-teal);
   padding: 2rem 3rem;
   border-radius: 20px;
-  width: 100%;
-  max-width: 1200px; 
+  flex: 1; /* ✅ misma altura que sidebar */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
   color: var(--off-white);
+  max-width: 1200px;
 }
 
 .setting_item {
@@ -85,7 +87,7 @@
 }
 
 .theme_label {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .setting_item label {
@@ -107,7 +109,7 @@
   outline: none;
 }
 
-.setting_input_lang{
+.setting_input_lang {
   width: 20%;
   border: none;
   border-radius: 8px;
@@ -118,8 +120,8 @@
   outline: none;
 }
 
-.input_lang{
-    background-color: #11403f;
+.input_lang {
+  background-color: #11403f;
   border-bottom: 2px solid var(--off-white);
 }
 
@@ -222,20 +224,112 @@
   }
 }
 
-
-@media (max-width: 900px) {
+/* 📱 Celulares (hasta 767px) */
+@media (max-width: 767px) {
   .settings_content_wrapper {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 0; /* quitamos el padding que desiguala tamaños */
+    gap: 1rem;
+  }
+
+  .sidebar,
+  .settings_card {
+    width: 90vw; /* ✅ igual ancho real según pantalla */
+    max-width: 380px; /* límite para que no se pase */
+    margin: 0 auto;
+    border-radius: 16px;
+    font-size: 0.95rem;
+    box-sizing: border-box; /* asegura medidas iguales */
   }
 
   .sidebar {
-    width: 100%;
-    max-width: 600px;
+    padding: 1rem 0 2rem;
   }
 
   .settings_card {
-    max-width: 600px;
-    padding: 1.5rem;
+    padding: 1.2rem;
+  }
+
+  .setting_input_line,
+  .setting_input_lang {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 6px 0;
+  }
+
+  .theme_label {
+    font-size: 1rem;
+    transform: translateY(8px);
+  }
+
+  /* Scroll invisible */
+  html, body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .settings_container {
+    overflow-y: auto;
+    max-height: 100vh;
+    scrollbar-width: none;
+  }
+  .settings_container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 💻 Tablets (768px a 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .settings_content_wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    gap: 1.5rem;
+  }
+
+  .sidebar,
+  .settings_card {
+    width: 80vw; /* ✅ igual ancho exacto según pantalla */
+    max-width: 650px;
+    margin: 0 auto;
+    border-radius: 18px;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  .sidebar {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .settings_card {
+    padding: 1.8rem 2rem;
+  }
+
+  .theme_label {
+    transform: translateY(15px);
+  }
+
+  .setting_input_line,
+  .setting_input_lang {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  /* Scroll invisible */
+  html, body {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .settings_container {
+    overflow-y: auto;
+    max-height: 100vh;
+    scrollbar-width: none;
+  }
+  .settings_container::-webkit-scrollbar {
+    display: none;
   }
 }

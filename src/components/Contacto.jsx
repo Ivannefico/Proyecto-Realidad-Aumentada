@@ -28,10 +28,10 @@ const Contacto = () => {
           <ul className={contacto_css.ul}>
             <h3 className={contacto_css.subtitle_con}>{t.datosContacto}</h3>
             <li className={contacto_css.li}>
-              {t.email}: <b>scanner.cat@gmail.com</b>
+              {t.email}: <b>ScannerCatt@gmail.com</b>
             </li>
             <li className={contacto_css.li}>
-              {t.telefono}: <b>+123456789</b>
+              {t.telefono}: <b>+54 9 299 530 1764</b>
             </li>
           </ul>
         </div>
