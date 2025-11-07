@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import formuregis_css from "../css/Registro.module.css";
-import { useUsuarios } from "../hooks/useUsuarios";
 import { LanguageContext } from "./Idioma.jsx";
 import traducciones from "../language/traducciones.js";
+import { auth, db } from "../firebase/firebase.jsx";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 import logoDark from "../img/logoBlancoReves.png";
 import logoLight from "../img/logoNegroReves.png";
@@ -20,14 +22,11 @@ import ojoCerradoDark from "../img/ojocerradoBlanco.png";
 
 const Registro = ({ onCambiarFormulario }) => {
   const navigate = useNavigate();
-  const { crearUsuario } = useUsuarios();
-  
   const { idioma } = useContext(LanguageContext);
-  const t = traducciones[idioma].registro;
+  const t = traducciones[idioma]?.registro || traducciones["es"].registro;
 
   const [isDark, setIsDark] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const [registro, setRegistro] = useState({
     usuarios: "",
     correo: "",
@@ -35,7 +34,6 @@ const Registro = ({ onCambiarFormulario }) => {
     contrasena: "",
     confirmarContrasena: "",
   });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -47,10 +45,7 @@ const Registro = ({ onCambiarFormulario }) => {
     return () => observer.disconnect();
   }, []);
 
-  const handleChange = (e) => {
-    setRegistro({ ...registro, [e.target.name]: e.target.value });
-  };
-
+  const handleChange = (e) => setRegistro({ ...registro, [e.target.name]: e.target.value });
   const validateEmail = (email) => /^\S+@\S+\.\S+$/.test(email);
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -70,17 +65,43 @@ const Registro = ({ onCambiarFormulario }) => {
 
     setLoading(true);
     try {
-      await crearUsuario({
+      // Crear usuario en Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        registro.correo,
+        registro.contrasena
+      );
+      const user = userCredential.user;
+
+      // 🔹 Guardar datos del usuario en la colección "usuarios", con su UID como ID
+      await setDoc(doc(db, "usuarios", user.uid), {
         usuarios: registro.usuarios,
         correo: registro.correo,
         telefono: registro.telefono,
-        contrasena: registro.contrasena,
+        contrasena: registro.contrasena, // ⚠️ Solo en desarrollo (luego se puede eliminar)
         rol: "usuarios",
+        estado: "Activo",
       });
 
-      navigate("/", { replace: true });
-    } catch {
-      setError("Error");
+      // 🔹 Guardar en localStorage para mantener sesión
+      localStorage.setItem(
+        "usuario",
+        JSON.stringify({
+          uid: user.uid,
+          usuarios: registro.usuarios,
+          correo: registro.correo,
+          telefono: registro.telefono,
+          rol: "usuarios",
+        })
+      );
+
+      alert("✅ Usuario registrado correctamente");
+      navigate("/home");
+    } catch (err) {
+      console.error("Error al registrar usuario:", err);
+      if (err.code === "auth/email-already-in-use") setError("El correo ya está registrado");
+      else if (err.code === "auth/invalid-email") setError("Correo inválido");
+      else setError("Error al registrar usuario");
     } finally {
       setLoading(false);
     }
@@ -98,13 +119,9 @@ const Registro = ({ onCambiarFormulario }) => {
     <div className={formuregis_css.container}>
       <div className={formuregis_css.right_panel}>
         {error && <p style={{ color: "red" }}>{error}</p>}
-
         <form onSubmit={handleSignIn} className={formuregis_css.form}>
           <div className={formuregis_css.text_container}>
-            <h2>
-              {t.titulo} <br /> {t.subtitulo}
-            </h2>
-
+            <h2>{t.titulo} <br /> {t.subtitulo}</h2>
             <p className={formuregis_css.login_text}>
               {t.pregunta}
               <button
@@ -172,7 +189,10 @@ const Registro = ({ onCambiarFormulario }) => {
                 required
                 className="input-tema"
               />
-              <span onClick={togglePasswordVisibility} className={formuregis_css.password_toggle}>
+              <span
+                onClick={togglePasswordVisibility}
+                className={formuregis_css.password_toggle}
+              >
                 <img src={iconPass} alt="toggle" />
               </span>
             </div>
@@ -187,12 +207,19 @@ const Registro = ({ onCambiarFormulario }) => {
                 required
                 className="input-tema"
               />
-              <span onClick={togglePasswordVisibility} className={formuregis_css.password_toggle}>
+              <span
+                onClick={togglePasswordVisibility}
+                className={formuregis_css.password_toggle}
+              >
                 <img src={iconPass} alt="toggle" />
               </span>
             </div>
 
-            <button type="submit" className={formuregis_css.register_btn} disabled={loading}>
+            <button
+              type="submit"
+              className={formuregis_css.register_btn}
+              disabled={loading}
+            >
               {loading ? "..." : t.registrar}
             </button>
 

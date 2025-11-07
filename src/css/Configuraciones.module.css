@@ -213,6 +213,52 @@
   cursor: pointer;
 }
 
+.password_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.setting_input_line {
+  width: 100%;
+  padding: 10px 40px 10px 10px; /* espacio a la derecha para el ojo */
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  background-color: #155d5c; /* el color que uses */
+  color: white;
+  font-size: 14px;
+}
+
+.icon_password_inside {
+  position: absolute;
+  right: 10px; /* separa el ojo del borde derecho */
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  opacity: 0.8;
+}
+
+.icon_password_inside:hover {
+  opacity: 1;
+}
+.boton {
+  background-color: #015050;
+  border: none;
+  color: #dffdfd;
+  padding: 10px 18px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.boton:hover {
+  background-color: #00b3b3;
+  transform: scale(1.05);
+}
+
+
 @keyframes aparecer {
   from {
     transform: scale(0.9);
