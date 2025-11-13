@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import formuinicio_css from "../css/InicioSesion.module.css";
 import { auth, db } from "../firebase/firebase.jsx";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,} from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { LanguageContext } from "./Idioma.jsx";
 import traducciones from "../language/traducciones.js";
@@ -27,6 +27,23 @@ const Login = ({ onCambiarFormulario }) => {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+  try {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+    if (usuario && usuario.uid) {
+      navigate("/home", { replace: true });
+    }
+  } catch {
+    localStorage.removeItem("usuario");
+  }
+}, [navigate]);
+
+  useEffect(() => {
+  if (process.env.NODE_ENV === "development") {
+    localStorage.removeItem("usuario");
+  }
+  }, []);
 
   useEffect(() => {
     const handleTheme = () => setIsDark(document.body.classList.contains("dark"));
@@ -63,7 +80,7 @@ const Login = ({ onCambiarFormulario }) => {
       localStorage.setItem("usuario", JSON.stringify({ uid: user.uid, ...userData }));
 
       mostrarMensaje("✅ Inicio de sesión exitoso", "exito");
-      setTimeout(() => navigate("/home"), 1200);
+      setTimeout(() => navigate("/home", { replace: true }), 1200);
     } catch (err) {
       console.error(err);
       mostrarMensaje(t.error || "❌ Error al iniciar sesión", "error");
@@ -99,7 +116,7 @@ const Login = ({ onCambiarFormulario }) => {
       localStorage.setItem("usuario", JSON.stringify(finalData));
 
       mostrarMensaje("✅ Inicio con Google exitoso", "exito");
-      setTimeout(() => navigate("/home"), 1200);
+      setTimeout(() => navigate("/home", { replace: true }), 1200);
     } catch (err) {
       console.error(err);
       mostrarMensaje("❌ Error con Google", "error");
@@ -120,7 +137,6 @@ const Login = ({ onCambiarFormulario }) => {
 
   return (
     <div className={formuinicio_css.container}>
-      {/* 🔔 Mensaje flotante */}
       {mensaje && (
         <div
           className={`${formuinicio_css.toast} ${
