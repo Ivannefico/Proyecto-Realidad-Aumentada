@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import formuinicio_css from "../css/InicioSesion.module.css";
 import { auth, db } from "../firebase/firebase.jsx";
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { LanguageContext } from "./Idioma.jsx";
 import traducciones from "../language/traducciones.js";
 
@@ -26,6 +26,7 @@ const Login = ({ onCambiarFormulario }) => {
   const [login, setLogin] = useState({ correo: "", contrasena: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [mensaje, setMensaje] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
@@ -36,9 +37,15 @@ const Login = ({ onCambiarFormulario }) => {
     return () => observer.disconnect();
   }, []);
 
+  const mostrarMensaje = (texto, tipo = "exito") => {
+    setMensaje({ texto, tipo });
+    setTimeout(() => setMensaje(null), 2000);
+  };
+
   const handleChange = (e) => setLogin({ ...login, [e.target.name]: e.target.value });
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
+  // Login con email y contraseña
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
@@ -46,39 +53,57 @@ const Login = ({ onCambiarFormulario }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, login.correo, login.contrasena);
       const user = userCredential.user;
-      const userDoc = await getDoc(doc(db, "listausuarios", user.uid));
+      const userDoc = await getDoc(doc(db, "usuarios", user.uid));
       const userData = userDoc.exists() ? userDoc.data() : {};
 
       localStorage.setItem("usuario", JSON.stringify({ uid: user.uid, ...userData }));
-      alert("✅ Inicio de sesión exitoso");
-      navigate("/home");
+
+      mostrarMensaje("✅ Inicio de sesión exitoso", "exito");
+      setTimeout(() => navigate("/home"), 1200);
     } catch (err) {
       console.error(err);
-      setError(t.error || "Error al iniciar sesión");
+      mostrarMensaje(t.error || "Error al iniciar sesión", "error");
     } finally {
       setLoading(false);
     }
   };
 
+  // Login con Google
   const handleGoogleSignIn = async () => {
     setError("");
+    setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      const usuarioData = {
-        usuarios: user.displayName || "Usuario Google",
-        correo: user.email,
-        rol: "usuarios",
-      };
+      const userRef = doc(db, "usuarios", user.uid);
+      const userSnap = await getDoc(userRef);
 
-      localStorage.setItem("usuario", JSON.stringify(usuarioData));
-      alert("✅ Inicio con Google exitoso");
-      navigate("/home");
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          contrasena: "",
+          correo: user.email || "",
+          estado: "Activo",
+          rol: "usuarios",
+          telefono: "",
+          usuarios: user.displayName || "",
+        });
+        console.log("Usuario Google creado en 'usuarios' ✅");
+      }
+
+      const finalSnap = await getDoc(userRef);
+      const finalData = finalSnap.exists() ? finalSnap.data() : {};
+
+      localStorage.setItem("usuario", JSON.stringify(finalData));
+
+      mostrarMensaje("✅ Inicio con Google exitoso", "exito");
+      setTimeout(() => navigate("/home"), 1200);
     } catch (err) {
       console.error(err);
-      setError("Error con Google");
+      mostrarMensaje("Error con Google", "error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,19 +115,32 @@ const Login = ({ onCambiarFormulario }) => {
 
   return (
     <div className={formuinicio_css.container}>
+      {/* 🔔 TOAST flotante */}
+      {mensaje && (
+        <div
+          className={`${formuinicio_css.toast} ${
+            mensaje.tipo === "exito" ? formuinicio_css.toast_exito : formuinicio_css.toast_error
+          }`}
+        >
+          {mensaje.texto}
+        </div>
+      )}
+
       <div className={formuinicio_css.right_panel}>
         <img src={logo} alt="logo" className={formuinicio_css.background_image} />
       </div>
 
       <div className={formuinicio_css.left_panel}>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
         <form onSubmit={handleLogin} className={formuinicio_css.form}>
           <div className={formuinicio_css.text_container}>
             <h2>{t.titulo}</h2>
             <p className={formuinicio_css.register_text}>
               {t.pregunta}
-              <button type="button" onClick={onCambiarFormulario} className={formuinicio_css.register_btn}>
+              <button
+                type="button"
+                onClick={onCambiarFormulario}
+                className={formuinicio_css.register_btn}
+              >
                 {t.registrar}
               </button>
             </p>
@@ -110,16 +148,33 @@ const Login = ({ onCambiarFormulario }) => {
 
           <div className={formuinicio_css.formcajas}>
             <div className={formuinicio_css.input_group}>
-              <input name="correo" placeholder={t.correo}
-                value={login.correo} onChange={handleChange} required className="input-tema" />
-              <span className={formuinicio_css.icon}><img src={iconCorreo} alt="Correo" /></span>
+              <input
+                name="correo"
+                placeholder={t.correo}
+                value={login.correo}
+                onChange={handleChange}
+                required
+                className="input-tema"
+              />
+              <span className={formuinicio_css.icon}>
+                <img src={iconCorreo} alt="Correo" />
+              </span>
             </div>
 
             <div className={formuinicio_css.input_group}>
-              <input name="contrasena" type={showPassword ? "text" : "password"}
-                placeholder={t.contrasena} value={login.contrasena}
-                onChange={handleChange} required className="input-tema" />
-              <span onClick={togglePasswordVisibility} className={formuinicio_css.password_toggle}>
+              <input
+                name="contrasena"
+                type={showPassword ? "text" : "password"}
+                placeholder={t.contrasena}
+                value={login.contrasena}
+                onChange={handleChange}
+                required
+                className="input-tema"
+              />
+              <span
+                onClick={togglePasswordVisibility}
+                className={formuinicio_css.password_toggle}
+              >
                 <img src={iconPassword} alt="toggle" />
               </span>
             </div>
