@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import formuinicio_css from "../css/InicioSesion.module.css";
 import { auth, db } from "../firebase/firebase.jsx";
-import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,} from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { LanguageContext } from "./Idioma.jsx";
 import traducciones from "../language/traducciones.js";
@@ -25,7 +25,6 @@ const Login = ({ onCambiarFormulario }) => {
   const [isDark, setIsDark] = useState(false);
   const [login, setLogin] = useState({ correo: "", contrasena: "" });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -42,16 +41,21 @@ const Login = ({ onCambiarFormulario }) => {
     setTimeout(() => setMensaje(null), 2000);
   };
 
-  const handleChange = (e) => setLogin({ ...login, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setLogin({ ...login, [e.target.name]: e.target.value });
+
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
 
-  // Login con email y contraseña
+  // 🔹 Login con email y contraseña
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, login.correo, login.contrasena);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        login.correo,
+        login.contrasena
+      );
       const user = userCredential.user;
       const userDoc = await getDoc(doc(db, "usuarios", user.uid));
       const userData = userDoc.exists() ? userDoc.data() : {};
@@ -62,15 +66,14 @@ const Login = ({ onCambiarFormulario }) => {
       setTimeout(() => navigate("/home"), 1200);
     } catch (err) {
       console.error(err);
-      mostrarMensaje(t.error || "Error al iniciar sesión", "error");
+      mostrarMensaje(t.error || "❌ Error al iniciar sesión", "error");
     } finally {
       setLoading(false);
     }
   };
 
-  // Login con Google
+  // 🔹 Login con Google
   const handleGoogleSignIn = async () => {
-    setError("");
     setLoading(true);
     try {
       const provider = new GoogleAuthProvider();
@@ -89,19 +92,17 @@ const Login = ({ onCambiarFormulario }) => {
           telefono: "",
           usuarios: user.displayName || "",
         });
-        console.log("Usuario Google creado en 'usuarios' ✅");
       }
 
       const finalSnap = await getDoc(userRef);
       const finalData = finalSnap.exists() ? finalSnap.data() : {};
-
       localStorage.setItem("usuario", JSON.stringify(finalData));
 
       mostrarMensaje("✅ Inicio con Google exitoso", "exito");
       setTimeout(() => navigate("/home"), 1200);
     } catch (err) {
       console.error(err);
-      mostrarMensaje("Error con Google", "error");
+      mostrarMensaje("❌ Error con Google", "error");
     } finally {
       setLoading(false);
     }
@@ -110,16 +111,22 @@ const Login = ({ onCambiarFormulario }) => {
   const logo = isDark ? logoDark : logoLight;
   const iconCorreo = isDark ? correoDark : correoLight;
   const iconPassword = showPassword
-    ? (isDark ? ojoAbiertoDark : ojoAbiertoLight)
-    : (isDark ? ojoCerradoDark : ojoCerradoLight);
+    ? isDark
+      ? ojoAbiertoDark
+      : ojoAbiertoLight
+    : isDark
+    ? ojoCerradoDark
+    : ojoCerradoLight;
 
   return (
     <div className={formuinicio_css.container}>
-      {/* 🔔 TOAST flotante */}
+      {/* 🔔 Mensaje flotante */}
       {mensaje && (
         <div
           className={`${formuinicio_css.toast} ${
-            mensaje.tipo === "exito" ? formuinicio_css.toast_exito : formuinicio_css.toast_error
+            mensaje.tipo === "exito"
+              ? formuinicio_css.toast_exito
+              : formuinicio_css.toast_error
           }`}
         >
           {mensaje.texto}

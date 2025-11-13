@@ -449,23 +449,30 @@ html, body {
   padding: 12px 20px;
   border-radius: 10px;
   font-weight: bold;
-  color: white;
-  animation: fadeInOut 2s ease forwards;
+  font-size: 15px;
+  animation: aparecer 0.3s ease-in-out;
   z-index: 9999;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .toast_exito {
-  background-color: #28a745;
+  background-color: #00b894;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
 }
 
 .toast_error {
-  background-color: #dc3545;
+  background-color: #d63031;
+  color: white;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
 }
 
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -20px); }
-  10% { opacity: 1; transform: translate(-50%, 0); }
-  90% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, -20px); }
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
