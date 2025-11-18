@@ -1,0 +1,9 @@
+path: dataset
+train: images/train
+val: images/val
+
+names:
+  0: laptop
+  1: celular
+  2: mouse
+  3: teclado
