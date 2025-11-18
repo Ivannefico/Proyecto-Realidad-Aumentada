@@ -7,8 +7,8 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Cargar el modelo YOLO
-model = YOLO("runs/detect/train2/weights/best.pt")  # descarga automática si no lo tienes
+# Cargar tu modelo entrenado
+model = YOLO("runs/detect/train2/weights/best.pt")
 
 @app.route("/scan", methods=["POST"])
 def scan_image():
@@ -17,21 +17,34 @@ def scan_image():
 
     image_file = request.files["image"]
 
-    # Guardar la imagen temporalmente
+    # Guardar temporalmente
     with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
         image_file.save(temp_file.name)
         temp_path = temp_file.name
 
     try:
-        # Ejecutar detección
         results = model(temp_path, conf=0.35)
         detections = []
+
         for result in results:
             for box in result.boxes:
                 cls_id = int(box.cls[0])
                 name = result.names[cls_id]
                 conf = float(box.conf[0])
-                detections.append({"objeto": name, "confianza": round(conf, 2)})
+
+                xyxy = box.xyxy[0].cpu().numpy().tolist()
+                x1, y1, x2, y2 = xyxy
+
+                detections.append({
+                    "objeto": name,
+                    "confianza": round(conf, 2),
+                    "box": {
+                        "x": int(x1),
+                        "y": int(y1),
+                        "w": int(x2 - x1),
+                        "h": int(y2 - y1)
+                    }
+                })
 
         os.remove(temp_path)
         return jsonify({"detecciones": detections})
